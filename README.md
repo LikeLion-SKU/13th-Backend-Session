@@ -1,3 +1,5 @@
+![프로필이미지](https://github.com/LikeLion-SKU/13th-Backend-Session/blob/JooHyunJun/github%20profile.png)
+
 ### **안녕하세요! Server를 공부 중인 서경대학교 전자컴퓨터공학과 주현준입니다.**
 
 ### 스스로 개발 공부에 있어서 적극적이고 BE 개발자로 직무를 정한 이후 개인적으로도 인프런을 통해서 계속해서 공부 하고 있습니다.
