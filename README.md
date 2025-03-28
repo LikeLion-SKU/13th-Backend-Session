@@ -30,15 +30,15 @@
 
 ### Programming Languages
 
--Python
--C
--C++
+- Python
+- C
+- C++
 
 ### Frontend
 
--React
--Node.js
--JavaScript
+- React
+- Node.js
+- JavaScript
 
 ### Collaboration
 
