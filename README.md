@@ -1,19 +1,20 @@
-## 🤩 운영진(Team Leaders)
-
-|                                       Lead                                      |                                                                                 |                                                                                  |
-|:-------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------:|
-|                    [윤희준](https://github.com/uni-j-uni)                       |                      [민동명](https://github.com/zmarzmar)                      |                     [이윤정](https://github.com/E2YunJeong)                      |
-| <img src="https://avatars.githubusercontent.com/u/118972548?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/145469952?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/163099474?v=4" width="300" /> |
-
-
-## 🤩 팀원들(Team Members)
-|                                                                                 |                                                                                |                                                                                 |                                                                                 |
-|:-------------------------------------------------------------------------------:|:------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------:|
-|                    [강수우](https://github.com/kangsuwoo)                       |                      [고현서](https://github.com/hyunseoko)                     |                     [금시언](https://github.com/Comeoksal)                      |                    [김나경](https://github.com/naooung)                        |
-| <img src="https://avatars.githubusercontent.com/u/72612808?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/128693161?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/172238270?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/162952415?v=4" width="300" /> |
-|                     [김채린](https://github.com/chaeelin)                       |                     [문재연](https://github.com/jaeyeonyy)                      |                     [박주용](https://github.com/pjuyong)                        |                      [사서연](https://github.com/SunSeoYeon)                    |
-| <img src="https://avatars.githubusercontent.com/u/170619611?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/71226104?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/158154226?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/174882500?v=4" width="300" /> |
-|                   [송수진](https://github.com/soojinsong)                       |                   [신채린](https://github.com/shinchaerin79)                    |                       [심서현](https://github.com/simGPT)                       |                     [윤해민](https://github.com/hamtorygoals)                    |
-| <img src="https://avatars.githubusercontent.com/u/162791828?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/166346480?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/151374157?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/154819055?v=4" width="300" /> |
-|                         [이채민](https://github.com/2cmin)                      |                       [주현준](https://github.com/bikooju)                      |
-| <img src="https://avatars.githubusercontent.com/u/124021888?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/170635800?v=4" width="300" /> |
+<div style="text-align: left;"> 
+    <h2 style="border-bottom: 1px solid #21262d; color: #c9d1d9;"> 🦁멋쟁이사자처럼 13기 백엔드 강수우 </h2>  
+    <div style="font-weight: 700; font-size: 15px; text-align: left; color: #c9d1d9;"> 안녕하세요 서경대학교 자유전공학부 25학번 강수우입니다. </li>올해 1년동안 열심히 하겠습니다 감사합니다. </div> 
+    </div>
+    <div style="text-align: left;">
+    <h2 style="border-bottom: 1px solid #21262d; color: #c9d1d9;"> 🛠️ Tech Stacks </h2> <br> 
+    <div style="margin: ; text-align: left;" "text-align: left;"> <img src="https://img.shields.io/badge/C-A8B9CC?style=plastic&logo=C&logoColor=white">
+          <img src="https://img.shields.io/badge/C++-00599C?style=plastic&logo=C%2B%2B&logoColor=white">
+          <img src="https://img.shields.io/badge/Java-007396?style=plastic&logo=Java&logoColor=white">
+          <img src="https://img.shields.io/badge/Python-3776AB?style=plastic&logo=Python&logoColor=white">
+          </div>
+    </div>
+    <div style="text-align: left;">
+    <h2 style="border-bottom: 1px solid #21262d; color: #c9d1d9;"> 🧑‍💻 Contact me </h2> <br> 
+    <div style="text-align: left;"> <a href=mailto:kangsuwoo@skuniv.ac.kr> <img src="https://img.shields.io/badge/Gmail-EA4335?style=plastic&logo=Gmail&logoColor=white&link=mailto:kangsuwoo@skuniv.ac.kr"> </a>
+         <a href=7ro.__.06> <img src="https://img.shields.io/badge/Instagram-E4405F?style=plastic&logo=Instagram&logoColor=white&link=7ro.__.06"> </a>
+          </div>  <br> 
+    <div style="text-align: left;">  </div> 
+    </div>
+    
