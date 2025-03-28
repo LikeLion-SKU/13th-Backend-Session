@@ -17,3 +17,16 @@
 | <img src="https://avatars.githubusercontent.com/u/162791828?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/166346480?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/151374157?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/154819055?v=4" width="300" /> |
 |                         [이채민](https://github.com/2cmin)                      |                       [주현준](https://github.com/bikooju)                      |
 | <img src="https://avatars.githubusercontent.com/u/124021888?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/170635800?v=4" width="300" /> |
+
+
+## 👋 박주용 (Parkjuyong)
+### 소프트웨어학과 2022301304 **박주용**입니다.
+
+## 📫 연락처
+**Phone** : 010-7738-7812 
+
+**GitHub** : [pjuyong](https://github.com/pjuyong)
+
+**E-mail** : imjuyongp@skuniv.ac.kr
+
+
