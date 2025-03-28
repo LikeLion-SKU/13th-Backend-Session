@@ -1,36 +1,61 @@
-## 🎯 Git Convention
+🦁 안녕하세요! 멋쟁이사자처럼 13기 백엔드 아기사자 사서연입니다.
+서경대학교 전자컴퓨터공학과에 재학중이며, 백엔드 개발에 열정을 가진 개발자입니다.
+💡 성장하는 개발자를 목표로 다양한 프로젝트와 스터디를 통해 기술을 습득하고,
+🛠️ 실무 역량을 키우기 위해 학습을 게을리하지 않고 있습니다.
+함께 고민하고 문제를 해결하며 성장의 즐거움을 느끼고,
+새로운 도전을 두려워하지 않으며 끊임없이 발전하겠습니다!
 
-- 🎉 **Start:** Start New Project [:tada:]
-- ✨ **Feat:** 새로운 기능을 추가 [:sparkles:]
-- 🐛 **Fix:** 버그 수정 [:bug:]
-- 🎨 **Design:** CSS 등 사용자 UI 디자인 변경 [:art:]
-- ♻️ **Refactor:** 코드 리팩토링 [:recycle:]
-- 🔧 **Settings:** Changing configuration files [:wrench:]
-- 🗃️ **Comment:** 필요한 주석 추가 및 변경 [:card_file_box:]
-- ➕ **Dependency/Plugin:** Add a dependency/plugin [:heavy_plus_sign:]
-- 📝 **Docs:** 문서 수정 [:memo:]
-- 🔀 **Merge:** Merge branches [:twisted_rightwards_arrows:]
-- 🚀 **Deploy:** Deploying stuff [:rocket:]
-- 🚚 **Rename:** 파일 혹은 폴더명을 수정하거나 옮기는 작업만인 경우 [:truck:]
-- 🔥 **Remove:** 파일을 삭제하는 작업만 수행한 경우 [:fire:]
-- ⏪️ **Revert:** 전 버전으로 롤백 [:rewind:]
+---
 
-## 🤩 운영진(Team Leaders)
+## 📱기술
 
-|                                       Lead                                      |                                                                                 |                                                                                  |
-|:-------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------:|
-|                    [윤희준](https://github.com/uni-j-uni)                       |                      [민동명](https://github.com/zmarzmar)                      |                     [이윤정](https://github.com/E2YunJeong)                      |
-| <img src="https://avatars.githubusercontent.com/u/118972548?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/145469952?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/163099474?v=4" width="300" /> |
+### Backend
 
+- Java / Spring Boot
+- Spring Data JPA
 
-## 🤩 팀원들(Team Members)
-|                                                                                 |                                                                                |                                                                                 |                                                                                 |
-|:-------------------------------------------------------------------------------:|:------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------:|
-|                    [강수우](https://github.com/kangsuwoo)                       |                      [고현서](https://github.com/hyunseoko)                     |                     [금시언](https://github.com/Comeoksal)                      |                    [김나경](https://github.com/naooung)                        |
-| <img src="https://avatars.githubusercontent.com/u/72612808?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/128693161?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/172238270?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/162952415?v=4" width="300" /> |
-|                     [김채린](https://github.com/chaeelin)                       |                     [문재연](https://github.com/jaeyeonyy)                      |                     [박주용](https://github.com/pjuyong)                        |                      [사서연](https://github.com/SunSeoYeon)                    |
-| <img src="https://avatars.githubusercontent.com/u/170619611?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/71226104?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/158154226?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/174882500?v=4" width="300" /> |
-|                   [송수진](https://github.com/soojinsong)                       |                   [신채린](https://github.com/shinchaerin79)                    |                       [심서현](https://github.com/simGPT)                       |                     [윤해민](https://github.com/hamtorygoals)                    |
-| <img src="https://avatars.githubusercontent.com/u/162791828?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/166346480?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/151374157?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/154819055?v=4" width="300" /> |
-|                         [이채민](https://github.com/2cmin)                      |                       [주현준](https://github.com/bikooju)                      |
-| <img src="https://avatars.githubusercontent.com/u/124021888?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/170635800?v=4" width="300" /> |
+### Database
+
+- MySQL
+
+### Tools
+
+- IntelliJ IDEA
+- Visual Studio Code (VS Code)
+- Linux(Ubuntu)
+
+### Programming Languages
+
+Python
+C
+C++
+
+### Frontend
+
+React
+Node.js
+JavaScript
+
+### Collaboration
+
+- GitHub
+- Notion
+- Discord
+
+---
+
+## 👍🏻다짐
+
+😊아직은 모르는것도 많고 알아가야하는 부분도 많지만 차근차근 노력해보겠습니다. 감사합니다!
+
+---
+
+## 🗃️ 경험
+
+-서경대 멋쟁이사자처럼 12기 프론트엔드 아기사자
+
+-멋쟁이사자처럼 12기 중앙해커톤 참가
+
+-멋쟁이사자처럼 12기 아이디어톤참가
+
+-멋쟁이사자처럼 13기 백엔드 아기사자
