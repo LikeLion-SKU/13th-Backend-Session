@@ -8,7 +8,7 @@
 
 ### 멈추지 않고 계속해서 배우고 성장하는 BE 개발자가 되겠습니다.
 
-# 💻기술스택
+## 💻기술스택
 
 ### Backend
 
@@ -33,7 +33,7 @@
 - **Github**
 
 
-# 💻경험
+## 💻경험
 
 - **University Makeus Challenge (UMC) 6th Spring Boot(2024.03 ~ 2024.08.27)**
 - **University Makeus Challenge (UMC) 7th Spring Boot(2024.09 ~ 2024.02.21)**
