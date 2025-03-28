@@ -1,19 +1,53 @@
-## 🤩 운영진(Team Leaders)
+# 🦁 멋쟁이사자처럼 13기 백엔드 아기사자 김채린
 
-|                                       Lead                                      |                                                                                 |                                                                                  |
-|:-------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------:|
-|                    [윤희준](https://github.com/uni-j-uni)                       |                      [민동명](https://github.com/zmarzmar)                      |                     [이윤정](https://github.com/E2YunJeong)                      |
-| <img src="https://avatars.githubusercontent.com/u/118972548?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/145469952?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/163099474?v=4" width="300" /> |
+안녕하세요!  
+서경대학교 소프트웨어학과 김채린입니다.  
 
+서버 개발에 흥미를 느껴 다양한 프로젝트를 진행했고,  
+개념을 탄탄하게 다지기 위해 꾸준히 개별 학습도 병행하고 있습니다.  
+앞으로도 최선을 다해 많이 배우고 성장하겠습니다. 감사합니다!
 
-## 🤩 팀원들(Team Members)
-|                                                                                 |                                                                                |                                                                                 |                                                                                 |
-|:-------------------------------------------------------------------------------:|:------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------:|
-|                    [강수우](https://github.com/kangsuwoo)                       |                      [고현서](https://github.com/hyunseoko)                     |                     [금시언](https://github.com/Comeoksal)                      |                    [김나경](https://github.com/naooung)                        |
-| <img src="https://avatars.githubusercontent.com/u/72612808?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/128693161?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/172238270?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/162952415?v=4" width="300" /> |
-|                     [김채린](https://github.com/chaeelin)                       |                     [문재연](https://github.com/jaeyeonyy)                      |                     [박주용](https://github.com/pjuyong)                        |                      [사서연](https://github.com/SunSeoYeon)                    |
-| <img src="https://avatars.githubusercontent.com/u/170619611?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/71226104?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/158154226?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/174882500?v=4" width="300" /> |
-|                   [송수진](https://github.com/soojinsong)                       |                   [신채린](https://github.com/shinchaerin79)                    |                       [심서현](https://github.com/simGPT)                       |                     [윤해민](https://github.com/hamtorygoals)                    |
-| <img src="https://avatars.githubusercontent.com/u/162791828?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/166346480?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/151374157?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/154819055?v=4" width="300" /> |
-|                         [이채민](https://github.com/2cmin)                      |                       [주현준](https://github.com/bikooju)                      |
-| <img src="https://avatars.githubusercontent.com/u/124021888?v=4" width="300" /> | <img src="https://avatars.githubusercontent.com/u/170635800?v=4" width="300" /> |
+---
+
+## 💻 Tech Stack
+
+### Backend
+- Java / Spring Boot
+- Spring Data JPA
+- CI/CD (GitHub Actions)
+
+### Database
+- MySQL
+
+### Tools
+- IntelliJ IDEA
+
+### Cloud
+- AWS EC2
+
+### Collaboration
+- GitHub  
+- Jira  
+- Notion  
+- Discord
+
+---
+
+## 📌 경험
+
+- **2024.03 ~ 2024.11**  
+  👉 *2024 한이음 프로젝트*  
+  *"수포자 방지를 위한 게이미피케이션 기반 수학학습 앱 개발"*
+
+- **2024.05 ~ 2024.07**  
+  👉 *SW 개발자 대회 참가*
+
+- **2025.01 ~ 2025.02**  
+  👉 *교내 스터디 및 간단한 프로젝트 진행*
+
+- **2025.01 ~ 진행 중**  
+  👉 *6인 포트폴리오 프로젝트 개발 중*
+
+---
+
+🙌 꾸준히 성장하는 백엔드 개발자가 되기 위해 달리는 중입니다! 감사합니다 🙌
