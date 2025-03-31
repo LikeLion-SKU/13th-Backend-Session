@@ -15,6 +15,7 @@
     <div style="text-align: left;"> <a href=mailto:kangsuwoo@skuniv.ac.kr> <img src="https://img.shields.io/badge/Gmail-EA4335?style=plastic&logo=Gmail&logoColor=white&link=mailto:kangsuwoo@skuniv.ac.kr"> </a>
          <a href=7ro.__.06> <img src="https://img.shields.io/badge/Instagram-E4405F?style=plastic&logo=Instagram&logoColor=white&link=7ro.__.06"> </a>
           </div>  <br> 
+        연락처 : 010 - 8807 - 2152
     <div style="text-align: left;">  </div> 
     </div>
     
