@@ -1,4 +1,4 @@
-![프로필이미지](https://github.com/LikeLion-SKU/13th-Backend-Session/blob/JooHyunJun/github%20profile.png)
+![프로필이미지](file_000000000a4c51f8a7533f903d06f6bc_conversation_id=67ea87cb-a694-8001-8151-70cf907b32df&message_id=9c151d3a-68ef-443e-93dc-8277a9032ed5_11zon.png)
 
 ### **안녕하세요! Server를 공부 중인 서경대학교 전자컴퓨터공학과 주현준입니다.**
 
