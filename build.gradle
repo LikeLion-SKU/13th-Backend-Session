@@ -1,4 +1,4 @@
-plugins {
+plugins { // 환경 구성에 필요한 플러그인 설정
     id 'java'
     id 'org.springframework.boot' version '3.4.4'
     id 'io.spring.dependency-management' version '1.1.7'
@@ -7,22 +7,25 @@ plugins {
 group = 'com.likelion'
 version = '0.0.1-SNAPSHOT'
 
-java {
+java { // Java 버전 설정
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
-repositories {
+repositories { // 빌드에 필요한 의존성을 다운받을 저장소
     mavenCentral()
 }
 
-dependencies {
+dependencies {// 프로젝트에 필요한 의존성 설정
     implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    runtimeOnly 'com.mysql:mysql-connector-j'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
-tasks.named('test') {
+tasks.named('test') {// JUnit5 기반의 테스트 실행
     useJUnitPlatform()
 }
