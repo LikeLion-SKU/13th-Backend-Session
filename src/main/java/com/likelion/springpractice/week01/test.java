@@ -1,4 +1,4 @@
-package com.likelion.springpractice;
+package com.likelion.springpractice.week01;
 
 public class test {
   public static void main(String[] args) {
