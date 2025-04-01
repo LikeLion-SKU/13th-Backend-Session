@@ -1,4 +1,4 @@
-package com.likelion.conflicttest;
+package com.likelion.springpractice;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

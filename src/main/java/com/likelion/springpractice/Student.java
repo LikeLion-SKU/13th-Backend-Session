@@ -1,4 +1,4 @@
-package com.likelion.conflicttest;
+package com.likelion.springpractice;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

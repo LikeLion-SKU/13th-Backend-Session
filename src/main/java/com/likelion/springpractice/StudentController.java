@@ -1,4 +1,4 @@
-package com.likelion.conflicttest;
+package com.likelion.springpractice;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;

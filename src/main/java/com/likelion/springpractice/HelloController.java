@@ -1,4 +1,4 @@
-package com.likelion.conflicttest;
+package com.likelion.springpractice;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class HelloController {
 
-    @GetMapping("/hello")
-    public String helloWorld() {
-        return "Hello World!";
-    }
+  @GetMapping("/hello")
+  public String helloWorld() {
+    return "Hello World!";
+  }
 }
