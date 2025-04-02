@@ -1,4 +1,4 @@
-package com.likelion.springpractice;
+package com.likelion.springpractice.week02;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,6 +15,8 @@ public class Student {
   private Long id;
   private String name;
   private Long age;
+  private String department;
+  private String student_num;
 
   public Long getId() {
     return id;
@@ -26,5 +28,13 @@ public class Student {
 
   public Long getAge() {
     return age;
+  }
+
+  public String getDepartment() {
+    return department;
+  }
+
+  public String getStudent_num() {
+    return student_num;
   }
 }
