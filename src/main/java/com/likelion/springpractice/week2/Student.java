@@ -1,5 +1,6 @@
 package com.likelion.springpractice.week2;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,8 +19,10 @@ public class Student {
 
   private Long age;
 
+  @Column(name = "department")
   private String department; //학과
 
+  @Column(name = "studentNum")
   private Long studentNum; //학번
 
   public String getDepartment() {
