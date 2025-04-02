@@ -1,4 +1,4 @@
-###✅API란?
+### ✅API란?
 
 - API는 **Application Programming Interface**의 약자로,  
   프로그램끼리 **데이터를 주고받기 위한 약속(인터페이스)**입니다.
@@ -47,14 +47,21 @@
 
 ---
 
--.gradle: gradle 버전 별 엔진 및 설정 파일
+### 설명!
+
+-gradle: gradle 버전 별 엔진 및 설정 파일
+
 -gradle/wrapper:  Gradle을 설치하지 않아도 Gradle task를 실행할 수 있게
+
 -build.gradle: 의존성, 플러그인 설정 등 빌드에 대한 모든 기능 정의
+
 -gradlew&gradlew.bat: Unix & Windows용 실행 스크립트
+
 -settings.gradle:프로젝트 설정 파일
+
 ---
 
-###✅ Bean이란?
+### ✅ Bean이란?
 
 - **Bean**은 Spring Container가 관리하는 **객체(인스턴스)**를 의미합니다.
 - 개발자가 `new` 키워드로 직접 객체를 만들지 않아도,  
