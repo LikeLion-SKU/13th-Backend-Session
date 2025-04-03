@@ -8,6 +8,7 @@ public class ConflicttestApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ConflicttestApplication.class, args);
+
 	}
 
 }
