@@ -1,4 +1,4 @@
-package com.likelion.springpractice.week2;
+package com.likelion.springpractice.WEEK02;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
