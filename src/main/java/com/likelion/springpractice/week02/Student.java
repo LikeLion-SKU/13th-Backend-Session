@@ -16,6 +16,8 @@ public class Student {
   private Long id;
   private String name;
   private Long age;
+  private String department;
+  private String studentNum;
 
   public Long getId() {
     return id;
@@ -28,4 +30,9 @@ public class Student {
   public long getAge() {
     return age;
   }
+
+  public String getDepartment() {    return department;  }
+
+  public String getStudentNum(){return studentNum;}
+
 }
