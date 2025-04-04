@@ -1,13 +1,13 @@
-package com.likelion.conflicttest;
+package com.likelion.springpractice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ConflicttestApplication {
+public class springpractice {
 
     public static void main(String[] args) {
-        SpringApplication.run(ConflicttestApplication.class, args);
+        SpringApplication.run(springpractice.class, args);
     }
 
 }
