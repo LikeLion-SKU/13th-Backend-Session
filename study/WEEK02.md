@@ -52,13 +52,13 @@ Gradle은 스프링부트 프로젝트 **빌드 도구**(**빌드**란 코드 �
 
 ### ✅Gradle 폴더 및 파일의 역할
 
-- build.gradle : ⭐빌드 설정 파일⭐(라이브러리, 플러그인, Java 버전 등)
-- setting.gradle : 프로젝트 이름 설정, 다중 모듈 관리
-- gradlew : Gradle Wrapper 스크립트 (Linux, Mac 용 Gradle 명령 실행)
-- gradlew.bat : Gradle Wrapper 스크립트 (Windows 용 Gradle 명령 실행)
-- gradle/ : Gradle Wrapper 실행을 위한 설정 파일 저장 디렉터리
-- build/ : 빌드가 끝난 결과물 생성 디렉터리
-- .gradle/ : 빌드 캐시 저장소(Gradle이 빌드 속도 높이려고 내부적으로 사용하는 디렉터리)
+- **build.gradle** : ⭐빌드 설정 파일⭐(라이브러리, 플러그인, Java 버전 등)
+- **setting.gradle** : 프로젝트 이름 설정, 다중 모듈 관리
+- **gradlew** : Gradle Wrapper 스크립트 (Linux, Mac 용 Gradle 명령 실행)
+- **gradlew.bat** : Gradle Wrapper 스크립트 (Windows 용 Gradle 명령 실행)
+- **gradle/** : Gradle Wrapper 실행을 위한 설정 파일 저장 디렉터리
+- **build/** : 빌드가 끝난 결과물 생성 디렉터리
+- **.gradle/** : 빌드 캐시 저장소(Gradle이 빌드 속도 높이려고 내부적으로 사용하는 디렉터리)
 
 ## ☑️Gradle 정리
 
@@ -80,7 +80,8 @@ Spring에서는 개발자 대신 객체를 생성, 관리하고 필요한 곳에
 
 **Bean**이 필요한 이유는 단순히 객체 생성이 목적이 아님.
 작은 프로그램에서는 new를 통한 생성을 해도 되지만, 규모가 커지면 심각한 문제 초래.
-⚠️심각한 문제들
+
+- ⚠️심각한 문제들
 
 1. 누가 이 객체를 만드는가?
 2. 몇 번 이 객체를 만드는가?
