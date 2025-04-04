@@ -1,13 +1,13 @@
-package com.likelion.conflicttest;
+package com.likelion.springpractice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ConflicttestApplicationTests {
+class springpracticeApplicationTests {
 
-    @Test
-    void contextLoads() {
-    }
+  @Test
+  void contextLoads() {
+  }
 
 }

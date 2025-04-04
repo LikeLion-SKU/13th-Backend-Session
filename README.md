@@ -5,5 +5,7 @@
 
 ---
 
->*Email* : 2023216057@skuniv.ac.kr
+> *Email* : 2023216057@skuniv.ac.kr
+>
 *GitHub* : [simGPT](https://github.com/simGPT)
+

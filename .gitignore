@@ -25,6 +25,8 @@ bin/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
+# application.properties가 노출되면 중요 정보가 노출될 수 있기에 절대 github에 안올리려고 일단 여기에 경로 추가함
+src/main/resources/application.properties
 
 ### NetBeans ###
 /nbproject/private/
