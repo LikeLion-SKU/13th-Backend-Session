@@ -1,4 +1,4 @@
-package com.example.demo.week2.helloworld;
+package come.likelion.springpractice.helloworld;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
