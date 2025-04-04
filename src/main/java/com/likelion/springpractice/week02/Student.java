@@ -31,8 +31,12 @@ public class Student {
     return age;
   }
 
-  public String getDepartment() {    return department;  }
+  public String getDepartment() {
+    return department;
+  }
 
-  public String getStudentNum(){return studentNum;}
+  public String getStudentNum(){
+    return studentNum;
+  }
 
 }
