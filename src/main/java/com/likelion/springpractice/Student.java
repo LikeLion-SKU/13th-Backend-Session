@@ -8,7 +8,6 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "students")
-
 public class Student {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,7 +15,7 @@ public class Student {
   private String name;
   private Long age;
   private String department;
-  private Integer studentnumber;
+  private String studentNum;
 
   public Long getId() {
     return id;
@@ -25,12 +24,19 @@ public class Student {
   public String getName() {
     return name;
   }
+
   public Long getAge() {
     return age;
   }
+
   public String getDepartment() {
-    return department;}
-  public Integer getStudentnumber() {return studentnumber;
+    return department;
+  }
+
+  public String getStudentNum() {
+    return studentNum;
   }
 
 }
+
+
