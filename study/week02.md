@@ -2,16 +2,18 @@
 
 #### [프로그래밍 명명 규칙]  
 **camelCase**
-- 변수, 메소드 이름에 사용
-  PascalCase
-- 클래스, 타입 등의 이름에 사용
-  SNAKE_CASE
+- 변수, 메소드 이름에 사용  
+
+**PascalCase**
+- 클래스, 타입 등의 이름에 사용  
+
+**SNAKE_CASE**
 - 모든 단어의 문자가 소문자 or 대문자
 - 상수명에 사용
 ---
 ### ✅ API
 - **Application Programming Interface**의 약자
-- 서로 다른 애플리케이션들이 소통할 수 있게 해주는 **중간 인터페이스**RESTful API
+- 서로 다른 애플리케이션들이 소통할 수 있게 해주는 **중간 인터페이스**
 
 ### ✅ RESTful API
 - REST 아키텍처 스타일을 따르는 웹 API
@@ -30,10 +32,10 @@
 - Java 프로젝트의 컴파일, 테스트, 배포 등을 자동으로 수행
 
 ### ✅ Gradle 주요 파일 구조
-.gradle - gradle 버전 별 엔진 및 설정 파일
-gradle/wrapper - Gradle을 설치하지 않아도 Gradle task를 실행할 수 있게 함
-build.gradle - 의존성, 플러그인 설정 등 빌드에 대한 모든 기능 정의
-gradlew & gradlew.bat - Unix&Windows용 실행 스크립트
+.gradle - gradle 버전 별 엔진 및 설정 파일  
+gradle/wrapper - Gradle을 설치하지 않아도 Gradle task를 실행할 수 있게 함  
+build.gradle - 의존성, 플러그인 설정 등 빌드에 대한 모든 기능 정의  
+gradlew & gradlew.bat - Unix&Windows용 실행 스크립트  
 settings.gradle - 프로젝트 설정 파일
 ---
 ### ✅ Bean
@@ -56,7 +58,7 @@ settings.gradle - 프로젝트 설정 파일
 - 외부 라이브러리는 자동 등록 불가
 
 #### <Bean 사용 방법>
-Spring Container에 등록된 Bean은 `@Autowired`를 사용하여 자동으로 객체에 주입됨
+Spring Container에 등록된 Bean은 `@Autowired`를 사용하여 자동으로 객체에 주입됨  
 사용자가 `new` 키워드를 사용할 필요 없이 Spring이 알아서 필요한 객체를 넣어줌
 ---
 #### [MySQL]  
