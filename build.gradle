@@ -24,6 +24,10 @@ dependencies {// 프로젝트에 필요한 의존성 설정
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     runtimeOnly 'com.mysql:mysql-connector-j'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // Swagger openapi-ui
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.1'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-api:2.8.1'
 }
 
 tasks.named('test') {// JUnit5 기반의 테스트 실행
