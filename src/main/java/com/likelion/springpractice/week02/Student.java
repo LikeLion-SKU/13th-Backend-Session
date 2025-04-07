@@ -1,4 +1,4 @@
-package com.likelion.springpractice.WEEK02;
+package com.likelion.springpractice.week02;
 
 import jakarta.persistence.*;
 
