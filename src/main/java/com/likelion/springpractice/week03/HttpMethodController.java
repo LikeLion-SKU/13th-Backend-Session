@@ -22,13 +22,13 @@ public class HttpMethodController {
     return "This is read test";
   }
 
-  @PatchMapping("udpate-test")
-  public String udpateTest() {
+  @PatchMapping("update-test")
+  public String updatePatchTest() {
     return "This is patch udpate test";
   }
 
   @PutMapping("update-test")
-  public String updateTest() {
+  public String updatePutTest() {
     return "This is put update test";
   }
 
