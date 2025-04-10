@@ -38,12 +38,12 @@ public class MyController {
 
   @PatchMapping("patch-students") // 학생 부분 수정
   public String patchStudnet() {
-    return "update students";
+    return "update student";
   }
 
   @DeleteMapping("delete-student") // 학생 삭제
   public String deleteStudent() {
-    return "delete students";
+    return "delete student";
   }
 
 }
