@@ -23,7 +23,7 @@ public class HttpMethodController {
 
   @PatchMapping("update-test")
   public String updatePatchTest(){
-    return "This is update path test";
+    return "This is update patch test";
   }
 
   @PutMapping("update-test")
