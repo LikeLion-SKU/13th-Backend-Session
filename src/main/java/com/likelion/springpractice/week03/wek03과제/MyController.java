@@ -43,7 +43,7 @@ public class MyController {
 
   @DeleteMapping("delete-student") // 학생 삭제
   public String deleteStudent() {
-    return "delete student";
+    return "delete students";
   }
 
 }
