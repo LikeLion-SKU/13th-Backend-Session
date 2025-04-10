@@ -50,6 +50,16 @@ public class ProjectController {
 Long id - URL에서 들어오는 id값을 메서드 안에서 id라는 변수로 쓰기 위한 매개변수
 
 ex. GET /api/projects/1
-URL이 /projects/1 로 들어오면 5 라는 값을 Long id 에 바인딩해서 메서드 안에서 id 를 쓸 수 있게 해준다.
-cf. URL 경로에 있는 변수 이름 {id}와 메서드 매개면수 이름 id는 같아야 한다. 다를 경우에는 명시해준다.
+URL이 /projects/1 로 들어오면 1이라는 값을 Long id 에 바인딩해서 메서드 안에서 id 를 쓸 수 있게 해준다.
+
+cf.
+URL 경로에 있는 변수 이름 {id}와 메서드 매개면수 이름 id는 같아야 한다. 다를 경우에는 명시해준다.
+
+cf.
+id가 int가 아닌 이유
+long(64 bit)이 int(32 bit)보다 더 많은 값을 저장할 수 있다.
+
+long 대신 Long을 쓰는 이유
+long은 primitive type으로 값이 없을 경우 0으로 초기화된다.
+Long은 wrapper type으로 값이 없을 경우 null로 초기화된다. 따라서 값이 0이라면, id가 0으로 저장됐음을 알 수 있다.
 */
