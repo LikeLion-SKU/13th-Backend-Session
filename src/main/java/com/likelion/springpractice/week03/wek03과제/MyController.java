@@ -38,7 +38,7 @@ public class MyController {
 
   @PatchMapping("patch-students") // 학생 부분 수정
   public String patchStudnet() {
-    return "update student";
+    return "update students";
   }
 
   @DeleteMapping("delete-student") // 학생 삭제
