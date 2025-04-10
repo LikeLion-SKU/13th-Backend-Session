@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api") // API 엔드포인트 설정
 public class MyController {
 
-  private final StudentRepository studentsRepository;
+  private final StudentRepository studentsRepository; // 2주차 DB사용 목적
 
   public MyController(StudentRepository studentsRepository) {
     this.studentsRepository = studentsRepository;
