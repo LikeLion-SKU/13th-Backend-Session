@@ -217,8 +217,7 @@ public class SearchController {
     }
 }
 ```
-
-- /search?keyword=spring 요청 시 "Search Keyword: spring" 반환
+💡/search?keyword=spring 요청 시 "Search Keyword: spring" 반환
 
 6. **@RequestBody**
 
@@ -259,7 +258,7 @@ public class SimpleController {
 }
 ```
 
-- 브라우저에 Plain text response가 나옴.
+💡브라우저에 Plain text response가 나옴.
 
 8. **@Entity**
 
