@@ -39,13 +39,13 @@ public class SwaggerConfig {
     }
 
     @Bean
-    public GroupedOpenApi customGroupedOpenApi() {
-        return GroupedOpenApi.builder().group("api").pathsToMatch("/**").build();
+    public GroupedOpenApi customGroupedOpenApiTest() {
+        return GroupedOpenApi.builder().group("api-test").pathsToMatch("/api/*-test").build();
     }
 
     @Bean
-    public GroupedOpenApi customGroupedOpenApi2() {
-        return GroupedOpenApi.builder().group("update").pathsToMatch("/**/updat*").build();
+    public GroupedOpenApi customGroupedOpenApiUsers() {
+        return GroupedOpenApi.builder().group("api-my").pathsToMatch("/api/users/**").build();
     }
 
 }
