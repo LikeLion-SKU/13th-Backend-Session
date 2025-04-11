@@ -1,4 +1,5 @@
-![프로필이미지](src/main/resources/static/images/github%20profile.png)
+
+![기본프로필_코딩](https://github.com/user-attachments/assets/67368d6e-3fe9-45c3-92a8-8b3f556ee9e9)
 
 ### **안녕하세요! Server를 공부 중인 서경대학교 전자컴퓨터공학과 주현준입니다.**
 
