@@ -95,12 +95,14 @@ public class Person {
 ## nullable=false, @NotNull, @NonNull의 차이는?
 
 **1. nullable=false**
+
 컬럼을 NOT NULL로 설정하는 것. 엔티티와 매핑되는 테이블 생성을 위한 DDL 쿼리(create table)가 나갈 때, 컬럼에 NOT NULL 제약조건(constraints)를 걸어준다.
 
 **이것은 데이터베이스 테이블 컬럼에 NULL 값이 삽입되는 것을 막는 것이어서, 서비스 로직에서 엔티티에 NULL이 들어오는 것은 아무런 에러를 발생시키지 않는다.**
 
 
 **2. @NotNull**
+
 Spring Boot Validation 라이브러리(build.gradle에 추가해서 사용)를 써서 유효성 검증을 수행하는 방법.
 
 **런타임 시 확인을 수행하여 엔티티에 NULL이 들어오는 것을 막는다.**
@@ -111,6 +113,7 @@ NULL이 들어오면 RuntimeException인 IllegalArgumentException을 던진다.
 
 
 **3. Lombok의 @NonNull**
+
 같은 이름을 가진 애노테이션을 Spring에서도 제공하는데 보통 @NonNull을 이야기하면 Lombok 라이브러리가 제공하는 @NonNull을 말하는 것 같다. 이 애노테이션을 달면 NULL 체크 로직을 자동으로 생성하여 런타임 체크를 수행한다.
 
 NULL이 들어오면 RuntimeException인 NullPointerException을 던진다.
