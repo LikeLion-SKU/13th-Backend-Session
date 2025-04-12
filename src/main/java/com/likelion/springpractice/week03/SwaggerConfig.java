@@ -53,8 +53,35 @@ public class SwaggerConfig {
   @Bean
   public GroupedOpenApi customGroupedOpenApi() {
     return GroupedOpenApi.builder()
-        .group("api")           // 그룹 이름
+        .group("api")           // 그룹 이름 -> 단순 이름만 지정
+        // *:api로 시작하는 바로 아래 단계만, **: api로 시작하는 모든 것들
         .pathsToMatch("/**")    // 전체 경로 포함
+        .build();
+  }
+
+  // 공지 관련 API를 그룹화하여 확인
+  @Bean
+  public GroupedOpenApi customGroupedOpenApi2() {
+    return GroupedOpenApi.builder()
+        .group("api-notice")
+        .pathsToMatch("/api/notices/**")
+        .build();
+  }
+
+  // 회원 관련 API를 그룹화하여 확인
+  @Bean
+  public GroupedOpenApi customGroupedOpenApi3() {
+    return GroupedOpenApi.builder()
+        .group("api-members")
+        .pathsToMatch("/api/members/**")
+        .build();
+  }
+
+  @Bean
+  public GroupedOpenApi customGroupedOpenApi4() {
+    return GroupedOpenApi.builder()
+        .group("api-test")
+        .pathsToMatch("/api/update-test/**")
         .build();
   }
 }
