@@ -11,28 +11,29 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 public class HttpMethodController {
+
   @PostMapping("/create-test")
-  public String createTest(){
+  public String createTest() {
     return "This is create test";
   }
-
+  
   @GetMapping("read-test")
-  public String readTest(){
+  public String readTest() {
     return "This is read test";
   }
 
   @PatchMapping("update-test")
-  public String updatePatchTest(){
+  public String updatePatchTest() {
     return "This is update patch test";
   }
 
   @PutMapping("update-test")
-  public String updatePutTest(){
+  public String updatePutTest() {
     return "This is update put test";
   }
 
   @DeleteMapping("delete-test")
-  public String deleteTest(){
+  public String deleteTest() {
     return "This is delete test";
   }
 }

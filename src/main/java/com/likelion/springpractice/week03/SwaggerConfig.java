@@ -13,11 +13,12 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class SwaggerConfig {
+
   @Value("${server.servlet.context-path:}")
   private String contextPath;
-
+  
   @Bean
-  public OpenAPI customOpenAPI(){
+  public OpenAPI customOpenAPI() {
     Server loacalServer = new Server();
     loacalServer.setUrl(contextPath);
     loacalServer.setDescription("Local Server");
@@ -36,8 +37,9 @@ public class SwaggerConfig {
         .info(new Info().title("Swagger API 명세서").version("1.0").description("My Swagger"));
 
   }
+
   @Bean
-  public GroupedOpenApi customGroupedOpenApi(){
+  public GroupedOpenApi customGroupedOpenApi() {
     return GroupedOpenApi.builder().group("api").pathsToMatch("/**").build();
   }
 
