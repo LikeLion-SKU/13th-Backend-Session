@@ -19,22 +19,22 @@ public class MyController {
     }
 
     @GetMapping("users/{userId}")
-    public String getUsers(@PathVariable long userId) {
+    public String getUsers(@PathVariable Long userId) {
         return "This is get user information by " + userId;
     }
 
     @PatchMapping("users/{userId}")
-    public String updatePatchUser(@PathVariable long userId) {
+    public String updatePatchUser(@PathVariable Long userId) {
         return "This is update Patch user by " + userId;
     }
 
     @PutMapping("users/{userId}")
-    public String updatePutUser(@PathVariable long userId) {
+    public String updatePutUser(@PathVariable Long userId) {
         return "This is update Put user by " + userId;
     }
 
     @DeleteMapping("users/{userId}")
-    public String deleteUser(@PathVariable long userId) {
+    public String deleteUser(@PathVariable Long userId) {
         return "This is delete user by " + userId;
     }
 }
