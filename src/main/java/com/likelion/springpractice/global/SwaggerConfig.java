@@ -1,4 +1,4 @@
-package com.likelion.springpractice.week03;
+package com.likelion.springpractice.global;
 
 
 import io.swagger.v3.oas.models.Components;
@@ -46,6 +46,11 @@ public class SwaggerConfig {
     @Bean
     public GroupedOpenApi customGroupedOpenApiUsers() {
         return GroupedOpenApi.builder().group("api-my").pathsToMatch("/api/users/**").build();
+    }
+
+    @Bean
+    public GroupedOpenApi customGroupedOpenApiPosts() {
+        return GroupedOpenApi.builder().group("api-posts").pathsToMatch("/api/v1/posts/**").build();
     }
 
 }
