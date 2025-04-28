@@ -1,4 +1,4 @@
-package com.likelion.springpractice.week03;
+package com.likelion.springpractice.global;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.info.Info;
@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SwaggerConfig {
 
-  @Value("${server.servlet.context-path:")
+  @Value("${server.servlet.context-path:}")
   private String contextPath;
 
   @Bean
@@ -40,5 +40,13 @@ public class SwaggerConfig {
   @Bean
   public GroupedOpenApi customGroupedOpenApi() {
     return GroupedOpenApi.builder().group("api").pathsToMatch("/**").build();
+  }
+
+  @Bean
+  public GroupedOpenApi customGroupedOpenApitwo() {
+    return GroupedOpenApi.builder()
+        .group("api-project")
+        .pathsToMatch("/api/projects/**")
+        .build();
   }
 }
