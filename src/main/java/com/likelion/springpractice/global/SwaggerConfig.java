@@ -1,4 +1,4 @@
-package com.likelion.springpractice.week03;
+package com.likelion.springpractice.global;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -16,7 +16,7 @@ public class SwaggerConfig {
 
   @Value("${server.servlet.context-path:}")
   private String contextPath;
-  
+
   @Bean
   public OpenAPI customOpenAPI() {
     Server loacalServer = new Server();

@@ -22,17 +22,25 @@ repositories {
 }
 
 dependencies {
+
+    // spring web
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.cloud:spring-cloud-function-web'
+    // Spring Data JPA
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     // Swagger openapi-ui
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.1'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-api:2.8.1'
+    // Lombok
+    implementation 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     runtimeOnly 'com.mysql:mysql-connector-j'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
 }
 
 dependencyManagement {
