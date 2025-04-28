@@ -17,22 +17,22 @@ public class HttpMethodController {
     return "This is create test";
   }
 
-  @GetMapping("read-test")
+  @GetMapping("/read-test")
   public String readTest() {
     return "This is read test";
   }
 
-  @PatchMapping("update-test")
+  @PatchMapping("/update-test")
   public String updatePatchTest() {
     return "This is update patch test";
   }
 
-  @PutMapping("update-test")
+  @PutMapping("/update-test")
   public String updatePutTest() {
     return "This is update put test";
   }
 
-  @DeleteMapping("delete-test")
+  @DeleteMapping("/delete-test")
   public String deleteTest() {
     return "This is delete test";
   }
