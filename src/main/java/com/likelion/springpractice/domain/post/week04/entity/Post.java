@@ -29,4 +29,7 @@ public class Post extends BaseTimeEntity {
 
   @Column(nullable = false)
   private String content;
+
+  @Column(nullable = true)
+  private String writer;
 }
