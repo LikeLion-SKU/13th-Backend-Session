@@ -7,6 +7,7 @@ import com.likelion.springpractice.domain.post.week05.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,8 +18,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -43,20 +42,23 @@ public class PostController {
 
     @Operation(summary = "게시글 단일 조회", description = "게시판 페이지에서 특정 게시글에 접근할 때 요청되는 API")
     @GetMapping("/posts/{id}")
-    public ResponseEntity<PostResponse> getPostById(@Parameter(description = "특정 게시글 ID") @PathVariable Long id) {
+    public ResponseEntity<PostResponse> getPostById(
+        @Parameter(description = "특정 게시글 ID") @PathVariable Long id) {
         return ResponseEntity.ok(postService.getPostById(id));
     }
 
     @Operation(summary = "게시글 수정", description = "게시판 페이지에서 게시글 수정 후 수정 완료 버튼을 눌렀을 때 요청되는 API")
     @PutMapping("/posts/{id}")
-    public ResponseEntity<PostResponse> updatePost(@Parameter(description = "특정 게시글 ID") @PathVariable Long id,
-                                                   @Parameter(description = "게시글 수정 내용") @RequestBody UpdatePostRequest updatePostRequest) {
+    public ResponseEntity<PostResponse> updatePost(
+        @Parameter(description = "특정 게시글 ID") @PathVariable Long id,
+        @Parameter(description = "게시글 수정 내용") @RequestBody UpdatePostRequest updatePostRequest) {
         return ResponseEntity.ok(postService.updatePost(id, updatePostRequest));
     }
 
     @Operation(summary = "게시글 삭제", description = "게시판 페이지에서 게시글 삭제 버튼을 눌렀을 때 요청되는 API")
     @DeleteMapping("/posts/{id}")
-    public ResponseEntity<Boolean> deletePost(@Parameter(description = "특정 게시글 ID") @PathVariable Long id) {
+    public ResponseEntity<Boolean> deletePost(
+        @Parameter(description = "특정 게시글 ID") @PathVariable Long id) {
         return ResponseEntity.ok(postService.deletePost(id));
     }
 
@@ -64,5 +66,11 @@ public class PostController {
     @GetMapping("/posts/popular")
     public ResponseEntity<List<PostResponse>> getAllPostsSortedByViews() {
         return ResponseEntity.ok(postService.getAllPostsSortedByViews());
+    }
+
+    @Operation(summary = "게시글 최신순 조회", description = "게시판 페이지에서 최신순 버튼 눌렀을 때 요청되는 API")
+    @GetMapping("/posts/latest")
+    public ResponseEntity<List<PostResponse>> getAllPostsSortedByCreatedAtDesc() {
+        return ResponseEntity.ok(postService.getAllPostsSortedByCreatedAt());
     }
 }
