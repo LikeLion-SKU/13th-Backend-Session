@@ -11,4 +11,7 @@ public class CreatePostRequest {
 
     @Schema(description = "게시글 내용", example = "내용내용내용내용")
     private String content;
+
+    @Schema(description = "조회수", example = "0")
+    private Long views;
 }

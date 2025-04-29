@@ -22,6 +22,7 @@ public class PostService {
         Post post = Post.builder()
                 .title(createPostRequest.getTitle())
                 .content(createPostRequest.getContent())
+                .views(createPostRequest.getViews())
                 .build();
         postRepository.save(post);
 
@@ -36,7 +37,14 @@ public class PostService {
     public PostResponse getPostById(Long id) {
         Post post = postRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("게시글을 찾을 수 없습니다."));
-        return toPostResponse(post);
+        Post viewdPost = Post.builder()
+                .id(post.getId())
+                .title(post.getTitle())
+                .content(post.getContent())
+                .views(post.getViews()+1)
+                .build();
+        postRepository.save(viewdPost);
+        return toPostResponse(viewdPost);
     }
     //게시글 수정
     @Transactional
@@ -48,6 +56,7 @@ public class PostService {
                 .id(post.getId())
                 .title(updatePostRequest.getTitle())
                 .content(updatePostRequest.getContent())
+                .views(post.getViews())
                 .build();
         postRepository.save(updatedPost);
 
@@ -61,9 +70,15 @@ public class PostService {
         postRepository.deleteById(id);
         return true;
     }
+
+    //게시글 조회순 조회
+    public List<PostResponse> getAllPostsSortedByViews(){
+        List<Post> postList = postRepository.findAll();
+        return postList.stream().map(this::toPostResponse).toList();
+    }
     //Entity를 DTO로 변환해주는 메소드
     private PostResponse toPostResponse(Post post) {
         return PostResponse.builder().postId(post.getId())
-                .title(post.getTitle()).content(post.getContent()).build();
+                .title(post.getTitle()).content(post.getContent()).views(post.getViews()).build();
     }
 }

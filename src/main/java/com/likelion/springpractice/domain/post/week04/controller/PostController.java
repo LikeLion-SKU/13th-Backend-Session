@@ -59,4 +59,10 @@ public class PostController {
     public ResponseEntity<Boolean> deletePost(@Parameter(description = "특정 게시글 ID") @PathVariable Long id) {
         return ResponseEntity.ok(postService.deletePost(id));
     }
+
+    @Operation(summary = "게시글 조회 많은 순 조회", description = "게시판 페이지에서 조회 많은 순 버튼 눌렀을 때 요청되는 API")
+    @GetMapping("/posts/popular")
+    public ResponseEntity<List<PostResponse>> getAllPostsSortedByViews() {
+        return ResponseEntity.ok(postService.getAllPostsSortedByViews());
+    }
 }
