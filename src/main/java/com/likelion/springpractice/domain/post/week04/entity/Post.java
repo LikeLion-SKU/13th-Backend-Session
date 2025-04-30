@@ -31,6 +31,4 @@ public class Post extends BaseTimeEntity {
   @Column(nullable = false)
   private String content;  //내용
 
-  @Column(nullable = true)
-  private String writer; //저자
 }
