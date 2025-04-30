@@ -44,4 +44,14 @@ public class SwaggerConfig {
   public GroupedOpenApi customGroupedOpenApi() {
     return GroupedOpenApi.builder().group("api").pathsToMatch("/**").build(); //이 그룹의 이름 api!!
   }
+
+  @Bean
+  public GroupedOpenApi customGroupedOpenApitwo() {
+    return GroupedOpenApi.builder().group("api-todo").pathsToMatch("api/todo/**").build(); //이 그룹의 이름 api!!
+    //**은, api로 시작하는 뒤의 모든것들에 대해서 불러오겠다!!
+    //*는, api로 시작하는 뒤에 하나만 불러오겠다!!
+    //이러면, update와 관련된 하위에 대해서만 불러온다!!
+  }
+
+
 }
