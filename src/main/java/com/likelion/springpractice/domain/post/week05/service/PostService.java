@@ -30,24 +30,27 @@ public class PostService {
     List<Post> postList = postRepository.findAll();
     return postList.stream().map(this::toPostResponse).toList();
   }
+
   //게시글 단일 조회
   public PostResponse getPostById(Long id) {
     Post post = postRepository.findById(id)
         .orElseThrow(()->new IllegalArgumentException("게시글을 찾을 수 없습니다."));
+    post.viewCountUp();
     return toPostResponse(post);
   }
+
   //게시글 수정
   @Transactional
   public PostResponse updatePost(Long id, UpdatePostRequest updatePostRequest) {
     Post post = postRepository.findById(id)
         .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다."));
-    Post updatePost = Post.builder()
-        .id(post.getId()) //중요! 바꾸지 않을 값은 기존 값으로 build 해줘야 함
-        .title(updatePostRequest.getContent())
-        .build();
-    postRepository.save(updatePost);
-    return toPostResponse(updatePost);
+    //내용 수정
+    post.update(updatePostRequest.getTitle(), updatePostRequest.getContent());
+
+    return toPostResponse(post); // post는 JPA의 dirty checking으로 자동 저장됨
   }
+
+
   //게시물 삭제
   @Transactional
   public Boolean deletePost(Long id) {
@@ -56,10 +59,25 @@ public class PostService {
     postRepository.deleteById(id);
     return true;
   }
+
   //Entity를 DTO로 변환해주는 메소드
   private PostResponse toPostResponse(Post post) {
     return PostResponse.builder().postId(post.getId()).title(post.getTitle())
         .content(post.getContent()).build();
+  }
+
+  //게시글 최신순 조회
+  public List<PostResponse> getPostsOrderByCreatedAtDesc(){
+    return postRepository.findAllByOrderByCreatedAtDesc().stream()
+        .map(this::toPostResponse)
+        .toList();
+  }
+
+  //게시글 조회수순 조회
+  public List<PostResponse> getPostsOrderByViewCountDesc(){
+    return postRepository.findAllByOrderByViewCountDesc().stream()
+        .map(this::toPostResponse)
+        .toList();
   }
 }
 

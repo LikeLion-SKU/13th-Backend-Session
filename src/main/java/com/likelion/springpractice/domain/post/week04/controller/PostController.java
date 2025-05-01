@@ -64,4 +64,18 @@ public class PostController {
   public ResponseEntity<Boolean> deletePost(@Parameter(description = "특정 게시글 ID") @PathVariable Long id){
     return ResponseEntity.ok(postService.deletePost(id));
   }
+
+  @Operation(summary = "게시글 최신순 조회",
+    description = "게시판에 올려진 게시글을 최신순으로 조회하는 API")
+  @GetMapping("/posts/latest")
+  public ResponseEntity<List<PostResponse>> getPostsByLatest(){
+    return ResponseEntity.ok(postService.getPostsOrderByCreatedAtDesc());
+  }
+
+  @Operation(summary = "게시글 조회수순 조회",
+      description = "게시판에 올려진 게시글을 조회 많은 순으로 조회하는 API")
+  @GetMapping("/posts/popular")
+  public ResponseEntity<List<PostResponse>> getPostsByViewCount(){
+    return ResponseEntity.ok(postService.getPostsOrderByViewCountDesc());
+  }
 }
