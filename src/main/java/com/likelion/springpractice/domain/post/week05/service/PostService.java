@@ -88,4 +88,5 @@ public class PostService {
         return PostResponse.builder().postId(post.getId())
             .title(post.getTitle()).content(post.getContent()).views(post.getViews()).build();
     }
+
 }
