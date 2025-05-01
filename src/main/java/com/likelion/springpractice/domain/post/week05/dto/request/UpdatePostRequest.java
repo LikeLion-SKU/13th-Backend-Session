@@ -15,4 +15,5 @@ public class UpdatePostRequest {
 
     @Schema(description = "조회수", example = "1")
     private Long views;
+
 }
