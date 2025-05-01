@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class SwaggerConfig {
-  @Value("${server.servlet.context-path:")
+  @Value("${server.servlet.context.path:}")
   //공개되면 안 되는 키 등. 환성변수가 없을 때 콜론 뒤에 걸 쓸 거다. 안 써있으면 8080으로 알아서 맞춰줌
   private String contextPath;
 
