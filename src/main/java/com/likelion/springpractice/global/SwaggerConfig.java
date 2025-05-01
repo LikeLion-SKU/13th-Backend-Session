@@ -61,7 +61,7 @@ public class SwaggerConfig {
 
   // 공지 관련 API를 그룹화하여 확인
   @Bean
-  public GroupedOpenApi customGroupedOpenApi2() {
+  public GroupedOpenApi apiGroupedOpenApi() {
     return GroupedOpenApi.builder()
         .group("api-notices")
         .pathsToMatch("/api/notices/**")
@@ -70,7 +70,7 @@ public class SwaggerConfig {
 
   // 회원 관련 API를 그룹화하여 확인
   @Bean
-  public GroupedOpenApi customGroupedOpenApi3() {
+  public GroupedOpenApi memberGroupedOpenApi() {
     return GroupedOpenApi.builder()
         .group("api-members")
         .pathsToMatch("/api/members/**")
@@ -78,7 +78,7 @@ public class SwaggerConfig {
   }
 
   @Bean
-  public GroupedOpenApi v1PostGroupedOpenApi() {
+  public GroupedOpenApi postGroupedOpenApi() {
     return GroupedOpenApi.builder()
         .group("api-v1-posts")
         .pathsToMatch("/api/v1/posts/**")
