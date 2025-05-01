@@ -25,5 +25,20 @@ Controller<->Service<->Repository<->DB
 - 처리 과정에서 Repository의 JPA를 통해서 CRUD 작동을 유용하게 사용하여 실질 로직 처리.
 
 ➡️ Converter란?
+- DTO<->Entity 변환에 사용.
+- 실습 중 Converter 코드 예시
+```java
+//Entity를 DTO로 변환해주는 메소드
+    private PostResponse toPostResponse(Post post) {
+        return PostResponse.builder().postId(post.getId())
+            .title(post.getTitle()).content(post.getContent()).views(post.getViews()).build();
+    }
+```
+➡️ ResponseEntity
+- 개발자가 직접 결과 데이터 및 HTTP 상태 코드를 제어할 수 있는 클래스.
+```java
+import org.springframework.http.ResponseEntity;
+```
+http의 ResponseEntity를 사용하여 제어(상태 코드를 다룰 수 있음. 내 마음대로 변경X)
 
 
