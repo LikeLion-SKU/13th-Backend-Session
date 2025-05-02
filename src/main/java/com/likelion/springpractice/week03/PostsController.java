@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-public class PostController {
+public class PostsController {
   @PostMapping("/create-post")
   public String createPost() {
     return "This is create post";
