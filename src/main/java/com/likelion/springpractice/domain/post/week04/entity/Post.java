@@ -28,5 +28,5 @@ public class Post extends BaseTimeEntity {
   private String title; // 제목
 
   @Column(nullable = false)
-  private String content; // 내
+  private String content; // 내용
 }
