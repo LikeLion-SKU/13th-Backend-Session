@@ -24,10 +24,17 @@ public class Post extends BaseTimeEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-
   @Column(nullable = false)
   private String title;
 
   @Column(nullable = false)
   private String content;
+
+  @Column(nullable = false)
+  private int viewCount;   // 조회수
+
+  // == 조회수 증가 메서드 == //
+  public void increaseViewCount() {
+    this.viewCount++;
+  }
 }

@@ -5,6 +5,7 @@ import com.likelion.springpractice.domain.post.week05.dto.request.CreatePostRequ
 import com.likelion.springpractice.domain.post.week05.dto.request.UpdatePostRequest;
 import com.likelion.springpractice.domain.post.week05.dto.response.PostResponse;
 import com.likelion.springpractice.domain.post.week05.repository.PostRepository;
+import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -67,7 +68,43 @@ public class PostService {
   }
 
   private PostResponse toPostResponse(Post post) {
-    return PostResponse.builder().postId(post.getId()).title(post.getTitle())
-        .content(post.getContent()).build();
+    return PostResponse
+        .builder()
+        .postId(post.getId())
+        .title(post.getTitle())
+        .content(post.getContent())
+        .createdAt(post.getCreatedAt())
+        .viewCount(post.getViewCount())
+        .build();
+  }
+
+  // 게시글 조회 수 증가
+  @Transactional
+  public PostResponse getPostAndIncreaseViewCount(Long id) {
+    Post post = postRepository.findById(id)
+        .orElseThrow(() -> new EntityNotFoundException("게시글이 존재하지 않습니다."));
+
+    post.increaseViewCount();
+    postRepository.save(post);
+
+    return toPostResponse(post);
+  }
+
+  // 게시글 최신 순 조회
+  public List<PostResponse> getPostsSortedByLatest () {
+    List<Post> posts  = postRepository.findAllByOrderByCreatedAtDesc();
+    return posts
+        .stream()
+        .map(this::toPostResponse)
+        .toList();
+  }
+
+  // 게시글 조회 많은 순 조회
+  public List<PostResponse> getPostsSortedByViewCount() {
+    List<Post> posts  = postRepository.findAllByOrderByViewCountDesc();
+    return posts
+        .stream()
+        .map(this::toPostResponse)
+        .toList();
   }
 }

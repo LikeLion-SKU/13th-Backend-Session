@@ -50,6 +50,14 @@ public class PostController {
     return ResponseEntity.ok(postService.getPostById(id));
   }
 
+  @Operation(summary = "게시글 단일 조회 (조회수 증가 포함)",
+      description = "게시글 상세 페이지 조회 시 사용되며, 이때 조회수가 1 증가하는 API")
+  @GetMapping("/posts/view/{id}")
+  public ResponseEntity<PostResponse> getPostAndIncreaseViewCount(
+      @Parameter(description = "특정 게시글 ID") @PathVariable Long id) {
+    return ResponseEntity.ok(postService.getPostAndIncreaseViewCount(id));
+  }
+
   @Operation(summary = "게시글 수정",
       description = "게시판 페이지에서 게시글 수정 후 수정 완료 버튼을 눌렀을 때 요청되는 API")
   @PutMapping("/posts/{id}")
@@ -65,5 +73,19 @@ public class PostController {
   public ResponseEntity<Boolean> deletePost(
       @Parameter(description = "특정 게시글 ID") @PathVariable Long id){
     return ResponseEntity.ok(postService.deletePost(id));
+  }
+
+  @Operation(summary = "게시글 최신순 조회",
+      description = "게시글을 생성일 기준 최신순으로 정렬해서 가져오는 API")
+  @GetMapping("/posts/latest")
+  public ResponseEntity<List<PostResponse>> getPostsByLatest() {
+    return ResponseEntity.ok(postService.getPostsSortedByLatest());
+  }
+
+  @Operation(summary = "게시글 조회 많은 순으로 조회",
+      description = "게시글을 조회수가 많은 순으로 정렬해서 가져오는 API")
+  @GetMapping("/posts/popular")
+  public ResponseEntity<List<PostResponse>> getPostsByPopularity() {
+    return ResponseEntity.ok(postService.getPostsSortedByViewCount());
   }
 }

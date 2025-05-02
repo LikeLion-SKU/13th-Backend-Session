@@ -1,6 +1,7 @@
 package com.likelion.springpractice.domain.post.week05.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -17,4 +18,10 @@ public class PostResponse {
 
   @Schema(description = "게시글 내용", example = "이번주 세션도 화이팅!")
   private String content;
+
+  @Schema(description = "게시글 생성일시", example = "2025-05-02T15:00:00")
+  private LocalDateTime createdAt;
+
+  @Schema(description = "게시글 조회수", example = "1")
+  private int viewCount;
 }
