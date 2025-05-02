@@ -52,6 +52,7 @@ public class PostService {
         .id(post.getId()) // 중요! 바꾸지 않을 값은 기존 값으로 build 해줘야 함
         .title(updatePostRequest.getTitle())
         .content(updatePostRequest.getContent())
+        .views(post.getViews())
         .build();
     postRepository.save(updatePost);
     return toPostResponse(updatePost);
@@ -69,10 +70,29 @@ public class PostService {
 
   }
 
+  // 게시글 최신순으로 전체 조회
+  @Transactional(readOnly = true)
+  public List<PostResponse> getAllPostsByLatest() {
+    List<Post> postList = postRepository.findAllByOrderByCreatedAtDesc();
+    return postList.stream().map(this::toPostResponse).toList();
+  }
+
+  // 게시글 조회수 많은 순으로 전체 조회
+  @Transactional(readOnly = true)
+  public List<PostResponse> getAllPostsByMostViewed() {
+    List<Post> postList = postRepository.findAllByOrderByViewsDesc();
+    return postList.stream().map(this::toPostResponse).toList();
+  }
+  
   // Entity를 DTO로 변환해주는 메소드
   private PostResponse toPostResponse(Post post) {
-    return PostResponse.builder().postId(post.getId()).title(post.getTitle())
-        .content(post.getContent()).build();
+    return PostResponse.builder()
+        .postId(post.getId())
+        .title(post.getTitle())
+        .content(post.getContent())
+        .views(post.getViews())
+        .build();
   }
+
 
 }
