@@ -37,5 +37,4 @@ public class MyController {
     return "delete hello";
   }
 
-
 }
