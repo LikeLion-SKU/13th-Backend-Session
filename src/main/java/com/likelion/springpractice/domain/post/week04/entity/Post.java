@@ -31,4 +31,18 @@ public class Post extends BaseTimeEntity {
   @Column(nullable = false)
   private String content;  //내용
 
+  @Column(nullable = false)
+  private Long views; //조회수
+
+  //게시글 수정시 사용하는 메소드
+  public void update(String title, String content, Long views) {
+    this.title = title;
+    this.content = content;
+    this.views = views;
+  }
+
+  //게시글 단일 조회시 조회수 증가 메소드
+  public void increaseViews(Long views) {
+    this.views = views + 1;
+  }
 }

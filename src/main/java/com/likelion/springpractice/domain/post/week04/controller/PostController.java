@@ -1,7 +1,6 @@
 package com.likelion.springpractice.domain.post.week04.controller;
 
 
-import com.likelion.springpractice.domain.post.week04.entity.Post;
 import com.likelion.springpractice.domain.post.week05.dto.request.CreatePostRequest;
 import com.likelion.springpractice.domain.post.week05.dto.request.UpdatePostRequest;
 import com.likelion.springpractice.domain.post.week05.dto.response.PostResponse;
@@ -29,16 +28,17 @@ public class PostController {
 
   private final PostService postService;
 
-  @Operation(summary = "게시글 생성",
-    description = "게시판 페이지에서 게시글 작성 후 생성 버튼을 눌렀을 때 요청되는 API")
-  @PostMapping("/posts")
+  @Operation(summary = "게시글 생성",  //각 API 엔드포인트에 대한 설명, 요약, 응답정보 등을 문서화해주는 Operation
+      description = "게시판 페이지에서 게시글 작성 후 생성 버튼을 눌렀을 때 요청되는 API")
+  @PostMapping("/posts") // HTTP POST 요청을 "/api/vi/posts" URL로 받을 때 실행됨.
   public ResponseEntity<PostResponse> createPost(
-      @Parameter(description = "게시글 작성 내용") @RequestBody CreatePostRequest createPostRequest) {
+      @Parameter(description = "게시글 작성 내용")  //Swagger문서에서 파라미터의 의미를 설명해주는 역할!!
+      @RequestBody CreatePostRequest createPostRequest) {
     return ResponseEntity.ok(postService.createPost(createPostRequest));
   }
 
-  @Operation(summary = "게시글 전체 조회",
-    description = "게시판 페이지로 이동될 때 요청되는 API")
+  @Operation(summary = "게시글 전체 조회",  //Operation의 구성요소 중 하나로, API에 대한 한줄요약.
+      description = "게시판 페이지로 이동될 때 요청되는 API") //상세설명
   @GetMapping("/posts")
   public ResponseEntity<List<PostResponse>> getAllPosts() {
     return ResponseEntity.ok(postService.getAllPosts());
@@ -53,7 +53,7 @@ public class PostController {
   }
 
   @Operation(summary = "게시글 수정",
-    description = "게시판 페이지에서 게시글 수정 후 수정 완료 버튼을 눌렀을 때 요청되는 API")
+      description = "게시판 페이지에서 게시글 수정 후 수정 완료 버튼을 눌렀을 때 요청되는 API")
   @PutMapping("/posts/{id}")
   public ResponseEntity<PostResponse> updatePost(
       @Parameter(description = "게시글 수정 내용") @RequestBody UpdatePostRequest updatePostRequest,
@@ -67,5 +67,17 @@ public class PostController {
   public ResponseEntity<Boolean> deletePost(
       @Parameter(description = "특정 게시글 ID") @PathVariable Long id) {
     return ResponseEntity.ok(postService.deletePost(id));
+  }
+
+  @Operation(summary = "게시글 조회 많은 순 조회", description = "게시판 페이지에서 조회 많은 순 버튼을 눌렀을 때 요청되는 API")
+  @GetMapping("/posts/popular")
+  public ResponseEntity<List<PostResponse>> getAllPostsSortedByViews() {
+    return ResponseEntity.ok(postService.getAllPostsSortedByViews());
+  }
+
+  @Operation(summary = "게시글 최신순 조회", description = "게시판 페이지에서 최신순 버튼을 눌렀을 때 요청되는 API")
+  @GetMapping("/posts/latest")
+  public ResponseEntity<List<PostResponse>> getAllPostsSortedByCreatedAtDesc() {
+    return ResponseEntity.ok(postService.getAllPostsSortedByCreatedAt());
   }
 }
