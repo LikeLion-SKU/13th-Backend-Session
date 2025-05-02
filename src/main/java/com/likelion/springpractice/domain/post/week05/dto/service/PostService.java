@@ -69,8 +69,24 @@ public class PostService {
 
     // Entity를 DTO로 변환해주는 메소드
     private PostResponse toPostResponse(Post post) {
-        return PostResponse.builder().postId(post.getId()).title(post.getTitle())
-                .content(post.getContent()).build();
+        return PostResponse.builder()
+                .postId(post.getId())
+                .title(post.getTitle())
+                .content(post.getContent())
+                .viewCount(post.getViewCount())
+                .build();
+    }
+
+    // 최신순으로 게시글 목록 조회
+    public List<PostResponse> getPostsOrderByCreatedAtDesc() {
+        return postRepository.findAllByOrderByCreatedAtDesc()
+                .stream().map(this::toPostResponse).toList();
+    }
+
+    // 조회수 기준으로 인기 게시글 목록 조회
+    public List<PostResponse> getPostsOrderByViewCountDesc() {
+        return postRepository.findAllByOrderByViewCountDesc()
+                .stream().map(this::toPostResponse).toList();
     }
 }
 

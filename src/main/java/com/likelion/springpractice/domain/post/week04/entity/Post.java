@@ -29,4 +29,7 @@ public class Post extends BaseTimeEntity {
 
   @Column(nullable = false)
   private String content; // 내용
+
+  @Column(nullable = false)
+  private int viewCount; // 조회수
 }
