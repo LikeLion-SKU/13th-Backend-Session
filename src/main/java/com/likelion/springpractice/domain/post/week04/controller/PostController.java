@@ -28,25 +28,25 @@ public class PostController {
   private final PostService postService;
 
   @Operation(summary = "게시글 생성",
-             description = "게시판 페이지에서 게시글 작성 후 생성 버튼을 눌렀을 때 요청되는 API")
+      description = "게시판 페이지에서 게시글 작성 후 생성 버튼을 눌렀을 때 요청되는 API")
   @PostMapping("/posts")
   public ResponseEntity<PostResponse> createPost(@Parameter(description = "게시글 작성 내용")
-                           @RequestBody CreatePostRequest createPostRequest) {
+  @RequestBody CreatePostRequest createPostRequest) {
     return ResponseEntity.ok(postService.createPost(createPostRequest));
   }
 
   @Operation(summary = "게시글 전체 조회",
-             description = "게시판 페이지로 이동될 때 요청되는 API")
+      description = "게시판 페이지로 이동될 때 요청되는 API")
   @GetMapping("/posts")
   public ResponseEntity<List<PostResponse>> getAllPosts() {
     return ResponseEntity.ok(postService.getAllPosts());
   }
 
   @Operation(summary = "게시글 단일 조회",
-             description = "게시판 페이지에서 특정 게시글에 접근할 때 요청되는 API")
+      description = "게시판 페이지에서 특정 게시글에 접근할 때 요청되는 API")
   @GetMapping("/posts/{id}")
   public ResponseEntity<PostResponse> getPostById(@Parameter(description = "특정 게시글 ID")
-                            @PathVariable Long id) {
+  @PathVariable Long id) {
     return ResponseEntity.ok(postService.getPostById(id));
   }
 
@@ -54,9 +54,9 @@ public class PostController {
       description = "게시판 페이지에서 게시글 수정 후 수정 완료 버튼을 눌렀을 때 요청되는 API")
   @PutMapping("/posts/{id}")
   public ResponseEntity<PostResponse> updatePost(@Parameter(description = "게시글 수정 내용")
-                           @RequestBody UpdatePostRequest updatePostRequest,
-                           @Parameter(description = "특정 게시글 ID")
-                           @PathVariable Long id) {
+      @RequestBody UpdatePostRequest updatePostRequest,
+      @Parameter(description = "특정 게시글 ID")
+      @PathVariable Long id) {
     return ResponseEntity.ok(postService.updatePost(id, updatePostRequest));
   }
 
@@ -64,7 +64,27 @@ public class PostController {
       description = "게시판 페이지에서 게시글 삭제 버튼을 눌렀을 때 요청되는 API")
   @DeleteMapping("/posts/{id}")
   public ResponseEntity<Boolean> deletePost(@Parameter(description = "특정 게시글 ID")
-                           @PathVariable Long id) {
+  @PathVariable Long id) {
     return ResponseEntity.ok(postService.deletePost(id));
+  }
+
+  /**
+   * 게시글 조회 많은순 조회 API
+   */
+  @Operation(summary = "게시글 조회 많은순 조회",
+      description = "게시판 페이지에서 조회 많은순으로 조회할 때 요청되는 API")
+  @GetMapping("/posts/popular")
+  public ResponseEntity<List<PostResponse>> getPostByViewCount() {
+    return ResponseEntity.ok(postService.getPostsByViewCount());
+  }
+
+  /**
+   * 게시글 최신순 조회 API
+   */
+  @Operation(summary = "게시글 최신순 조회",
+      description = "게시판 페이지에서 최신순으로 조회할 때 요청되는 API")
+  @GetMapping("/posts/recent")
+  public ResponseEntity<List<PostResponse>> getRecentPosts() {
+    return ResponseEntity.ok(postService.getRecentPosts());
   }
 }
