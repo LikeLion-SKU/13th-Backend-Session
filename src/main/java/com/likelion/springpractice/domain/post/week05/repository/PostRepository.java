@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
   List<Post> findAllByOrderByCreatedAtDesc(); // 게시글 생성 시간을 기준으로 내림차순(최신순)으로 조회
+  List<Post> findAllByOrderByViewsDesc(); // 게시글을 조회수가 많은 순으로 조회
 }

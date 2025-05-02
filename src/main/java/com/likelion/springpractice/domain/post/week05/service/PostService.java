@@ -41,6 +41,12 @@ public class PostService {
     return postListCreatedAtDesc.stream().map(this::toPostResponse).toList();
   }
 
+  // 게시글 조회수 순으로 조회
+  public List<PostResponse> getAllPostsByViewsDesc() {
+    List<Post> postListViews = postRepository.findAllByOrderByViewsDesc();
+    return postListViews.stream().map(this::toPostResponse).toList();
+  }
+
   // 게시글 단일 조회
   public PostResponse getPostById(Long id) {
     Post post = postRepository.findById(id)

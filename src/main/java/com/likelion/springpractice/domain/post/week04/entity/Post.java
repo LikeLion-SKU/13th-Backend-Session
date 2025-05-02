@@ -31,6 +31,6 @@ public class Post extends BaseTimeEntity {
   private String content; // 내용
 
   @Column
-  private Long views; // 조회수
+  private int views; // 조회수
 
 }

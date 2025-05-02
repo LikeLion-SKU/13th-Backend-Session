@@ -43,12 +43,20 @@ public class PostController {
     return ResponseEntity.ok(postService.getAllPosts());
   }
 
-  // 5주차 기능 추가
+  // 5주차 기능 추가 (게시글 최신순으로 조회)
   @Operation(summary = "게시글을 최신순으로 조회",
       description = "게시판 페이지에서 최신순 버튼을 눌렀을 때 게시글을 최신순으로 조회하는 API")
   @GetMapping("/posts/latest")
   public ResponseEntity<List<PostResponse>> getLatestPosts() {
     return ResponseEntity.ok(postService.getAllPostsByCreatedAtDesc());
+  }
+
+  // 5주차 기능 추가 (게시글 조회수 순으로 조회)
+  @Operation(summary = "게시글을 조회수 순으로 조회",
+      description = "게시판 페이지에서 조회수순 버튼을 눌렀을 때 게시글을 최신순으로 조회하는 API")
+  @GetMapping("/posts/views")
+  public ResponseEntity<List<PostResponse>> getViewsPosts() {
+    return ResponseEntity.ok(postService.getAllPostsByViewsDesc());
   }
 
   @Operation(summary = "게시글 단일 조회",

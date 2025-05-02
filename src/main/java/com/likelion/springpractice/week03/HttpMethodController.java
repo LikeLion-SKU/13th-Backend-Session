@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class HttpMethodController {
 
-  @PostMapping("/create-test")
+  @PostMapping("/create-test") // uri로 작성
   public String createTest() {
     return "This is create test";
   }
