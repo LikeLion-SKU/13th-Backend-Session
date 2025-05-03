@@ -13,7 +13,4 @@ public class UpdatePostRequest {
     @Schema(description = "게시글 내용", example = "이번주 세션도 화이팅!")
     private String content;
 
-    @Schema(description = "조회수", example = "1")
-    private Long views;
-
 }
