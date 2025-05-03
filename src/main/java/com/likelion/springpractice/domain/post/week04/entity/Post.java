@@ -29,10 +29,14 @@ public class Post extends BaseTimeEntity {
   @Column(nullable = false)
   private String content;
   //  -------5주차때 추가한 내용
-  private int viewCount = 0;
+  private Integer viewCount;
 
   public void plusViewCount() {
-    this.viewCount += 1;
+    this.viewCount++;
   }
 
+  public void update(String title, String content) {
+    this.title = title;
+    this.content = content;
+  }
 }

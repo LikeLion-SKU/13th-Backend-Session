@@ -22,16 +22,16 @@ public class PostService {
     Post post = Post.builder()
         .title(createPostRequest.getTitle())
         .content(createPostRequest.getContent())
+        .viewCount(0)
         .build();
+
     postRepository.save(post);
     return toPostResponse(post);
   }
 
-  //  5주차에 Transactional이랑 postList.forEach(Post::plusviewcount)추가함
-  @Transactional
+
   public List<PostResponse> getAllPosts() {
     List<Post> postList = postRepository.findAll();
-    postList.forEach(Post::plusViewCount);
     return postList.stream().map(this::toPostResponse).toList();
   }
 
@@ -49,13 +49,10 @@ public class PostService {
   public PostResponse updatePost(Long id, UpdatePostRequest updatePostRequest) {
     Post post = postRepository.findById(id)
         .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다."));
-    Post updatePost = Post.builder()
-        .id(post.getId())
-        .title(updatePostRequest.getTitle())
-        .content(updatePostRequest.getContent())
-        .build();
-    postRepository.save(updatePost);
-    return toPostResponse(updatePost);
+
+    post.update(updatePostRequest.getTitle(), updatePostRequest.getContent());
+
+    return toPostResponse(post);
   }
 
   @Transactional

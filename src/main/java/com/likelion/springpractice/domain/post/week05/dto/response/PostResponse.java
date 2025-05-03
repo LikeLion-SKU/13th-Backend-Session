@@ -17,6 +17,6 @@ public class PostResponse {
   private String content;
 //  5주차때 추가
 
-  @Schema(description = "게시물 조회수", example = "올라가요")
+  @Schema(description = "게시물 조회수", example = "10")
   private int viewCount;
 }
