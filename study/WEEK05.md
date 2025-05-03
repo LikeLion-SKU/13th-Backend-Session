@@ -35,6 +35,31 @@
 > @Query("SELECT p FROM post p WHERE p.title=:title")
 > SESECT*FROM posts WHERE title='찾을 게시글 제목';
 
+## ✅ 사용자 정의 쿼리
+
+- **쿼리 메소드**
+- JPA는 메소드 이름으로 쿼리를 생성하는 기능 제공
+- 쿼리 메소드는 메소드의 이름을 분석하여 JPGL 쿼리를 실행한다.
+- findBy, getBy, readBy, queryBy, searchBy, streamBy등 By는 모두 Select의 일을 하는 Keyword이다.
+- And,Or -> method안에 And or을 넣어준다.(findByNameAndEmail)
+- After, Before, GreaterThan, LessThan은 값 비교를 해주는 keyword이다.
+- After, Before, GreaterThan, LessThan은 초과 미만을 의미하며 Between은 이상, 이하를 의미하는 것을 헷갈리면 안된다.
+- isNull은 해당 값에 Null값이 있는지 체크하는 keyword이다.
+- NotEmpty는 String과 같은 문자열이 비어있는지 체크가 아닌 Collection type의 변수가 not empty(비어있는지)를 체크한다.
+- StartingWith/EndingWith/Contains
+- contains("rti")와 like("%rti%")는 같은 것이다
+- Sorting은 조건에 따라 데이터의 정렬을 해주는 Keyword이다.(Desc/ Asc로 정렬한다.)
+
+## 예시
+
+> List<Post> findByTitleAndWriter(String title,String writer);
+> List<Post> findTop2ByTitle(String title)
+> List<User> findByIdBetween(Long id1, Long id2);
+> // id가 id1이상, id2이하인 데이터들 return
+> List<User> findByIdIsNotNull();
+> List<User> findByAddressIsNotEmpty();
+> List<User> findTop1ByNameOrderByIdDesc(String name);
+
 ## ✅ DTO (Data Transfer Object)
 
 - **역할:** 계층 간 데이터 전달을 위한 객체
