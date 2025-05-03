@@ -43,13 +43,13 @@ public class PostController {
   }
 
   @Operation(summary = "게시글 최신순으로 조회", description = "최신순 정렬 버튼 눌르면 최신순으로 조회")
-  @GetMapping("/posts-createdAt")
+  @GetMapping("/posts/createdAt")
   public ResponseEntity<List<PostResponse>> getAllPostsCreatedAt() {
     return ResponseEntity.ok(postService.getSortedPostsByCreatedAt());
   }
 
   @Operation(summary = "게시글 조회순으로 조회", description = "조회수 정렬 버튼 눌르면 조회 많은 순으로 조회")
-  @GetMapping("/posts-views")
+  @GetMapping("/posts/views")
   public ResponseEntity<List<PostResponse>> getAllPostsViews() {
     return ResponseEntity.ok(postService.getSortedPostsByViews());
   }
