@@ -22,6 +22,7 @@ public class PostService {
     Post post = Post.builder()
         .title(createPostRequest.getTitle())
         .content(createPostRequest.getContent())
+        .view(0L)
         .build();
     postRepository.save(post);
 
@@ -61,14 +62,9 @@ public class PostService {
     Post post = postRepository.findById(id)
         .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다."));
 
-    Post updatePost = Post.builder()
-        .id(post.getId())
-        .title(updatePostRequest.getTitle())
-        .content(updatePostRequest.getContent())
-        .build();
-    postRepository.save(updatePost);
+    post.update(updatePostRequest.getTitle(), updatePostRequest.getContent());
 
-    return toPostResponse(updatePost);
+    return toPostResponse(post);
   }
 
 

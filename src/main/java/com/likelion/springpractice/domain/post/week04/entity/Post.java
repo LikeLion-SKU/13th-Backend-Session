@@ -33,4 +33,9 @@ public class Post extends BaseTimeEntity {
   @Column(nullable = false)
   private Long view;
 
+  public void update(String title, String content) {
+    this.title = title;
+    this.content = content;
+  }
+
 }
