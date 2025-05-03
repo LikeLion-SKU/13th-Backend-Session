@@ -33,4 +33,12 @@ public class Post extends BaseTimeEntity {
   @Column(nullable = false)
   private long views = 0L; // 조회수
 
+  public void update(String title, String content) {
+    this.title = title;
+    this.content = content;
+  }
+
+  public void increaseViews() {
+    this.views++;
+  }
 }

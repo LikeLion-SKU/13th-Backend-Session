@@ -39,6 +39,7 @@ public class PostService {
   public PostResponse getPostById(Long id) {
     Post post = postRepository.findById(id)
         .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다."));
+    post.increaseViews();
     return toPostResponse(post);
   }
 
@@ -47,15 +48,8 @@ public class PostService {
   public PostResponse updatePost(Long id, UpdatePostRequest updatePostRequest) {
     Post post = postRepository.findById(id)
         .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다."));
-
-    Post updatePost = Post.builder()
-        .id(post.getId()) // 중요! 바꾸지 않을 값은 기존 값으로 build 해줘야 함
-        .title(updatePostRequest.getTitle())
-        .content(updatePostRequest.getContent())
-        .views(post.getViews())
-        .build();
-    postRepository.save(updatePost);
-    return toPostResponse(updatePost);
+    post.update(updatePostRequest.getTitle(), updatePostRequest.getContent());
+    return toPostResponse(post);
 
   }
 
@@ -83,7 +77,7 @@ public class PostService {
     List<Post> postList = postRepository.findAllByOrderByViewsDesc();
     return postList.stream().map(this::toPostResponse).toList();
   }
-  
+
   // Entity를 DTO로 변환해주는 메소드
   private PostResponse toPostResponse(Post post) {
     return PostResponse.builder()
