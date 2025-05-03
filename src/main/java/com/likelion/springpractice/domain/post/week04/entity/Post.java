@@ -35,7 +35,8 @@ public class Post extends BaseTimeEntity {
 
   // 조회수 필드 추가
   @Column(nullable = false)
-  private Long viewCount;
+  @Builder.Default
+  private Long viewCount = 0L;
 
   // 게시글 수정 기능 (작성자와 조회수는 수정할 수 없는 값)
   public void update(String title, String content) {
