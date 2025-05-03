@@ -51,15 +51,10 @@ public class PostService {
     Post post = postRepository.findById(id)
         .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다."));
 
-    Post updatedPost = Post.builder()
-        .id(post.getId()) // 중요!! 바꾸지 않을 값은 기존 값으로 build 해줘야 함
-        .title(updatePostRequest.getTitle())
-        .content(updatePostRequest.getContent())
-        .views(post.getViews())
-        .build();
-    postRepository.save(updatedPost);
+    post.update(updatePostRequest.getTitle(), updatePostRequest.getContent());
+    // postRepository.save(post);   // JAP가 변경 감지해서 자동 반영해주기 때문에 생략 가능
 
-    return toPostResponse(updatedPost);
+    return toPostResponse(post);
   }
 
   @Transactional
