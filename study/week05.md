@@ -54,7 +54,8 @@
 <details>
     <summary>JPQL 문법</summary>
 
-✅ JPQL 기본 개념
+## ✅ JPQL 기본 개념
+
 **SQL은 데이터베이스 테이블(Table)을 대상으로 함**
 
 **JPQL은 자바의 엔티티(Entity)를 대상으로 함**
@@ -118,8 +119,8 @@ List<Post> searchByTitle(@Param("keyword") String keyword);
 - Request, Response에는 꼭 행위(Create, Update, Get)를 붙인다.
 - 파일 정렬등을 고려하면 도메인명을 앞으로 빼도 무방하다.
 
-### BUilder
-@BUilder : Builder를 자동으로 생성해주는 어노테이션
+### Builder
+@Builder : Builder를 자동으로 생성해주는 어노테이션
 
 ### @Data
 - 다음의 어노테이션과 다양한 메소드를 자동 생성해줌
