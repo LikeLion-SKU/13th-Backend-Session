@@ -15,24 +15,27 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class PostService {
 
+  //컨트롤러에선, 서비스 메소드를 호출!! 서비스에선, 레포지토리 메서드를 호출한다!!
   private final PostRepository postRepository;
 
   // 게시글 생성
+  // 클라이언트가 보낸 게시글 생성 요청을 처리!!
   @Transactional
-  public PostResponse createPost(CreatePostRequest createPostRequest) {
-    Post post = Post.builder()
-        .title(createPostRequest.getTitle())
+  public PostResponse createPost(CreatePostRequest createPostRequest) { //DTO를 인자로 받아,
+    Post post = Post.builder()  //DTO -> Entity 변환 후!
+        .title(createPostRequest.getTitle()) //프론트에서 보낸 "title" 값을 Post 객체의 필드로 넣는 과정
         .content(createPostRequest.getContent())
         .build();
-    postRepository.save(post);
+    postRepository.save(post);  //Post 객체를 DB에 저장!!
 
-    return toPostResponse(post);
+    return toPostResponse(post); //그리고, 저장된 결과(Entity)를 DTO로 변환해서 반환!!
   }
 
   //게시글 전체 조회
   public List<PostResponse> getAllPosts() {
-    List<Post> postList = postRepository.findAll();
-    return postList.stream().map(this::toPostResponse).toList();
+    List<Post> postList = postRepository.findAll(); //findAll을 통해 모든 게시글 Entity를 가져옴!
+    return postList.stream().map(this::toPostResponse)
+        .toList(); //가져온 리스트를 PostResponse(DTO)로 하나하나 변환해야 하므로 stream().map 사용!
   }
 
   //게시글 단일 조회
