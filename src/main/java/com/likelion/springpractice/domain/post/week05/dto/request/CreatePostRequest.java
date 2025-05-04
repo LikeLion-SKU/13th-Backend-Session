@@ -19,6 +19,6 @@ public class CreatePostRequest { //게시글 생성 요청 시, 클라이언트�
 
   //따로 넣어줄 필요 없음!! 게시글 생성 시에는 0으로 자동 생성되어야 함!!
   //따라서, 서비스 코드에 Post.builder()에서, views(0)을 넣어줌!!
-  @Schema(description = "조회수", example = "0")
-  private Long views;
+  //@Schema(description = "조회수", example = "0")
+  //private Long views;
 }

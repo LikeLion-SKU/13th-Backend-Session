@@ -25,6 +25,7 @@ public class PostService {
     Post post = Post.builder()  //DTO -> Entity 변환 후!
         .title(createPostRequest.getTitle()) //프론트에서 보낸 "title" 값을 Post 객체의 필드로 넣는 과정
         .content(createPostRequest.getContent())
+        .views(0) //조회수 0으로 생성
         .build();
     postRepository.save(post);  //Post 객체를 DB에 저장!!
 
@@ -42,6 +43,7 @@ public class PostService {
   public PostResponse getPostById(Long id) {
     Post post = postRepository.findById(id)
         .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다."));
+    post.increaseViews();
     return toPostResponse(post);
   }
 
@@ -50,8 +52,11 @@ public class PostService {
   public PostResponse updatePost(Long id, UpdatePostRequest updatePostRequest) {
     Post post = postRepository.findById(id)
         .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다."));
-    post.update(updatePostRequest.getTitle(), updatePostRequest.getContent(),
-        updatePostRequest.getViews());
+    //post.update(updatePostRequest.getTitle(), updatePostRequest.getContent(),
+    //    updatePostRequest.getViews());
+
+    post.update(updatePostRequest.getTitle(), updatePostRequest.getContent());
+    //이렇게 하면 DB에서 title, content 값만 바뀌고, 나머지 값들(createAt)등은 그대로 유지됨!
 
 //    Post updatedPost = Post.builder()
 //        .id(post.getId()) //중요!! 바꾸지 않을 값은 기존 값으로 build해줘야 함!!
@@ -87,6 +92,6 @@ public class PostService {
   //Entity를 DTO로 변환해주는 메소드
   private PostResponse toPostResponse(Post post) {
     return PostResponse.builder().postId(post.getId()).title(post.getTitle())
-        .content(post.getContent()).build();
+        .content(post.getContent()).views(post.getViews()).build();
   }
 }

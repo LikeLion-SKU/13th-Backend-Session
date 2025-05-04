@@ -14,6 +14,6 @@ public class UpdatePostRequest {
   private String content;
 
   //게시글 수정 시에는, 기존에 있던 값이 유지되어야 하므로 우리가 값을 넣어줄 필요 없음!!
-  @Schema(description = "조회수", example = "1")
-  private Long views;
+  //@Schema(description = "조회수", example = "1")
+  //private Long views;
 }

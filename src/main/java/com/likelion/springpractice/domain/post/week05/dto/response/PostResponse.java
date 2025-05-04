@@ -21,5 +21,5 @@ public class PostResponse { //클라이언트에 응답을 보낼 때 사용되�
   private String content;
 
   @Schema(description = "조회 수", example = "4")
-  private Long views;
+  private Integer views;
 }

@@ -36,17 +36,18 @@ public class Post extends BaseTimeEntity { //Post클래스는 게시글 하나�
   private String content;  //내용
 
   @Column(nullable = false)
-  private Long views; //조회수
+  private Integer views; //조회수
 
   //게시글 수정시 사용하는 메소드
-  public void update(String title, String content, Long views) {
+  public void update(String title, String content) {
     this.title = title;
     this.content = content;
-    this.views = views;
+    //this.views = views;  인자 마지막에 Long views
   }
 
   //게시글 단일 조회시 조회수 증가 메소드
-  public void increaseViews(Long views) {
+  public void increaseViews() {
+    //this.views = views + 1; , 인자 Long views (수정 전 코드)
     this.views++;
   }
 }
