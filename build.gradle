@@ -21,8 +21,12 @@ dependencies {// 프로젝트에 필요한 의존성 설정
     // Web
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
+    // Spring-security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
     // Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
     // DB
