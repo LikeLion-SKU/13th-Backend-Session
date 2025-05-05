@@ -31,6 +31,10 @@ public class Post extends BaseTimeEntity {
   private String content; // 내용
 
   @Column
-  private int views; // 조회수
+  private int views = 0; // 조회수
+
+  public void incrementViews() { // 조회수 증가
+    views++;
+  }
 
 }

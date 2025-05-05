@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-@Builder
+@Builder // 빌더를 만들었기 때문에 생성자를 만들 필요가 없음
 @Schema(title = "PostResponse: 게시글 응답 DTO")
 public class PostResponse extends BaseTimeEntity {
 

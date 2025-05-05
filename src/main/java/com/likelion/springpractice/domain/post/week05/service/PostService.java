@@ -22,6 +22,7 @@ public class PostService {
     Post post = Post.builder()
         .title(createPostRequest.getTitle())
         .content(createPostRequest.getContent())
+        .views(0)
         .build();
     postRepository.save(post);
 
@@ -32,6 +33,7 @@ public class PostService {
   public List<PostResponse> getAllPosts() {
     // postRepository에 등록되어 있는 모든 요소들을 findAll()로 불러와서 List에 저장
     List<Post> postList = postRepository.findAll();
+
     return postList.stream().map(this::toPostResponse).toList();
   }
 
@@ -49,8 +51,12 @@ public class PostService {
 
   // 게시글 단일 조회
   public PostResponse getPostById(Long id) {
-    Post post = postRepository.findById(id)
+    Post post = postRepository.findById(id) // 특정 게시물의 객체
         .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다."));
+
+    post.incrementViews(); // post의 게시글 조회수 증가
+    postRepository.save(post); // 변경사항 저장
+
     return toPostResponse(post);
   }
 
