@@ -31,6 +31,7 @@ public class PostService {
     Post post = Post.builder()
         .title(createPostRequest.getTitle())
         .content(createPostRequest.getContent())
+        .viewCount(0L) // 0으로 초기화
         .build();
     postRepository.save(post);
 
