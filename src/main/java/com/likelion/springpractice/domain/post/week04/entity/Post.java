@@ -32,4 +32,15 @@ public class Post extends BaseTimeEntity {
 
   @Column(nullable = false)
   private int viewCount; // 조회수
+
+  // 조회수 증가 메소드
+  public void addViews() {
+    this.viewCount++;
+  }
+
+  // 게시글 수정 메소드
+  public void update(String title, String content) {
+    this.title = title;
+    this.content = content;
+  }
 }

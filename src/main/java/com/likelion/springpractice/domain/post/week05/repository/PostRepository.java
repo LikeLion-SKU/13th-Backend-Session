@@ -1,4 +1,4 @@
-package com.likelion.springpractice.domain.post.week05.dto.repository;
+package com.likelion.springpractice.domain.post.week05.repository;
 
 import com.likelion.springpractice.domain.post.week04.entity.Post;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,10 +1,9 @@
 package com.likelion.springpractice.domain.post.week04.controller;
 
-import com.likelion.springpractice.domain.post.week04.entity.Post;
 import com.likelion.springpractice.domain.post.week05.dto.request.CreatePostRequest;
 import com.likelion.springpractice.domain.post.week05.dto.request.UpdatePostRequest;
 import com.likelion.springpractice.domain.post.week05.dto.response.PostResponse;
-import com.likelion.springpractice.domain.post.week05.dto.service.PostService;
+import com.likelion.springpractice.domain.post.week05.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
