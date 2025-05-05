@@ -17,6 +17,6 @@ public class PostResponse {
     @Schema(description = "게시글 내용", example = "이번주 세션도 화이팅!")
     private String content;
 
-    @Schema(description = "조회 수", example = "4")
+    @Schema(description = "조회 수", example = "0")
     private Long views;
 }
