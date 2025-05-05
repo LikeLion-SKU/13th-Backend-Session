@@ -23,6 +23,8 @@ public class PostResponse extends BaseTimeEntity {
   @Schema(description = "게시글 생성 시간", example = "???")
   private LocalDateTime createdAt;
 
+  @Schema(description = "조회수")
+  private int views;
 
 
 }

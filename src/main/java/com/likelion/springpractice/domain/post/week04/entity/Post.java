@@ -37,4 +37,8 @@ public class Post extends BaseTimeEntity {
     views++;
   }
 
+  public void update(String title, String content) { // 게시글 제목, 내용 수정
+    this.title = title;
+    this.content = content;
+  }
 }
