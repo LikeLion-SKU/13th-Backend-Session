@@ -59,6 +59,9 @@ public class SecurityConfig {
                 "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**"
             ).hasRole("DEVELOPER")
 
+            // 모든 api에 대한 접근 권한 허용
+            .requestMatchers("/api/**").permitAll()
+
             // 인증 관련 요청 허용
             .requestMatchers("/api/auth/**", "/oauth2/**").permitAll()
 
