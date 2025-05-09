@@ -1,4 +1,4 @@
-package com.likelion.springpractice.week03;
+package com.likelion.springpractice.global;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
