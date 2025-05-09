@@ -34,6 +34,9 @@ dependencies {
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-api:2.8.1'
     // Lombok
     implementation 'org.projectlombok:lombok'
+    // spring security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.security:spring-security-test'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
