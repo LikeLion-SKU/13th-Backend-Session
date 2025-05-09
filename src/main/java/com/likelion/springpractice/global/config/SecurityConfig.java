@@ -70,6 +70,9 @@ public class SecurityConfig {
             // 일반 사용자 API
             .requestMatchers("/api/user/**").authenticated()
 
+            // 모든 api에 대한 접근 권한 허용
+            .requestMatchers("/api/**").permitAll()
+
             // 그 외 요청 차단
             .anyRequest().denyAll()
         );
