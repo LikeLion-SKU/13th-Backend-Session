@@ -61,6 +61,9 @@ public class SecurityConfig {
             // 인증 관련 요청 허용
             .requestMatchers("/api/auth/**", "/oauth2/**").permitAll()
 
+            // 모든 api에 대한 접근 권한 허용
+            .requestMatchers("/api/**").permitAll()
+
             // 관리자 전용 API
             .requestMatchers("/api/admin/**").hasRole("ADMIN")
 
