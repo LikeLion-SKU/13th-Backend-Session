@@ -27,9 +27,15 @@
 
 ## 🔄 흐름 요약
 
-1. 사용자가 로그인하면 → Access Token + Refresh Token 발급
-2. Access Token으로 API 사용
-3. 만료되면 → Refresh Token으로 재발급 요청
-4. Refresh Token도 만료되거나 위조되면 → 다시 로그인 필요
+1. 사용자 로그인 요청
+2. HTTPServletRequest에 ID/PW 담김
+3. AuthenticationFilter가 정보 유효성 검사
+4. UsernamePasswordAuthenticationToken 생성
+5. AuthenticationManager가 AuthenticationProvider에게 인증 위임
+6. Provider는 UserDetailsService를 통해 사용자 정보 조회
+7. 조회된 정보로 UserDetails 객체 생성
+8. 입력 정보와 비교 → 인증 완료
+9. 성공: SecurityContextHolder에 저장 후 SuccessHandler 호출
+10. 실패: FailureHandler 호출
 
 ---
