@@ -1,3 +1,5 @@
+package com.likelion.springpractice.global.config;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -64,6 +66,8 @@ public class SecurityConfig {
 
             // 일반 사용자 API
             .requestMatchers("/api/user/**").authenticated()
+            // 모든 api에 대한 접근 권한 허용
+            .requestMatchers("/api/**").permitAll()
 
             // 그 외 요청 차단
             .anyRequest().denyAll()
