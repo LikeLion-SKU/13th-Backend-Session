@@ -18,4 +18,5 @@ public class LoggingController {
 
         return "로그 테스트 완료!";
     }
+
 }

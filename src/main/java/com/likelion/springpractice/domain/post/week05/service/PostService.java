@@ -108,5 +108,6 @@ public class PostService {
         return postRepository.findAllByOrderByViewCountDesc()
                 .stream().map(this::toPostResponse).toList();
     }
+
 }
 
