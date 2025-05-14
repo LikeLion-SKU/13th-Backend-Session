@@ -1,4 +1,4 @@
-# 5주차 백엔드 세션 요약 - DTO, Service, Repository
+# # Spring Boot (Week 5) -DTO, Service, Repository
 
 ---
 
