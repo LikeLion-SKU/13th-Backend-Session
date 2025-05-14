@@ -1,4 +1,4 @@
-# Spring Boot (Week 2)
+# Spring Boot (Week 2) - API, Gradle, Bean
 
 ## API
 
