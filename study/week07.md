@@ -180,7 +180,7 @@ logging.level.com.example=DEBUG
 
 ---
 
-## 7. `java.lang.NullPointerException`
+## 7) `java.lang.NullPointerException`
 - **원인**: null 객체에 메서드나 필드 접근 시
 - **예시**
   ```
@@ -190,7 +190,7 @@ logging.level.com.example=DEBUG
 
 ---
 
-## 8. `org.hibernate.LazyInitializationException: could not initialize proxy`
+## 8) `org.hibernate.LazyInitializationException: could not initialize proxy`
 - **원인**: 트랜잭션 외부에서 Lazy 로딩된 엔티티에 접근
 - **예시**
   ```
