@@ -1,5 +1,5 @@
-
-# Spring Boot에서 JWT 기반 로그인 구현 과정
+# Spring Boot (Week 6)
+## - Spring Boot에서 JWT 기반 로그인 구현 과정
 
 ## 1. 회원가입
 
