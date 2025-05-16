@@ -37,7 +37,7 @@ Aspect Oriented Programming(관점 지향 프로그래밍)의 약자로,
 - Bean이 등록되지 않았거나, 잘못된 타입
 - 💡Bean 등록 어노테이션 확인
 
-### 2. HttpMessageNotReadableExceptio
+### 2. HttpMessageNotReadableException
 
 - JSON 형식 파싱 실패 시 발생
 - 💡 요청 본문 구조가 DTO와 일치하는지 확인
