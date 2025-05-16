@@ -148,7 +148,7 @@ public class LogTestController {
   <details>
     <summary>자주 발생하는 오류 로그</summary>
 
-# SpringBoot에서 자주 발생하는 오료 로그 7가지
+# SpringBoot에서 자주 발생하는 오류 로그 7가지
 
 ## ✅ 1. `org.springframework.beans.factory.NoSuchBeanDefinitionException`
 
