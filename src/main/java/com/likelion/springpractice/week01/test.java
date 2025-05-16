@@ -1,4 +1,4 @@
-package com.likelion.springpractice.week1;
+package com.likelion.springpractice.week01;
 
 public class test {
 

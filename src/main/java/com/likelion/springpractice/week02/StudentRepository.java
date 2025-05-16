@@ -1,4 +1,4 @@
-package com.likelion.springpractice.week2;
+package com.likelion.springpractice.week02;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
