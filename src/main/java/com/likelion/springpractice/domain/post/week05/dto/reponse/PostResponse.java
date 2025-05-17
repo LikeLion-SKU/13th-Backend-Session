@@ -24,7 +24,6 @@ public class PostResponse extends BaseTimeEntity {
   private LocalDateTime createdAt;
 
   @Schema(description = "조회수")
-  private int views;
-
+  private Integer views;
 
 }
