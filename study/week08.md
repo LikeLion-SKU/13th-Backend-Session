@@ -12,7 +12,7 @@
 
 ---
 
-## 🔗 연관관계 구성 요소
+## 연관관계 구성 요소
 
 ### 1. 관계 방향 (Direction)
 - **단방향**: 한 쪽만 참조 필드를 가짐 (`Member → Team`)
@@ -38,7 +38,7 @@
 
 ---
 
-## ⚙️ Fetch 전략 (즉시 vs 지연 로딩)
+## Fetch 전략 (즉시 vs 지연 로딩)
 
 JPA에서 연관된 엔티티를 어떻게 가져올지 결정하는 방식
 
@@ -68,7 +68,7 @@ private Team team;
 
 ---
 
-## 🔁 Cascade (영속성 전이)
+## Cascade (영속성 전이)
 
 부모 엔티티의 작업이 자식 엔티티에게도 자동으로 전파됨
 
@@ -87,7 +87,7 @@ private Team team;
 
 ---
 
-## 📘 ERD(Entity Relationship Diagram)
+## ERD(Entity Relationship Diagram)
 
 ### 개념
 - 데이터베이스 테이블 간의 관계를 시각적으로 표현한 다이어그램
@@ -99,7 +99,7 @@ private Team team;
 
 ---
 
-## 🔐 관계 유형: 식별 vs 비식별
+## 관계 유형: 식별 vs 비식별
 
 | 유형 | 설명 |
 |------|------|
@@ -110,7 +110,7 @@ private Team team;
 
 ---
 
-## 📝 설계 시 실수 방지 체크리스트
+## 설계 시 실수 방지 체크리스트
 - [ ] 모든 테이블에 **Primary Key** 설정
 - [ ] 외래키 참조 무결성 보장 (`ON DELETE` 옵션 확인)
 - [ ] N:M 관계는 반드시 중간 테이블로 분해
@@ -121,13 +121,13 @@ private Team team;
 ---
 
 
-# ERD 작성 시 주의해야 할 제약조건
+# ‼️ ERD 작성 시 주의해야 할 제약조건
 
 ERD(Entity Relationship Diagram)를 작성할 때 고려해야 할 **제약조건(Constraints)**은 데이터 무결성과 일관성을 유지하기 위해 필수적인 요소입니다.
 
 ---
 
-## ✅ 주요 제약조건 종류
+## 주요 제약조건 종류
 
 ### 1. Primary Key (기본 키)
 - 각 테이블의 **행(row)**을 고유하게 식별
@@ -213,7 +213,7 @@ created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
 ---
 
-## 💡 ERD 설계 팁
+## ERD 설계 팁
 
 - **정규화**로 중복 데이터 방지
 - 테이블 간 관계를 명확히 정의 (1:1, 1:N, N:M 등)
