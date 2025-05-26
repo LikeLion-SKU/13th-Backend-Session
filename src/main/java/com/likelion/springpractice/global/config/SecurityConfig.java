@@ -1,21 +1,20 @@
 package com.likelion.springpractice.global.config;
 
+import com.likelion.springpractice.global.Security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -23,75 +22,51 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
   private final CorsConfig corsConfig;
-
-  @Value("${swagger.auth.username}")
-  private String swaggerUsername;
-
-  @Value("${swagger.auth.password}")
-  private String swaggerPassword;
+  private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
   @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-    httpSecurity
-        // CORS 설정
+  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    http
+        // CSRF 보호 기능 비활성화 (REST API에서는 필요없음)
+        .csrf(AbstractHttpConfigurer::disable)
+        // CORS 설정 활성화(보통은 CORS 설정 활성화 하지 않음. 서버에서 NginX로 CORS 검증)
         .cors(cors -> cors.configurationSource(corsConfig.corsConfigurationSource()))
-
-        // CSRF 비활성화 (JWT 기반 REST API의 일반적인 설정)
-        .csrf(CsrfConfigurer::disable)
-
-        // 세션 관리 - JWT 기반이므로 무상태
-        .sessionManagement(session ->
-            session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        )
-
+        // HTTP Basic 인증 기본 설정
         .httpBasic(Customizer.withDefaults())
-
-        // 권한 설정
-        .authorizeHttpRequests(auth -> auth
-            // 정적 리소스 허용
-            .requestMatchers(
-                "/favicon.ico", "/error"
-            ).permitAll()
-
-            // Swagger 리소스 개발자만 허용
-            .requestMatchers(
-                "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**"
-            ).hasRole("DEVELOPER")
-
-            // 인증 관련 요청 허용
-            .requestMatchers("/api/auth/**", "/oauth2/**").permitAll()
-
-            // 모든 api에 대한 접근 권한 허용
-            .requestMatchers("/api/**").permitAll()
-
-            // 관리자 전용 API
-            .requestMatchers("/api/admin/**").hasRole("ADMIN")
-
-            // 일반 사용자 API
-            .requestMatchers("/api/user/**").authenticated()
-
-            // 그 외 요청 차단
-            .anyRequest().denyAll()
-        );
-
-    return httpSecurity.build();
+        // 세션을 생성하지 않음 (JWT 사용으로 인한 Stateless 설정)
+        .sessionManagement(
+            session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        // HTTP 요청에 대한 권한 설정
+        .authorizeHttpRequests(
+            request ->
+                request
+                    // Swagger 경로 인증 필요
+                    .requestMatchers("/swagger-ui/**", "/v3/api-docs/**")
+                    .permitAll()
+                    // 인증 없이 허용할 경로
+                    .requestMatchers("/api/**")
+                    .permitAll()
+                    // 그 외 모든 요청은 모두 인증 필요
+                    .anyRequest()
+                    .authenticated())
+        .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+    return http.build();
   }
 
-  // 패스워드를 받고 자동으로 인코딩(암호화)할 수 있는 메소드
+  /**
+   * 비밀번호 인코더 Bean 등록
+   **/
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
 
+  /**
+   * 인증 관리자 Bean 등록
+   **/
   @Bean
-  public UserDetailsService userDetailsService() {
-    UserDetails swaggerUser =
-        User.builder()
-            .username(swaggerUsername)
-            .password(passwordEncoder().encode(swaggerPassword))
-            .roles("DEVELOPER")
-            .build();
-
-    return new InMemoryUserDetailsManager(swaggerUser);
+  public AuthenticationManager authenticationManager(
+      AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    return authenticationConfiguration.getAuthenticationManager();
   }
 }
