@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+
+@RestController("week03UserController")
 @RequestMapping("/users")
 public class UserController {
 
@@ -27,7 +28,7 @@ public class UserController {
   public String readUsers() {
     return "사용자 전체 조회";
   }
-  
+
   @PatchMapping("/{id}")
   public String updatePatchUser(@PathVariable Long id) {
     return "id: " + id + " 사용자 수정(정보 추가)";
