@@ -8,7 +8,6 @@ import com.likelion.springpractice.domain.user.repository.UserRepository;
 import com.likelion.springpractice.global.exception.CustomException;
 import com.likelion.springpractice.global.response.BaseResponse;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,13 +15,14 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/auths")
-@Tag(name="Auth", description = "Auth 관리 API")
+@Tag(name = "Auth", description = "Auth 관리 API")
 public class AuthController {
 
     private final AuthService authService;
@@ -30,20 +30,21 @@ public class AuthController {
 
     @Operation(summary = "사용자 로그인", description = "사용자 로그인을 위한 API")
     @PostMapping("/login")
-    public ResponseEntity<BaseResponse<LoginResponse>> login(@RequestBody @Valid LoginRequest loginRequest, HttpServletResponse response) {
+    public ResponseEntity<BaseResponse<LoginResponse>> login(
+        @RequestBody @Valid LoginRequest loginRequest, HttpServletResponse response) {
         LoginResponse loginResponse = authService.login(loginRequest);
 
         //refresh Token 가져오기
-        String refreshToken  = userRepository.findByUsername(loginRequest.getUsername())
-                .orElseThrow(() -> new CustomException(UserErrorCode.USER_NOT_FOUND))
-                .getRefreshToken();
+        String refreshToken = userRepository.findByUsername(loginRequest.getUsername())
+            .orElseThrow(() -> new CustomException(UserErrorCode.USER_NOT_FOUND))
+            .getRefreshToken();
 
         //Set-Cookie 설정 (HttpOnly + Secure)
         Cookie refreshTokenCookie = new Cookie("refresh_token", refreshToken);
         refreshTokenCookie.setHttpOnly(true);
         //refreshTokenCookie.setSecure(true);
         refreshTokenCookie.setPath("/");
-        refreshTokenCookie.setMaxAge(60*60*24*7);
+        refreshTokenCookie.setMaxAge(60 * 60 * 24 * 7);
 
         response.addCookie(refreshTokenCookie);
 

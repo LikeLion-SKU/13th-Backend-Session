@@ -8,13 +8,13 @@ import com.likelion.springpractice.domain.user.exception.UserErrorCode;
 import com.likelion.springpractice.domain.user.repository.UserRepository;
 import com.likelion.springpractice.global.exception.CustomException;
 import com.likelion.springpractice.global.jwt.JwtProvider;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
@@ -26,20 +26,22 @@ public class AuthService {
     private final UserRepository userRepository;
     private final AuthMapper authMapper;
 
+    @Transactional
     public LoginResponse login(LoginRequest loginRequest) {
         User user = userRepository.findByUsername(loginRequest.getUsername())
-                .orElseThrow(() -> new CustomException(UserErrorCode.USER_NOT_FOUND));
+            .orElseThrow(() -> new CustomException(UserErrorCode.USER_NOT_FOUND));
 
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
-                        loginRequest.getPassword());
+            new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
+                loginRequest.getPassword());
 
         //인증 처리ß
         authenticationManager.authenticate(authenticationToken);
 
         //액세스 토큰 발급 및 리프레시 토큰 발급
         String accessToken = jwtProvider.createAccessToken(user.getUsername());
-        String refreshToken = jwtProvider.createRefreshToken(user.getUsername(), UUID.randomUUID().toString());
+        String refreshToken = jwtProvider.createRefreshToken(user.getUsername(),
+            UUID.randomUUID().toString());
 
         //리프레시 토큰 저장
         user.createRefreshToken(refreshToken);
