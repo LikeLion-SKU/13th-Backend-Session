@@ -25,17 +25,17 @@ public class SwaggerConfig {
         localServer.setDescription("Local Server");
 
         return new OpenAPI()
-                .addServersItem(localServer)
-                .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
-                .components(
-                        new Components()
-                                .addSecuritySchemes(
-                                        "bearerAuth",
-                                        new SecurityScheme()
-                                                .type(SecurityScheme.Type.HTTP)
-                                                .scheme("bearer")
-                                                .bearerFormat("JWT")))
-                .info(new Info().title("Swagger API 명세서").version("1.0").description("My Swagger"));
+            .addServersItem(localServer)
+            .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
+            .components(
+                new Components()
+                    .addSecuritySchemes(
+                        "bearerAuth",
+                        new SecurityScheme()
+                            .type(SecurityScheme.Type.HTTP)
+                            .scheme("bearer")
+                            .bearerFormat("JWT")))
+            .info(new Info().title("Swagger API 명세서").version("1.0").description("My Swagger"));
     }
 
     @Bean
@@ -44,13 +44,18 @@ public class SwaggerConfig {
     }
 
     @Bean
-    public GroupedOpenApi customGroupedOpenApiUsers() {
-        return GroupedOpenApi.builder().group("api-my").pathsToMatch("/api/users/**").build();
+    public GroupedOpenApi customGroupedOpenApiPosts() {
+        return GroupedOpenApi.builder().group("api-posts").pathsToMatch("/api/v1/posts/**").build();
     }
 
     @Bean
-    public GroupedOpenApi customGroupedOpenApiPosts() {
-        return GroupedOpenApi.builder().group("api-posts").pathsToMatch("/api/v1/posts/**").build();
+    public GroupedOpenApi customGroupedOpenApiUsers() {
+        return GroupedOpenApi.builder().group("api-users").pathsToMatch("/api/users/**").build();
+    }
+
+    @Bean
+    public GroupedOpenApi customGroupedOpenApiAuths() {
+        return GroupedOpenApi.builder().group("api-auths").pathsToMatch("/api/auths/**").build();
     }
 
 }
