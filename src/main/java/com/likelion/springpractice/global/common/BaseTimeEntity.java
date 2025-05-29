@@ -1,4 +1,4 @@
-package com.likelion.springpractice.global;
+package com.likelion.springpractice.global.common;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
