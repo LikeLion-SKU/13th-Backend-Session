@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
@@ -21,6 +22,7 @@ public class UserService {
   private final PasswordEncoder passwordEncoder;
   private final UserMapper userMapper;
 
+  @Transactional
   public SignUpResponse signUp(SignUpRequest request) {
     if (userRepository.existsByUsername(request.getUsername())) {
       throw new CustomException(UserErrorCode.USERNAME_ALREADY_EXISTS);
