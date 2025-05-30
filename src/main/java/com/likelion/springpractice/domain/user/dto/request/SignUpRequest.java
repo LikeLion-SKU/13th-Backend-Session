@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class SignUpRequest {
 
   @NotBlank(message = "사용자 아이디 항목은 필수입니다.")
-  @Schema(description = "사용자 아이디", example = "heejun0109")
+  @Schema(description = "사용자 아이디", example = "jaeyeon20")
   private String username;
 
   @NotBlank(message = "비밀번호 항목은 필수입니다.")
