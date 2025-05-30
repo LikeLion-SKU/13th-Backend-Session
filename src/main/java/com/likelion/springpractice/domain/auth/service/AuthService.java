@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service // Spring의 Service 계층으로 등록
 @Slf4j // Lombok: 로그 사용 가능하게 함 (log.info 등)
@@ -25,6 +26,7 @@ public class AuthService {
   private final UserRepository userRepository; // 사용자 DB 접근
   private final AuthMapper authMapper; // 응답 DTO 매핑용 매퍼
 
+  @Transactional
   public LoginResponse login(LoginRequest loginRequest) {
     // 사용자 조회 (없으면 예외)
     User user = userRepository.findByUsername(loginRequest.getUsername())

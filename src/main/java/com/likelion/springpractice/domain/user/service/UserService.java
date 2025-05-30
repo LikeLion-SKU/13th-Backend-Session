@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
@@ -21,8 +22,8 @@ public class UserService {
   private final PasswordEncoder passwordEncoder; // 비밀번호 암호화를 위한 인코더
   private final UserMapper userMapper; // User → SignUpResponse 변환 매퍼
 
-  // 회원가입 처리 메서드
-  public SignUpResponse signUp(SignUpRequest request) {
+  @Transactional
+  public SignUpResponse signUp(SignUpRequest request) {  // 회원가입 처리 메서드
 
     // 이미 존재하는 username인지 확인!!
     if (userRepository.existsByUsername(request.getUsername())) {
