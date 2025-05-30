@@ -11,14 +11,14 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 public class CorsConfig { // 서로 다른 도메인 또는 서버 간에 자원을 요청하고 받을 때 생기는 보안제약을 해결
-  @Value("${cors.allowed-origins}")
+  @Value("${cors.allowed-origins}") // 3000포트 : 리엑트 기본포트
   private String[] allowedOrigins;
 
   @Bean
   public UrlBasedCorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
 
-    // 환경 변수에 정의된 출처만 허용
+    // 환경 변수(application.properties)에 정의된 출처만 허용
     configuration.setAllowedOrigins(Arrays.asList(allowedOrigins));
     // 리스트에 작성한 HTTP 메소드 요청만 허용
     configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH"));
