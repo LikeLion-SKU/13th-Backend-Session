@@ -44,7 +44,7 @@ public class AuthService {
         UUID.randomUUID().toString());
 
     // 리프레시 토큰 저장
-    user.createRefreshToken(refreshToken);
+    user.saveRefreshToken(refreshToken);
 
     // Access Token의 만료 시간을 가져옴
     Long expirationTime = jwtProvider.getExpiration(accessToken);
