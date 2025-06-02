@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -43,4 +44,16 @@ public class GlobalExceptionHandler {
     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
         .body(BaseResponse.error(500, "예상치 못한 서버 오류가 발생했습니다."));
   }
+
+  // 잘못된 HTTP Method 사용 처리
+  @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+  public ResponseEntity<BaseResponse<Object>> handleMethodNotSupported(
+      HttpRequestMethodNotSupportedException ex) {
+    log.warn("지원하지 않는 HTTP Method: {}", ex.getMessage());
+    return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
+        .body(BaseResponse.error(HttpStatus.METHOD_NOT_ALLOWED.value(), "지원하지 않는 HTTP Method입니다."));
+  }
+
+  // 예외 핸들링 3개 추가
+
 }
