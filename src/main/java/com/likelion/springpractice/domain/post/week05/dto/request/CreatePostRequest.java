@@ -1,6 +1,7 @@
 package com.likelion.springpractice.domain.post.week05.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 
 @Getter
@@ -11,9 +12,11 @@ public class CreatePostRequest { //게시글 생성 요청 시, 클라이언트�
   //여기서 @RequestBody의 역할이 클라이언트가 HTTP 요청의 body에 담아 보낸 JSON 데이터를
   //자바 객체(CreatePostRequest)로 자동 변환해주는 것!!
 
-  @Schema(description = "게시글 제목", example = "1주차 세션???")
+  @NotBlank(message = "제목은 비어 있을 수 없습니다.")
+  @Schema(description = "게시글 제목", example = "5주차")
   private String title;
 
+  @NotBlank(message = "내용은 비어 있을 수 없습니다.")
   @Schema(description = "게시글 내용", example = "내용내용내용내용")
   private String content;
 

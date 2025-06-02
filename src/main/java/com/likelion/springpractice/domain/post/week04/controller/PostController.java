@@ -5,9 +5,11 @@ import com.likelion.springpractice.domain.post.week05.dto.request.CreatePostRequ
 import com.likelion.springpractice.domain.post.week05.dto.request.UpdatePostRequest;
 import com.likelion.springpractice.domain.post.week05.dto.response.PostResponse;
 import com.likelion.springpractice.domain.post.week05.service.PostService;
+import com.likelion.springpractice.global.response.BaseResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -36,11 +38,12 @@ public class PostController {
   @Operation(summary = "게시글 생성",  //각 API 엔드포인트에 대한 설명, 요약, 응답정보 등을 문서화해주는 Operation
       description = "게시판 페이지에서 게시글 작성 후 생성 버튼을 눌렀을 때 요청되는 API")
   @PostMapping("/posts") // HTTP POST 요청을 "/api/vi/posts" URL로 받을 때 실행됨.
-  public ResponseEntity<PostResponse> createPost(
+  public ResponseEntity<BaseResponse<PostResponse>> createPost(
       @Parameter(description = "게시글 작성 내용")  //Swagger에서 파라미터의 의미를 설명함! 실제 동작엔 관계X
-      @RequestBody CreatePostRequest createPostRequest) { //@RequestBody : JSON -> java객체로 변환!
-    return ResponseEntity.ok( //HTTP상태 코드를 결정! body에 PostResponse객체를 담아서 반환함!
-        postService.createPost(createPostRequest)); //비지니스 로직 처리하는 PosstService의 메서드를 호출함!
+      @RequestBody @Valid CreatePostRequest createPostRequest) { //@RequestBody : JSON -> java객체로 변환!
+    PostResponse reponse = postService.createPost(createPostRequest);
+    return ResponseEntity.ok(
+        BaseResponse.success("게시글 생성 성공", reponse)); //비지니스 로직 처리하는 PosstService의 메서드를 호출함!
   }
 
   @Operation(summary = "게시글 전체 조회",  //Operation의 구성요소 중 하나로, API에 대한 한줄요약.

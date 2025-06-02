@@ -1,10 +1,12 @@
 package com.likelion.springpractice.domain.post.week05.service;
 
+import com.likelion.springpractice.domain.post.exception.PostErrorCode;
 import com.likelion.springpractice.domain.post.week04.entity.Post;
 import com.likelion.springpractice.domain.post.week05.dto.request.CreatePostRequest;
 import com.likelion.springpractice.domain.post.week05.dto.request.UpdatePostRequest;
 import com.likelion.springpractice.domain.post.week05.dto.response.PostResponse;
 import com.likelion.springpractice.domain.post.week05.repository.PostRepository;
+import com.likelion.springpractice.global.exception.CustomException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +28,19 @@ public class PostService {
   public PostResponse createPost(CreatePostRequest createPostRequest) { //DTO를 인자로 받아,
     log.info("[서비스]게시글 생성 시도: title= {}, content={}", createPostRequest.getTitle(),
         createPostRequest.getContent());
+
+    if (createPostRequest.getTitle() == null || createPostRequest.getTitle().isBlank()) {
+      throw new CustomException(PostErrorCode.INVALID_POST_TITLE);
+    }
+
+    if (createPostRequest.getContent() == null || createPostRequest.getContent().isBlank()) {
+      throw new CustomException(PostErrorCode.INVALID_POST_CONTENT);
+    }
+
+    if (createPostRequest.getTitle().length() > 10) {
+      throw new CustomException(PostErrorCode.TITLE_TOO_LONG);
+    }
+
     Post post = Post.builder()  //DTO -> Entity 변환 후!
         .title(createPostRequest.getTitle()) //프론트에서 보낸 "title" 값을 Post 객체의 필드로 넣는 과정
         .content(createPostRequest.getContent())
