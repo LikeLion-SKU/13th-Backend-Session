@@ -1,10 +1,12 @@
 package com.likelion.springpractice.domain.post.week05.service;
 
+import com.likelion.springpractice.domain.post.exception.PostErrorCode;
 import com.likelion.springpractice.domain.post.week04.entity.Post;
 import com.likelion.springpractice.domain.post.week05.dto.request.CreatePostRequest;
 import com.likelion.springpractice.domain.post.week05.dto.request.UpdatePostRequest;
 import com.likelion.springpractice.domain.post.week05.dto.response.PostResponse;
 import com.likelion.springpractice.domain.post.week05.repository.PostRepository;
+import com.likelion.springpractice.global.exception.CustomException;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,18 @@ public class PostService {
     @Transactional
     public PostResponse createPost(CreatePostRequest createPostRequest) {
         log.info("[서비스] 게시글 생성 시도 : title= {}, content= {}", createPostRequest.getTitle(), createPostRequest.getContent());
+
+        if(createPostRequest.getTitle() == null || createPostRequest.getTitle().isBlank()) {
+            throw new CustomException(PostErrorCode.INVALID_POST_TITLE);
+        }
+
+        if(createPostRequest.getContent() == null || createPostRequest.getContent().isBlank()) {
+            throw new CustomException(PostErrorCode.INVALID_POST_CONTENT);
+        }
+
+        if(createPostRequest.getTitle().length() > 10 ) {
+            throw new CustomException(PostErrorCode.TITLE_TOO_LONG);
+        }
         Post post = Post.builder()
             .title(createPostRequest.getTitle())
             .content(createPostRequest.getContent())
