@@ -37,10 +37,10 @@ public class PostService {
             throw new CustomException(PostErrorCode.TITLE_TOO_LONG);
         }
         Post post = Post.builder()
-            .title(createPostRequest.getTitle())
-            .content(createPostRequest.getContent())
-            .views(0L)
-            .build();
+                .title(createPostRequest.getTitle())
+                .content(createPostRequest.getContent())
+                .views(0L)
+                .build();
         postRepository.save(post);
         log.info("[서비스] 게시글 생성 완료: id= {}, title= {}, content= {}", post.getId(), post.getTitle(), post.getContent());
         return toPostResponse(post);
@@ -59,10 +59,10 @@ public class PostService {
     public PostResponse getPostById(Long id) {
         log.info("[서비스] 게시글 단일 조회 시도: id= {}", id);
         Post post = postRepository.findById(id)
-            .orElseThrow(() -> {
-                log.warn("[서비스] 게시글 조회 실패 - 존재하지 않음 : id={}", id);
-                return new IllegalArgumentException("게시글을 찾을 수 없습니다.");
-            });
+                .orElseThrow(() -> {
+                    log.warn("[서비스] 게시글 조회 실패 - 존재하지 않음 : id={}", id);
+                    return new IllegalArgumentException("게시글을 찾을 수 없습니다.");
+                });
         post.increaseViews(post.getViews());
         log.info("[서비스] 게시글 단일 조회 성공: id= {}", id);
         return toPostResponse(post);
@@ -74,12 +74,12 @@ public class PostService {
         log.info("[서비스] 게시글 수정 시도: id= {}, newTitle= {}, newContent= {}", id, updatePostRequest.getTitle(), updatePostRequest.getContent());
 
         Post post = postRepository.findById(id)
-            .orElseThrow(() -> {
-                log.warn("[서비스] 게시글 수정 실패 - 존재하지 않음 : id ={}", id);
-                return new IllegalArgumentException("게시글을 찾을 수 없습니다.");
-            });
+                .orElseThrow(() -> {
+                    log.warn("[서비스] 게시글 수정 실패 - 존재하지 않음 : id ={}", id);
+                    return new IllegalArgumentException("게시글을 찾을 수 없습니다.");
+                });
         post.update(updatePostRequest.getTitle(), updatePostRequest.getContent(),
-            post.getViews());
+                post.getViews());
 
         log.info("[서비스] 게시글 수정 완료 : id= {}, title= {}, content= {}", post.getId(), post.getTitle(), post.getContent());
         return toPostResponse(post);
@@ -90,10 +90,10 @@ public class PostService {
     public Boolean deletePost(Long id) {
         log.info("[서비스] 게시글 삭제 시도 : id= {}", id);
         Post post = postRepository.findById(id)
-            .orElseThrow(() -> {
-                log.warn("[서비스] 게시글 삭제 실패 - 존재하지 않음 : id={}", id);
-                return new IllegalArgumentException("게시글을 찾을 수 없습니다.");
-            });
+                .orElseThrow(() -> {
+                    log.warn("[서비스] 게시글 삭제 실패 - 존재하지 않음 : id={}", id);
+                    return new IllegalArgumentException("게시글을 찾을 수 없습니다.");
+                });
         postRepository.deleteById(id);
         log.info("[서비스] 게시글 삭제 완료 : id= {}", id);
         return true;
@@ -114,7 +114,7 @@ public class PostService {
     //Entity를 DTO로 변환해주는 메소드
     private PostResponse toPostResponse(Post post) {
         return PostResponse.builder().postId(post.getId())
-            .title(post.getTitle()).content(post.getContent()).views(post.getViews()).build();
+                .title(post.getTitle()).content(post.getContent()).views(post.getViews()).build();
     }
 
 }

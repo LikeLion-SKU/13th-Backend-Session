@@ -11,26 +11,29 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class UserService {
+
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
 
+    @Transactional
     public SignUpResponse signUp(SignUpRequest request) {
-        if(userRepository.existsByUsername(request.getUsername())) {
+        if (userRepository.existsByUsername(request.getUsername())) {
             throw new CustomException(UserErrorCode.USERNAME_ALREADY_EXISTS);
         }
 
         String encodedPassword = passwordEncoder.encode(request.getPassword());
 
         User user = User.builder()
-                .username(request.getUsername())
-                .password(encodedPassword)
-                .build();
+            .username(request.getUsername())
+            .password(encodedPassword)
+            .build();
 
         User savedUser = userRepository.save(user);
         log.info("New user registered: {}", savedUser.getUsername());
