@@ -74,7 +74,7 @@ public class SwaggerConfig {
 ```
 
 - Swagger 사용 화면
-  ![img.png](images/img.png)
+  ![img.png](images/WEEK03-1.png)
 
 ## ➡️ **CRUD(in SpringBoot)**
 
@@ -217,6 +217,7 @@ public class SearchController {
     }
 }
 ```
+
 💡/search?keyword=spring 요청 시 "Search Keyword: spring" 반환
 
 6. **@RequestBody**
