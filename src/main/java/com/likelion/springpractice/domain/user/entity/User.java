@@ -45,7 +45,7 @@ public class User extends BaseTimeEntity {
   @Builder.Default
   private Role role = Role.USER;
 
-  public void createRefreshToken(String refreshToken) {
+  public void saveRefreshToken(String refreshToken) {
     this.refreshToken = refreshToken;
   }
 
