@@ -44,6 +44,7 @@ public class JwtProvider {
         .compact();
   }
 
+  // 엑세스 토큰 만료시간 조회
   public long getExpiration(String accessToken) {
     Claims claims = parseClaims(accessToken);
 
@@ -67,6 +68,7 @@ public class JwtProvider {
         .compact();
   }
 
+  // 토큰 유효성 검사(AuthenticationToken)
   public boolean validateToken(String token) {
     try {
       parseClaims(token);
@@ -84,14 +86,17 @@ public class JwtProvider {
     }
   }
 
+  // 토큰 소유자 정보 추출
   public String extractSocialId(String token) {
     return parseClaims(token).getSubject();
   }
 
+  // 토큰 Id 정보 추출 (RefershToken에 사용)
   public String extractTokenId(String token) {
     return parseClaims(token).getId();
   }
 
+  // 클레임 추출
   private Claims parseClaims(String token) {
     return Jwts.parserBuilder()
         .setSigningKey(getSigningKey())
