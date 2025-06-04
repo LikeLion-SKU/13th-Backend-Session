@@ -2,14 +2,18 @@ package com.likelion.springpractice.global.exception;
 
 import com.likelion.springpractice.global.Response.BaseResponse;
 import com.likelion.springpractice.global.exception.model.BaseErrorCode;
+import java.nio.file.AccessDeniedException;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingPathVariableException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @Slf4j
 @RestControllerAdvice
@@ -55,5 +59,46 @@ public class GlobalExceptionHandler {
   }
 
   // 예외 핸들링 3개 추가
+  // 1. AccessDeniedException – 권한 없음으로 인한 인가 실패
+  @ExceptionHandler(AccessDeniedException.class)
+  public ResponseEntity<BaseResponse<Object>> handleAccessDeniedException(
+      AccessDeniedException ex) {
+    log.warn("접근 권한 없음: {}", ex.getMessage());
+    return ResponseEntity.status(HttpStatus.FORBIDDEN)
+        .body(BaseResponse.error(HttpStatus.FORBIDDEN.value(), "접근 권한이 없습니다."));
+  }
 
+  // 2. MissingServletRequestParameterException - 필수 쿼리 파라미터 누락
+  @ExceptionHandler(MissingServletRequestParameterException.class)
+  public ResponseEntity<BaseResponse<Object>> handleMissingRequestParam(
+      MissingServletRequestParameterException ex) {
+    String errorMessage = String.format("필수 요청 파라미터 누락: %s", ex.getParameterName());
+    log.warn(errorMessage);
+    return ResponseEntity.badRequest()
+        .body(BaseResponse.error(HttpStatus.BAD_REQUEST.value(), errorMessage));
+  }
+
+  // 3. MissingPathVariableException - @PathVariable 값 누락
+  @ExceptionHandler(MissingPathVariableException.class)
+  public ResponseEntity<BaseResponse<Object>> handleMissingPathVariable(
+      MissingPathVariableException ex) {
+    log.warn("PathVariable 누락: {}", ex.getVariableName());
+    return ResponseEntity.badRequest()
+        .body(BaseResponse.error(400, "필수 경로 변수(" + ex.getVariableName() + ")가 누락되었습니다."));
+  }
+
+  // 4. MethodArgumentTypeMismatchException - 파라미터 타입 불일치
+  @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+  public ResponseEntity<BaseResponse<Object>> handleMethodArgumentTypeMismatch(
+      MethodArgumentTypeMismatchException ex) {
+    String paramName = ex.getName();
+    String requiredType =
+        ex.getRequiredType() != null ? ex.getRequiredType().getSimpleName() : "알 수 없음";
+    String errorMessage = String.format("요청 파라미터 '%s'는 '%s' 타입이어야 합니다.", paramName, requiredType);
+
+    log.warn("파라미터 타입 불일치: {}", ex.getMessage());
+
+    return ResponseEntity.badRequest()
+        .body(BaseResponse.error(HttpStatus.BAD_REQUEST.value(), errorMessage));
+  }
 }
