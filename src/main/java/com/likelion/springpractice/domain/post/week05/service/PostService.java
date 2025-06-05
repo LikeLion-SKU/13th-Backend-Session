@@ -78,7 +78,7 @@ public class PostService {
     Post post = postRepository.findById(id)
         .orElseThrow(() -> {
           log.warn("[서비스] 게시글 조회 실패 - 존재하지 않음: id={}", id);
-          return new IllegalArgumentException("게시글을 찾을 수 없습니다.");
+          return new CustomException(PostErrorCode.POST_NOT_FOUND);
         });
 
     log.info("[서비스] 게시글 단일 조회 성공: id={}", id);
@@ -89,19 +89,34 @@ public class PostService {
   // 게시글 수정
   @Transactional
   public PostResponse updatePost(Long id, UpdatePostRequest updatePostRequest) {
+    if (updatePostRequest.getTitle() == null || updatePostRequest.getTitle().isBlank()) {
+      throw new CustomException(PostErrorCode.INVALID_POST_TITLE);
+    }
+
+    if (updatePostRequest.getContent() == null || updatePostRequest.getContent().isBlank()) {
+      throw new CustomException(PostErrorCode.INVALID_POST_CONTENT);
+    }
+
     log.info("[서비스] 게시글 수정 시도: id={}, newTitle={}, nowContent={}",
         id, updatePostRequest.getTitle(), updatePostRequest.getContent());
     Post post = postRepository.findById(id)
         .orElseThrow(() -> {
           log.warn("[서비스] 게시글 수정 실패 - 존재하지 않음: id={}", id);
-          return new IllegalArgumentException("게시글을 찾을 수 없습니다.");
+          return new CustomException(PostErrorCode.POST_NOT_FOUND);
         });
+
+    // 게시글 변경이 없는 경우 예외 처리
+    if (post.getTitle().equals(updatePostRequest.getTitle()) &&
+        post.getContent().equals(updatePostRequest.getContent())) {
+      throw new CustomException(PostErrorCode.NO_CHANGES_DETECTED);
+    }
+
     post.update(updatePostRequest.getTitle(), updatePostRequest.getContent());
 
     log.info("[서비스] 게시글 수정 완료: id={}, title={}, content={}",
         post.getId(), updatePostRequest.getTitle(), updatePostRequest.getContent());
     return toPostResponse(post);
-
+  }
     /* [Post 객체가 새로 생성되는 문제 발생]
      * -> 동일한 id를 사용하여 객체 저장
      * -> JPA가 이미 존재하는 데이터로 인식하여 merge() 실행
@@ -116,7 +131,6 @@ public class PostService {
 
     return toPostResponse(updatedPost);
     */
-  }
 
   // 게시글 삭제
   @Transactional
@@ -125,10 +139,10 @@ public class PostService {
     Post post = postRepository.findById(id)
         .orElseThrow(() -> {
           log.warn("[서비스] 게시글 삭제 실패 - 존재하지 않음: id={}", id);
-          return new IllegalArgumentException("게시글을 찾을 수 없습니다.");
+          return new CustomException(PostErrorCode.POST_NOT_FOUND);
         });
 
-    postRepository.deleteById(id);
+    postRepository.delete(post);
     log.info("[서비스] 게시글 삭제 완료: id={}", id);
     return true;
   }
@@ -153,3 +167,8 @@ public class PostService {
         .toList();
   }
 }
+
+/*
+ [.orElseThrow 사용 시]
+ throw new CustomException을 사용하는 것이 아니라 return new CustomException으로 해야함
+ */
