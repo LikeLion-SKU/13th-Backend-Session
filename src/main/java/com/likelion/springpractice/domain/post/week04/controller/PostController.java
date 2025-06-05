@@ -1,9 +1,11 @@
 package com.likelion.springpractice.domain.post.week04.controller;
 
+import com.fasterxml.jackson.databind.ser.Serializers.Base;
 import com.likelion.springpractice.domain.post.week05.dto.reponse.PostResponse;
 import com.likelion.springpractice.domain.post.week05.dto.request.CreatePostRequest;
 import com.likelion.springpractice.domain.post.week05.dto.request.UpdatePostRequest;
 import com.likelion.springpractice.domain.post.week05.service.PostService;
+import com.likelion.springpractice.global.response.BaseResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -31,9 +33,11 @@ public class PostController {
   @Operation(summary = "게시글 생성",
       description = "게시판 페이지에서 게시글 작성 후 생성 버튼을 눌렀을 때 요청되는 API")
   @PostMapping("/posts")
-  public ResponseEntity<PostResponse> createPost(@Parameter(description = "게시글 작성 내용")
-  @RequestBody CreatePostRequest createPostRequest) { // dto
-    return ResponseEntity.ok(postService.createPost(createPostRequest));
+  public ResponseEntity<BaseResponse<PostResponse>> createPost(
+      @Parameter(description = "게시글 작성 내용")
+      @RequestBody CreatePostRequest createPostRequest) { // dto
+    PostResponse response = postService.createPost(createPostRequest);
+    return ResponseEntity.ok(BaseResponse.success("게시글 생성 성공", response));
   }
 
   @Operation(summary = "게시글 전체 조회",
