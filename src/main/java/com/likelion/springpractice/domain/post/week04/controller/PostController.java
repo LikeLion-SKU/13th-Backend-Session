@@ -4,9 +4,11 @@ import com.likelion.springpractice.domain.post.week05.dto.request.CreatePostRequ
 import com.likelion.springpractice.domain.post.week05.dto.request.UpdatePostRequest;
 import com.likelion.springpractice.domain.post.week05.dto.response.PostResponse;
 import com.likelion.springpractice.domain.post.week05.service.PostService;
+import com.likelion.springpractice.global.response.BaseResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -30,9 +32,11 @@ public class PostController {
   @Operation(summary = "게시글 생성",
       description = "게시판 페이지에서 게시글 작성 후 생성 버튼을 눌렀을때 요청되는 API")
   @PostMapping("/posts")
-  public ResponseEntity<PostResponse> createPost(
-      @Parameter(description = "게시글 작성내용") @RequestBody CreatePostRequest CreatePostRequest) {
-    return ResponseEntity.ok(postService.createPost(CreatePostRequest));
+  public ResponseEntity<BaseResponse<PostResponse>> createPost(
+      @Parameter(description = "게시글 작성내용")
+      @RequestBody @Valid CreatePostRequest CreatePostRequest) {
+    PostResponse response = postService.createPost(CreatePostRequest);
+    return ResponseEntity.ok(BaseResponse.success("게시글 생성 성공", response));
   }
 
   @Operation(summary = "게시글 전체 조회",
@@ -53,10 +57,11 @@ public class PostController {
   @Operation(summary = "게시글 수정",
       description = "게시판 페이지에서 게시글 수정 후 수정 완료 버튼을 눌렀을떄 요청되는 API")
   @PutMapping("/posts/{id}")
-  public ResponseEntity<PostResponse> updatePost(
+  public ResponseEntity<BaseResponse<PostResponse>> updatePost(
       @Parameter(description = "게시글 수정 내용") @RequestBody UpdatePostRequest updatePostRequest,
       @Parameter(description = "특정 게시글 ID") @PathVariable Long id) {
-    return ResponseEntity.ok(postService.updatePost(id, updatePostRequest));
+    PostResponse response = postService.updatePost(id, updatePostRequest);
+    return ResponseEntity.ok(BaseResponse.success("게시글 수정 성공", response));
   }
 
   @Operation(summary = "게시글 삭제",
