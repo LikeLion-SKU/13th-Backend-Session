@@ -34,7 +34,7 @@ public class PostController {
   @PostMapping("/posts")
   public ResponseEntity<BaseResponse<PostResponse>> createPost(
       @Parameter(description = "게시글 작성 내용")
-      @RequestBody @Valid CreatePostRequest createPostRequest) {
+      @Valid @RequestBody CreatePostRequest createPostRequest) {
     PostResponse response = postService.createPost(createPostRequest);
     return ResponseEntity.ok(BaseResponse.success("게시글 생성 성공", response));
   }
@@ -71,7 +71,7 @@ public class PostController {
       description = "게시판 페이지에서 게시글 수정 후 수정 완료 버튼을 눌렀을 때 요청되는 API")
   @PutMapping("/posts/{id}")
   public ResponseEntity<PostResponse> updatePost(
-      @Parameter(description = "게시글 수정 내용") @RequestBody UpdatePostRequest updatePostRequest,
+      @Parameter(description = "게시글 수정 내용") @Valid @RequestBody UpdatePostRequest updatePostRequest,
       @Parameter(description = "특정 게시글 ID") @PathVariable Long id) {
     return ResponseEntity.ok(postService.updatePost(id, updatePostRequest));
   }

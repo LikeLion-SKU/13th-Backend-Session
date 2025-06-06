@@ -55,6 +55,9 @@ public class PostService {
   public List<PostResponse> getALlPosts() {
     log.info("[서비스] 게시글 전체 조회 시도");
     List<Post> postList = postRepository.findAll();
+    if (postList.isEmpty()) {
+      throw new CustomException(PostErrorCode.POST_NONE); //조회할 게시글이 없습니다.
+    }
     log.info("[서비스] 조회된 게시글 수: {}", postList.size());
     return postList.stream().map(this::toPostResponse).toList();
   }
@@ -63,6 +66,9 @@ public class PostService {
   @Transactional(readOnly = true)
   public List<PostResponse> getSortedPostsByCreatedAt() {
     List<Post> postListByCreatedAt = postRepository.findAllByOrderByCreatedAtDesc();
+    if (postListByCreatedAt.isEmpty()) {
+      throw new CustomException(PostErrorCode.POST_NONE); //조회할 게시글이 없습니다.
+    }
     return postListByCreatedAt.stream().map(this::toPostResponse).toList();
   }
 
@@ -70,6 +76,9 @@ public class PostService {
   @Transactional(readOnly = true)
   public List<PostResponse> getSortedPostsByViews() {
     List<Post> postListByViews = postRepository.findAllByOrderByViewsDesc();
+    if (postListByViews.isEmpty()) {
+      throw new CustomException(PostErrorCode.POST_NONE); //조회할 게시글이 없습니다.
+    }
     return postListByViews.stream().map(this::toPostResponse).toList();
   }
 
@@ -80,7 +89,7 @@ public class PostService {
     Post post = postRepository.findById(id)
         .orElseThrow(() -> {
           log.warn("[서비스] 게시글 조회 실패 - 존재하지 않음: id={}", id);
-          return new IllegalArgumentException("게시글을 찾을 수 없습니다.");
+          return new CustomException(PostErrorCode.POST_NOT_FOUND);
         });
 
     //조회수 1증가
@@ -98,7 +107,7 @@ public class PostService {
     Post post = postRepository.findById(id)
         .orElseThrow(() -> {
           log.warn("[서비스] 게시글 수정 실패 - 존재하지 않음: id= {}", id);
-          return new IllegalArgumentException("게시글을 찾을 수 없습니다.");
+          return new CustomException(PostErrorCode.POST_NOT_FOUND);
         });
 
     post.updatePost(updatePostRequest.getTitle(), updatePostRequest.getContent());
@@ -115,7 +124,7 @@ public class PostService {
     Post post = postRepository.findById(id)
         .orElseThrow(() -> {
           log.warn("[서비스] 게시글 삭제 실패 - 존재하지 않음: id= {}", id);
-          return new IllegalArgumentException("게시글을 찾을 수 없습니다.");
+          return new CustomException(PostErrorCode.POST_NOT_FOUND);
         });
 
     postRepository.delete(post);
