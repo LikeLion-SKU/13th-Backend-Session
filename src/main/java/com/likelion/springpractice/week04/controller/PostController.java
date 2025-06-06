@@ -1,5 +1,6 @@
 package com.likelion.springpractice.week04.controller;
 
+import com.likelion.springpractice.global.response.BaseResponse;
 import com.likelion.springpractice.week05.dto.request.CreatePostRequest;
 import com.likelion.springpractice.week05.dto.request.UpdatePostRequest;
 import com.likelion.springpractice.week05.dto.response.PostResponse;
@@ -7,6 +8,7 @@ import com.likelion.springpractice.week05.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -30,9 +32,11 @@ public class PostController {
   @Operation(summary = "게시글 생성",
       description = "게시판 페이지에서 게시글 생성 후 생성 버튼을 눌렀을 때 요청되는 API")
   @PostMapping("/posts")
-  public ResponseEntity<PostResponse> createPost(
-      @Parameter(description = "게시글 작성 내용") @RequestBody CreatePostRequest createPostRequest) {
-    return ResponseEntity.ok(postService.createPost(createPostRequest));
+  public ResponseEntity<BaseResponse<PostResponse>> createPost(
+      @Parameter(description = "게시글 작성 내용")
+      @RequestBody @Valid CreatePostRequest createPostRequest) {
+    PostResponse response = postService.createPost(createPostRequest);
+    return ResponseEntity.ok(BaseResponse.success("게시글 생성 성공", response));
   }
 
   @Operation(summary = "게시글 전체 조회",
