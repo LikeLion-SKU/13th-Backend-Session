@@ -1,5 +1,4 @@
-![image](https://github.com/user-attachments/assets/45c5068c-ebe0-4a20-84d5-cf3a9401a718)<details>
-  
+
   <summary>10주차 미션</summary>
 
   <details>
