@@ -1,29 +1,26 @@
-
-# 📘 Spring Boot API 응답 통일 및 예외 처리 정리
+# Spring Boot (Week 10) - API 응답 통일 및 예외 처리 정리
 
 ---
 
-## ✅ 응답 통일 (Response Unification)
+## 응답 통일 (Response Unification)
 
-### 📌 응답 통일이란?
 API가 클라이언트(프론트엔드나 외부 서비스)로 응답을 줄 때, **일관된 형식(JSON 등)** 으로 응답을 주는 작업이다.
 
 - 다양한 API를 호출해도 예측 가능한 구조로 응답을 받을 수 있음
 - 사용성과 유지보수성이 향상됨
 
-### 📌 응답 통일 구성 요소
+### 응답 통일 구성 요소
 1. **BaseResponse<T>**: 공통 응답 틀 정의
 2. **Controller에서 `BaseResponse.success(...)`로 통일**
 3. **예외 처리 시 `BaseResponse.error(...)`로 통일**
 
 ---
 
-## ⚠️ 프로그램 오류 (Program Error)
+## 프로그램 오류 (Program Error)
 
-### 📌 프로그램 오류란?
 프로그램 실행 중 **정상적으로 대처하지 못하는 상황**에서 비정상 종료되거나 에러 팝업이 발생하는 것
 
-### 📌 오류의 종류
+### 오류의 종류
 | 구분             | 설명                             |
 |------------------|----------------------------------|
 | Compile Error    | 컴파일 타임의 문법 오류 등       |
@@ -32,15 +29,15 @@ API가 클라이언트(프론트엔드나 외부 서비스)로 응답을 줄 때
 
 ---
 
-## 🧨 예외 처리 (Exception Handling)
+## 예외 처리 (Exception Handling)
 
-### 📌 예외란?
+### 예외
 - 실행 중 발생하는 예기치 않은 에러 (Runtime Error)
 - 컴파일러는 컴파일 시 문법 오류는 잡지만, **런타임 예외는 잡지 못함**
 
 ---
 
-## 🛠️ 예외 처리 방식
+## 예외 처리 방식
 
 ### 1. 로컬 예외 처리 (try-catch)
 ```java
@@ -66,7 +63,7 @@ try {
 
 ---
 
-## 🔄 예외 처리 흐름
+## 예외 처리 흐름
 
 ### ✅ 정상 흐름
 
@@ -90,7 +87,7 @@ Client → Controller → Service → (Exception 발생)
 
 ---
 
-## 🧩 실제 예시
+## 실제 예시
 
 ### [CustomException 사용 예시]
 ```java
@@ -119,11 +116,11 @@ public ResponseEntity<BaseResponse> handleCustomException(CustomException e) {
 
 ---
 
-## ✅ 대표적인 예외 처리: 유효성 검사 (@Valid)
+## 대표적인 예외 처리: 유효성 검사 (@Valid)
 
 ---
 
-### 📌 유효성 검사란?
+### 유효성 검사
 
 - 사용자가 보낸 데이터가 조건에 맞는지를 검사하는 것
 - Spring에서는 클라이언트가 Controller에 요청을 보낼 때,
@@ -136,7 +133,7 @@ implementation 'org.springframework.boot:spring-boot-starter-validation'
 
 ---
 
-### 📌 유효성 검사 조건
+### 유효성 검사 조건
 
 - DTO 클래스에 제약 어노테이션(@NotBlank, @Email 등)이 있어야 함
 - Controller 메서드 파라미터에 `@Valid` 사용 필요
@@ -153,7 +150,7 @@ public ResponseEntity<?> register(@Valid @RequestBody UserDto userDto) {
 
 ---
 
-### 🔧 자주 사용하는 제약 어노테이션
+### 자주 사용하는 제약 어노테이션
 
 | 어노테이션       | 설명 |
 |------------------|------|
@@ -166,12 +163,12 @@ public ResponseEntity<?> register(@Valid @RequestBody UserDto userDto) {
 | `@Email`         | 이메일 형식인지 검사 |
 | `@Size(min, max)`| 문자열의 길이를 검사 |
 
-> 📌 `@Size(min = 10, max = 100)`처럼 설정 가능  
+> `@Size(min = 10, max = 100)`처럼 설정 가능  
 > 기본값: `min = 0`, `max = 정수형의 최대값`
 
 ---
 
-### 📤 예시: 실패 시 응답(JSON 형태)
+### 예시: 실패 시 응답(JSON 형태)
 ```json
 {
   "success": false,
@@ -183,7 +180,7 @@ public ResponseEntity<?> register(@Valid @RequestBody UserDto userDto) {
 
 ---
 
-## ✅ 핵심 요약
+## 핵심 요약
 
 | 구성 요소            | 역할 설명 |
 |---------------------|------------|
