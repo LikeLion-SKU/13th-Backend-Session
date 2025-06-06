@@ -2,15 +2,20 @@ package com.likelion.springpractice.domain.post.week05.dto.request;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
 @Getter
 @Schema(title = "UpdatePostRequest: 게시글 수정 요청 DTO")
 public class UpdatePostRequest {
 
+  @NotBlank(message = "제목은 비어 있을 수 없습니다.")
   @Schema(description = "게시글 제목", example = "5주차 세션")
   private String title;
 
+  @NotBlank(message = "내용은 비어 있을 수 없습니다.")
+  @Size(max = 10, message = "내용은 최대 10자까지 입력할 수 있습니다.")
   @Schema(description = "게시글 내용", example = "이번주 세션도 화이팅!")
   private String content;
 }

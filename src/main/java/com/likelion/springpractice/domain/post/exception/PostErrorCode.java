@@ -12,6 +12,9 @@ public enum PostErrorCode implements BaseErrorCode {
   INVALID_POST_TITLE("POST_4001", "게시글 제목은 필수입니다.", HttpStatus.BAD_REQUEST),
   INVALID_POST_CONTENT("POST_4002", "게시글 내용은 필수입니다.", HttpStatus.BAD_REQUEST),
   TITLE_TOO_LONG("POST_4003", "게시글 제목은 10자 이하로 작성해야 합니다.", HttpStatus.BAD_REQUEST);
+  // 게시글 조회 실패 enum 정의
+
+
   private final String code;
   private final String message;
   private final HttpStatus status;
