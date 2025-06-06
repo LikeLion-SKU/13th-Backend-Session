@@ -54,6 +54,7 @@ public class PostService {
   }
 
   //게시글 전체 조회
+  @Transactional
   public List<PostResponse> getAllPosts() {
     log.info("[서비스] 게시글 전체 조회 시도");
     List<Post> postList = postRepository.findAll(); //findAll을 통해 모든 게시글 Entity를 가져옴!
@@ -63,12 +64,13 @@ public class PostService {
   }
 
   //게시글 단일 조회
+  @Transactional
   public PostResponse getPostById(Long id) {
     log.info("[서비스] 게시글 단일 조회 시도: id={}", id);
     Post post = postRepository.findById(id)
         .orElseThrow(() -> {
           log.warn("[서비스] 게시글 조회 실패 - 존재하지 않음: id={}", id);
-          return new IllegalArgumentException("게시글을 찾을 수 없습니다.");
+          return new CustomException(PostErrorCode.POST_NOT_FOUND);
         });
     post.increaseViews();
     log.info("[서비스] 게시글 단일 조회 성공: id={}", id);
@@ -80,24 +82,21 @@ public class PostService {
   public PostResponse updatePost(Long id, UpdatePostRequest updatePostRequest) {
     log.info("[서비스] 게시글 수정 시도: id= {}, newTitle= {}, newContent= {}", id,
         updatePostRequest.getTitle(), updatePostRequest.getContent());
+
+    if (updatePostRequest.getTitle() == null || updatePostRequest.getTitle().isBlank()) {
+      throw new CustomException(PostErrorCode.INVALID_POST_TITLE);
+    }
+
+    if (updatePostRequest.getContent() == null || updatePostRequest.getContent().isBlank()) {
+      throw new CustomException(PostErrorCode.INVALID_POST_CONTENT);
+    }
     Post post = postRepository.findById(id)
         .orElseThrow(() -> {
           log.warn("[서비스] 게시글 수정 실패 - 존재하지 않음: id={}", id);
-          return new IllegalArgumentException("게시글을 찾을 수 없습니다.");
+          return new CustomException(PostErrorCode.POST_NOT_FOUND);
         });
-    //post.update(updatePostRequest.getTitle(), updatePostRequest.getContent(),
-    //    updatePostRequest.getViews());
 
     post.update(updatePostRequest.getTitle(), updatePostRequest.getContent());
-    //이렇게 하면 DB에서 title, content 값만 바뀌고, 나머지 값들(createAt)등은 그대로 유지됨!
-
-//    Post updatedPost = Post.builder()
-//        .id(post.getId()) //중요!! 바꾸지 않을 값은 기존 값으로 build해줘야 함!!
-//        .title(updatePostRequest.getTitle())
-//        .content(updatePostRequest.getContent())
-//        .build();
-//    postRepository.save(updatedPost);
-//    return toPostResponse(updatedPost);
     log.info("[서비스] 게시글 수정 완료: id={}, title= {}, content= {}", id, post.getTitle(),
         post.getContent());
     return toPostResponse(post);
@@ -110,7 +109,7 @@ public class PostService {
     Post post = postRepository.findById(id)
         .orElseThrow(() -> {
           log.warn("[서비스] 게시글 삭제 실패 - 존재하지 않음: id={}", id);
-          return new IllegalArgumentException("게시글을 찾을 수 없습니다.");
+          return new CustomException(PostErrorCode.POST_NOT_FOUND);
         });
     postRepository.deleteById(id);
     log.info("[서비스] 게시글 삭제 완료: id= {}", id);
