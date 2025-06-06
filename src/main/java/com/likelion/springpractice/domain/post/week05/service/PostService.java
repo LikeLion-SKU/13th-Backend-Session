@@ -34,7 +34,7 @@ public class PostService {
             throw new CustomException(PostErrorCode.INVALID_POST_CONTENT);
         }
 
-        if (createPostRequest.getContent().length() > 10) {
+        if (createPostRequest.getTitle().length() > 10) {
             throw new CustomException(PostErrorCode.TITLE_TOO_LONG);
         }
 
@@ -63,7 +63,7 @@ public class PostService {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> {
                         log.warn("[서비스] 게시글 조회 실패 - 존재하지 않음: id={}", id);
-                    return new IllegalArgumentException("게시글을 찾을 수 없습니다.");
+                    return new CustomException(PostErrorCode.POST_NOT_FOUND);
     });
         log.info("[서비스] 게시글 단일 조회 성공: id= {}", id);
         post.addViews(); // 조회수 1 증가
@@ -78,7 +78,7 @@ public class PostService {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> {
                     log.warn("[서비스] 게시글 수정 실패 - 존재하지 않음: id= {}", id);
-                    return new IllegalArgumentException("게시글을 찾을 수 없습니다.");
+                    return new CustomException(PostErrorCode.POST_NOT_FOUND);
                 });
 
         post.update(updatePostRequest.getTitle(), updatePostRequest.getContent());
@@ -95,7 +95,7 @@ public class PostService {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> {
                     log.warn("[서비스] 게시글 삭제 실패 - 존재하지 않음: id= {}", id);
-                    return new IllegalArgumentException("게시글을 찾을 수 없습니다.");
+                    return new CustomException(PostErrorCode.POST_NOT_FOUND);
                 });
 
         postRepository.deleteById(id);
