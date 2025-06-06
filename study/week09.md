@@ -1,5 +1,4 @@
-
-# JWT(JSON Web Token) 개념 및 설계 정리
+# Spring Boot (Week 9) - JWT(JSON Web Token) 개념 및 설계 정리
 
 ## JWT
 - 로그인 이후 인증 정보를 안전하게 주고받는 토큰 기반 인증 방식입니다.
