@@ -73,12 +73,28 @@ public class PostService {
     log.info("[서비스] 게시글 수정 시도: id= {}, newTitle= {}, newContent= {}", id,
         updatePostRequest.getTitle(), updatePostRequest.getContent());
     Post post = postRepository.findById(id)
-        .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다."));
-    //내용 수정
+        .orElseThrow(() -> {
+          log.warn("[서비스] 게시글 수정 실패 - 존재하지 않음 : id ={}", id);
+          return new CustomException(PostErrorCode.POST_NOT_FOUND);
+        });
+
+    if (updatePostRequest.getTitle() == null || updatePostRequest.getTitle().isBlank()) {
+      throw new CustomException(PostErrorCode.INVALID_IP_POST_TITLE);
+    }
+
+    if (updatePostRequest.getContent() == null || updatePostRequest.getContent().isBlank()) {
+      throw new CustomException(PostErrorCode.INVALID_IP_POST_CONTENT);
+    }
+
+    if (updatePostRequest.getTitle().length() > 10) {
+      throw new CustomException(PostErrorCode.TITLE_TOO_LONG);
+    }
+
     post.update(updatePostRequest.getTitle(), updatePostRequest.getContent());
-    log.info("[서비스] 게시글 수정 완료: id= {}, title= {}, content= {}", post.getId(),
-        post.getTitle(), post.getContent());
-    return toPostResponse(post); // post는 JPA의 dirty checking으로 자동 저장됨
+
+    log.info("[서비스] 게시글 수정 완료 : id= {}, title= {}, content= {}", post.getId(), post.getTitle(),
+        post.getContent());
+    return toPostResponse(post);
   }
 
   //게시물 삭제
