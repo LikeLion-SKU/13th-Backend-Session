@@ -4,6 +4,8 @@ import com.likelion.springpractice.global.exception.model.BaseErrorCode;
 import com.likelion.springpractice.global.response.BaseResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.stream.Collectors;
@@ -34,6 +36,33 @@ public class GlobalExceptionHandler {
             .collect(Collectors.joining(" / "));
     log.warn("Validation 오류 발생: {}", errorMessages);
     return ResponseEntity.badRequest().body(BaseResponse.error(400, errorMessages));
+  }
+
+  // 필수 쿼리 파라미터 누릭
+  @ExceptionHandler(MissingServletRequestParameterException.class)
+  public ResponseEntity<BaseResponse<Object>> handleMissingParams(MissingServletRequestParameterException ex) {
+    log.warn("필수 요청 파라미터 누락: {}", ex.getParameterName());
+    return ResponseEntity
+        .badRequest()
+        .body(BaseResponse.error(400, "필수 요청 파라미터가 누락되었습니다: " + ex.getParameterName()));
+  }
+
+  // 잘못된 인자 예외 발생
+  @ExceptionHandler(IllegalArgumentException.class)
+  public ResponseEntity<BaseResponse<Object>> handleIllegalArgument(IllegalArgumentException ex) {
+    log.warn("잘못된 인자 예외 발생: {}", ex.getMessage());
+    return ResponseEntity
+        .badRequest()
+        .body(BaseResponse.error(400, ex.getMessage()));
+  }
+
+  // 요청 JSON이 잘못된 형식일 때
+  @ExceptionHandler(HttpMessageNotReadableException.class)
+  public ResponseEntity<BaseResponse<Object>> handleInvalidJson(HttpMessageNotReadableException ex) {
+    log.warn("잘못된 JSON 형식 요청: {}", ex.getMessage());
+    return ResponseEntity
+        .badRequest()
+        .body(BaseResponse.error(400, "요청 형식이 올바르지 않습니다. JSON 구조를 확인해주세요."));
   }
 
   // 예상치 못한 예외
