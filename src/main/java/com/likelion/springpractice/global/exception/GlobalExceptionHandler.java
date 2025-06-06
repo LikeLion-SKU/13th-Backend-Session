@@ -2,11 +2,12 @@ package com.likelion.springpractice.global.exception;
 
 import com.likelion.springpractice.global.exception.model.BaseErrorCode;
 import com.likelion.springpractice.global.response.BaseResponse;
-import java.util.stream.Collectors;
+import java.sql.SQLException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -24,17 +25,34 @@ public class GlobalExceptionHandler {
         .body(BaseResponse.error(errorCode.getStatus().value(), ex.getMessage()));
   }
 
-  // Validation 실패
-  @ExceptionHandler(MethodArgumentNotValidException.class)
-  public ResponseEntity<BaseResponse<Object>> handleValidationException(
-      MethodArgumentNotValidException ex) {
-    String errorMessages =
-        ex.getBindingResult().getFieldErrors().stream()
-            .map(e -> String.format("[%s] %s", e.getField(), e.getDefaultMessage()))
-            .collect(Collectors.joining(" / "));
-    log.warn("Validation 오류 발생: {}", errorMessages);
-    return ResponseEntity.badRequest().body(BaseResponse.error(400, errorMessages));
+
+  // 권한 부족 예외
+  @ExceptionHandler(AccessDeniedException.class)
+  public ResponseEntity<BaseResponse<Object>> handleAccessDeniedException(
+      AccessDeniedException ex) {
+    log.warn("권한 부족 오류 발생: {}", ex.getMessage());
+    return ResponseEntity.status(HttpStatus.FORBIDDEN)
+        .body(BaseResponse.error(403, "권한이 없습니다."));
   }
+
+  // SQL 예외
+  @ExceptionHandler(SQLException.class)
+  public ResponseEntity<BaseResponse<Object>> handleDatabaseExceptions(Exception ex) {
+    log.error("DB 예외 발생: ", ex);
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .body(BaseResponse.error(500, "데이터베이스 처리 중 오류가 발생했습니다."));
+  }
+
+
+  // 지원하지 않는 HTTP 메서드 예외
+  @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+  public ResponseEntity<BaseResponse<Object>> handleMethodNotSupportedException(
+      HttpRequestMethodNotSupportedException ex) {
+    log.warn("지원하지 않는 HTTP 메서드 오류 발생: {}", ex.getMessage());
+    return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
+        .body(BaseResponse.error(405, "지원하지 않는 HTTP 메서드입니다."));
+  }
+
 
   // 예상치 못한 예외
   @ExceptionHandler(Exception.class)
