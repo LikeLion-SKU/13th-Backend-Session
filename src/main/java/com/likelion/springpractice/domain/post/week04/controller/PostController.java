@@ -42,23 +42,23 @@ public class PostController {
   @Operation(summary = "게시글 전체 조회",
       description = "게시판 페이지로 이동될떄 요청되는 API")
   @GetMapping("/posts")
-  public ResponseEntity<List<PostResponse>> getAllPosts() {
-    return ResponseEntity.ok(postService.getAllPosts());
+  public ResponseEntity<BaseResponse<List<PostResponse>>> getAllPosts() {
+    return ResponseEntity.ok(BaseResponse.success(postService.getAllPosts()));
   }
 
   @Operation(summary = "게시글 단일 조회",
       description = "게시판 페이지에서 특정 게시글에 접근할 때 요청되는 API")
   @GetMapping("posts/{id}")
-  public ResponseEntity<PostResponse> getPostById(
+  public ResponseEntity<BaseResponse<PostResponse>> getPostById(
       @Parameter(description = "특정 게시글 ID") @PathVariable Long id) {
-    return ResponseEntity.ok(postService.getPostById(id));
+    return ResponseEntity.ok(BaseResponse.success(postService.getPostById(id)));
   }
 
   @Operation(summary = "게시글 수정",
       description = "게시판 페이지에서 게시글 수정 후 수정 완료 버튼을 눌렀을떄 요청되는 API")
   @PutMapping("/posts/{id}")
   public ResponseEntity<BaseResponse<PostResponse>> updatePost(
-      @Parameter(description = "게시글 수정 내용") @RequestBody UpdatePostRequest updatePostRequest,
+      @Parameter(description = "게시글 수정 내용") @RequestBody @Valid UpdatePostRequest updatePostRequest,
       @Parameter(description = "특정 게시글 ID") @PathVariable Long id) {
     PostResponse response = postService.updatePost(id, updatePostRequest);
     return ResponseEntity.ok(BaseResponse.success("게시글 수정 성공", response));
@@ -67,22 +67,22 @@ public class PostController {
   @Operation(summary = "게시글 삭제",
       description = "게시판 페이지에서 게시글 삭제 버튼을 눌렀을때 요청되는 API")
   @DeleteMapping("posts/{id}")
-  public ResponseEntity<Boolean> deletePost(
+  public ResponseEntity<BaseResponse<Boolean>> deletePost(
       @Parameter(description = "특정 게시글 ID") @PathVariable Long id) {
-    return ResponseEntity.ok(postService.deletePost(id));
+    return ResponseEntity.ok(BaseResponse.success(postService.deletePost(id)));
   }
 
   @Operation(summary = "게시글 최신순",
       description = "게시판 페이지에서 게시글 최신순")
   @GetMapping("/posts/latest")
-  public ResponseEntity<List<PostResponse>> getPostsByLatest() {
-    return ResponseEntity.ok(postService.getPostsByLatest());
+  public ResponseEntity<BaseResponse<List<PostResponse>>> getPostsByLatest() {
+    return ResponseEntity.ok(BaseResponse.success(postService.getPostsByLatest()));
   }
 
   @Operation(summary = "게시글 조회수순",
       description = "게시판 페이지에서 게시글 조회수순")
   @GetMapping("/posts/popular")
-  public ResponseEntity<List<PostResponse>> getPostsByPopularity() {
-    return ResponseEntity.ok(postService.getPostsByPopularity());
+  public ResponseEntity<BaseResponse<List<PostResponse>>> getPostsByPopularity() {
+    return ResponseEntity.ok(BaseResponse.success(postService.getPostsByPopularity()));
   }
 }
