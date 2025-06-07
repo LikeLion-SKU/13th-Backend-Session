@@ -1,10 +1,12 @@
 package com.likelion.springpractice.domain.post.week05.service;
 
+import com.likelion.springpractice.domain.post.exception.PostErrorCode;
 import com.likelion.springpractice.domain.post.week04.entity.Post;
 import com.likelion.springpractice.domain.post.week05.dto.reponse.PostResponse;
 import com.likelion.springpractice.domain.post.week05.dto.request.CreatePostRequest;
 import com.likelion.springpractice.domain.post.week05.dto.request.UpdatePostRequest;
 import com.likelion.springpractice.domain.post.week05.repository.PostRepository;
+import com.likelion.springpractice.global.exception.CustomException;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,18 @@ public class PostService {
   public PostResponse createPost(CreatePostRequest createPostRequest) {
     log.info("[서비스] 게시글 생성 시도 : title={}, content={}",
         createPostRequest.getTitle(), createPostRequest.getContent());
+
+    if(createPostRequest.getTitle() == null || createPostRequest.getTitle().isBlank()) {
+      throw new CustomException(PostErrorCode.INVALID_POST_TITLE);
+    }
+
+    if(createPostRequest.getContent() == null || createPostRequest.getContent().isBlank()) {
+      throw new CustomException(PostErrorCode.INVAILD_POST_CONTENT);
+    }
+
+    if(createPostRequest.getTitle().length() > 10) {
+      throw new CustomException(PostErrorCode.TITLE_TOO_LONG);
+    }
 
     Post post = Post.builder()
         .title(createPostRequest.getTitle())
@@ -64,7 +78,7 @@ public class PostService {
     Post post = postRepository.findById(id) // 특정 게시물의 객체
         .orElseThrow(() -> {
           log.warn("[서비스] 게시글 조회 실패 - 존재하지 않음 : id={}", id);
-          return new IllegalArgumentException("게시글을 찾을 수 없습니다.");
+          throw new CustomException(PostErrorCode.POST_ERROR_CODE);
         });
 
     log.info("[서비스] 게시글 단일 조회 성공 : id={}", id);
@@ -83,8 +97,20 @@ public class PostService {
     Post post = postRepository.findById(id)
         .orElseThrow(() -> {
           log.info("[서비스] 게시글 수정 실패 - 존재하지 않음 : id={}", id);
-          return new IllegalArgumentException("게시글을 찾을 수 없습니다.");
+          throw new CustomException(PostErrorCode.POST_ERROR_CODE);
         });
+
+    if(updatePostRequest.getTitle() == null || updatePostRequest.getTitle().isBlank()) {
+      throw new CustomException(PostErrorCode.INVALID_POST_TITLE);
+    }
+
+    if(updatePostRequest.getContent() == null || updatePostRequest.getContent().isBlank()) {
+      throw new CustomException(PostErrorCode.INVAILD_POST_CONTENT);
+    }
+
+    if(updatePostRequest.getTitle().length() > 10) {
+      throw new CustomException(PostErrorCode.TITLE_TOO_LONG);
+    }
 
     post.update(updatePostRequest.getTitle(), updatePostRequest.getContent());
     // postRepository.save(post);
@@ -103,7 +129,7 @@ public class PostService {
     Post post = postRepository.findById(id)
         .orElseThrow(() -> {
           log.warn("[서비스] 게시글 삭제 실패 - 존재하지 않음 : id={}", id);
-          return new IllegalArgumentException("게시글을 찾을 수 없습니다.");
+          throw new CustomException(PostErrorCode.POST_ERROR_CODE);
         });
 
     postRepository.deleteById(id);

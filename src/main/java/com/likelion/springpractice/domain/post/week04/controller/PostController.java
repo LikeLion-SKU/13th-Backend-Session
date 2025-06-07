@@ -43,16 +43,18 @@ public class PostController {
   @Operation(summary = "게시글 전체 조회",
       description = "게시판 페이지로 이동할 때 요청되는 API")
   @GetMapping("/posts")
-  public ResponseEntity<List<PostResponse>> getAllPosts() {
-    return ResponseEntity.ok(postService.getAllPosts());
+  public ResponseEntity<BaseResponse<List<PostResponse>>> getAllPosts() {
+    List<PostResponse> postList = postService.getAllPosts();
+    return ResponseEntity.ok(BaseResponse.success("게시글 전체 조회 성공", postList));
   }
 
   // 5주차 기능 추가 (게시글 최신순으로 조회)
   @Operation(summary = "게시글을 최신순으로 조회",
       description = "게시판 페이지에서 최신순 버튼을 눌렀을 때 게시글을 최신순으로 조회하는 API")
   @GetMapping("/posts/latest")
-  public ResponseEntity<List<PostResponse>> getLatestPosts() {
-    return ResponseEntity.ok(postService.getAllPostsByCreatedAtDesc());
+  public ResponseEntity<BaseResponse<List<PostResponse>>> getLatestPosts() {
+    List<PostResponse> postLastestList = postService.getAllPostsByCreatedAtDesc();
+    return ResponseEntity.ok(BaseResponse.success("게시글 최신순으로 조회 성공", postLastestList));
   }
 
   // 5주차 기능 추가 (게시글 조회수 순으로 조회)
@@ -66,23 +68,26 @@ public class PostController {
   @Operation(summary = "게시글 단일 조회",
       description = "게시판 페이지에서 특정 게시글에 접근할 때 요청되는 API")
   @GetMapping("/posts/{id}")
-  public ResponseEntity<PostResponse> getPostById(@Parameter(description = "특정 게시글 ID") @PathVariable Long id) {
-    return ResponseEntity.ok(postService.getPostById(id));
+  public ResponseEntity<BaseResponse<PostResponse>> getPostById(@Parameter(description = "특정 게시글 ID") @PathVariable Long id) {
+    PostResponse response = postService.getPostById(id);
+    return ResponseEntity.ok(BaseResponse.success("게시글 조회 성공", response));
   }
 
   @Operation(summary = "게시글 수정",
       description = "게시판 페이지에서 게시글 수정 후 수정 완료 버튼을 눌러쓸 때 요청되는 API")
   @PutMapping("/posts/{id}")
-  public ResponseEntity<PostResponse> updatePost(@RequestBody UpdatePostRequest updatePostRequest,
+  public ResponseEntity<BaseResponse<PostResponse>> updatePost(@RequestBody UpdatePostRequest updatePostRequest,
       @Parameter(description = "특정 게시글 ID") @PathVariable Long id) { // dto
-    return ResponseEntity.ok(postService.updatePost(id, updatePostRequest));
+    PostResponse response = postService.updatePost(id, updatePostRequest);
+    return ResponseEntity.ok(BaseResponse.success("게시글 수정 성공", response));
   }
 
   @Operation(summary = "게시글 삭제",
       description = "게시판 페이지에서 게시글 삭제 버튼을 눌렀을 때 요청되는 API")
   @DeleteMapping("/posts/{id}")
-  public ResponseEntity<Boolean> deletePost(@Parameter(description = "특정 게시글 ID") @PathVariable Long id) {
-    return ResponseEntity.ok(postService.deletePost(id));
+  public ResponseEntity<BaseResponse<Boolean>> deletePost(@Parameter(description = "특정 게시글 ID") @PathVariable Long id) {
+    Boolean result = postService.deletePost(id);
+    return ResponseEntity.ok(BaseResponse.success("게시글 삭제 성공", result));
   }
 
 }
