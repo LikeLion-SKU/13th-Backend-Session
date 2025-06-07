@@ -62,7 +62,7 @@ public class PostService {
         .orElseThrow(() -> {
           log.warn("[서비스] 게시글 조회 실패 -존재하지않음: id={}", id);
 
-          return new IllegalArgumentException("게시글을 찾을수없습니다.");
+          return new CustomException(PostErrorCode.POST_ERROR_CODE);
         });
 //    5주차때 조회수 증가 할수있는거넣음
     log.info("[서비스] 게시글 단일 조회 성공: id={}", id);
@@ -86,7 +86,7 @@ public class PostService {
     Post post = postRepository.findById(id)
         .orElseThrow(() -> {
           log.warn("[서비스] 게시글 수정 실패 -존재하지않음: id={}", id);
-          return new IllegalArgumentException("게시글을 찾을 수 없습니다.");
+          return new CustomException(PostErrorCode.POST_ERROR_CODE);
         });
 
     post.update(updatePostRequest.getTitle(), updatePostRequest.getContent());
@@ -100,7 +100,7 @@ public class PostService {
     Post post = postRepository.findById(id)
         .orElseThrow(() -> {
           log.warn("[서비스] 게시글 삭제 실패 - 존재하지 않음: id={}", id);
-          return new IllegalArgumentException("게시글을 찾을수 없습니다.");
+          return new CustomException(PostErrorCode.POST_ERROR_CODE);
         });
     postRepository.deleteById(id);
     return true;
