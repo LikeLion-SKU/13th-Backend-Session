@@ -9,6 +9,7 @@ import com.likelion.springpractice.global.response.BaseResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +36,7 @@ public class PostController {
   @PostMapping("/posts")
   public ResponseEntity<BaseResponse<PostResponse>> createPost(
       @Parameter(description = "게시글 작성 내용")
-      @RequestBody CreatePostRequest createPostRequest) { // dto
+      @RequestBody @Valid CreatePostRequest createPostRequest) { // dto
     PostResponse response = postService.createPost(createPostRequest);
     return ResponseEntity.ok(BaseResponse.success("게시글 생성 성공", response));
   }
@@ -76,8 +77,8 @@ public class PostController {
   @Operation(summary = "게시글 수정",
       description = "게시판 페이지에서 게시글 수정 후 수정 완료 버튼을 눌러쓸 때 요청되는 API")
   @PutMapping("/posts/{id}")
-  public ResponseEntity<BaseResponse<PostResponse>> updatePost(@RequestBody UpdatePostRequest updatePostRequest,
-      @Parameter(description = "특정 게시글 ID") @PathVariable Long id) { // dto
+  public ResponseEntity<BaseResponse<PostResponse>> updatePost(@RequestBody @Valid UpdatePostRequest updatePostRequest,
+      @Parameter(description = "특정 게시글 ID") @PathVariable  Long id) { // dto
     PostResponse response = postService.updatePost(id, updatePostRequest);
     return ResponseEntity.ok(BaseResponse.success("게시글 수정 성공", response));
   }
