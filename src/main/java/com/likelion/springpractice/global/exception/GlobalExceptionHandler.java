@@ -1,0 +1,84 @@
+package com.likelion.springpractice.global.exception;
+
+import com.likelion.springpractice.global.exception.model.BaseErrorCode;
+import com.likelion.springpractice.global.response.BaseResponse;
+import java.util.stream.Collectors;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+
+@Slf4j
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+  // 커스텀 예외
+  @ExceptionHandler(CustomException.class) // 핸들러라는것을 명시적으로 표현하는 애너테이션 
+  public ResponseEntity<BaseResponse<Object>> handleCustomException(
+      CustomException ex) { // ex에서 에러코드들이 나옴
+    BaseErrorCode errorCode = ex.getErrorCode();
+    log.error("Custom 오류 발생: {}", ex.getMessage());
+    return ResponseEntity
+        .status(errorCode.getStatus())
+        .body(BaseResponse.error(errorCode.getStatus().value(), ex.getMessage()));
+  }
+
+  // Validation 실패 - 유효성 처리 실패 시의 예외처리 코드
+  @ExceptionHandler(MethodArgumentNotValidException.class)
+  public ResponseEntity<BaseResponse<Object>> handleValidationException(
+      MethodArgumentNotValidException ex) {
+    String errorMessages =
+        ex.getBindingResult().getFieldErrors().stream()
+            .map(e -> String.format("[%s] %s", e.getField(), e.getDefaultMessage()))
+            .collect(Collectors.joining(" / "));
+    log.warn("Validation 오류 발생: {}", errorMessages);
+    return ResponseEntity.badRequest().body(BaseResponse.error(400, errorMessages));
+  }
+
+  // 예상치 못한 예외
+  @ExceptionHandler(Exception.class)
+  public ResponseEntity<BaseResponse<Object>> handleException(Exception ex) {
+    log.error("Server 오류 발생: ", ex);
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .body(BaseResponse.error(500, "예상치 못한 서버 오류가 발생했습니다."));
+  }
+
+  // 잘못된 HTTP method 사용 처리
+  @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+  public ResponseEntity<BaseResponse<Object>> handleMethodNotSupportedException(
+      HttpRequestMethodNotSupportedException ex
+  ) {
+    log.warn("지원하지 않는 HTTP Method : {}", ex.getMessage());
+    return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(
+        BaseResponse.error(HttpStatus.METHOD_NOT_ALLOWED.value(), "지원하지 않는 HTTP Method입니다."));
+
+  }
+
+  @ExceptionHandler(NullPointerException.class)
+  public ResponseEntity<BaseResponse<Object>> handleNullPointerException(NullPointerException ex) {
+    log.error("NullPointerException 발생: ", ex);
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .body(BaseResponse.error(500, "처리 중 null 오류가 발생했습니다."));
+  }
+
+  // 잘못된 인자를 전달했을때
+  @ExceptionHandler(IllegalArgumentException.class)
+  public ResponseEntity<BaseResponse<Object>> handleIllegalArgumentException(
+      IllegalArgumentException ex) {
+    log.warn("잘못된 인자 전달: {}", ex.getMessage());
+    return ResponseEntity.badRequest().body(BaseResponse.error(400, ex.getMessage()));
+  }
+  
+  @ExceptionHandler(IllegalStateException.class)
+  public ResponseEntity<BaseResponse<Object>> handleIllegalStateException(
+      IllegalStateException ex) {
+    log.error("잘못된 상태에서 요청 처리: ", ex);
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .body(BaseResponse.error(500, "요청을 처리할 수 없는 상태입니다."));
+  }
+
+}
