@@ -142,7 +142,11 @@ public class PostService {
     return PostResponse.builder()
         .postId(post.getId())
         .title(post.getTitle())
-        .content(post.getContent()).build();
+        .content(post.getContent())
+        //.createdAt(post.getCreatedAt())
+        .views(post.getViews())
+        //.modifiedAt(post.getModifiedAt())
+        .build();
   }
 
 }
