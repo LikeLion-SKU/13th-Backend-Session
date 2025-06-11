@@ -1,6 +1,7 @@
 package com.likelion.springpractice.domain.user.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
@@ -16,7 +17,8 @@ import lombok.NoArgsConstructor;
 public class SignUpRequest {
 
   @NotBlank(message = "사용자 아이디 항목은 필수입니다.")
-  @Schema(description = "사용자 아이디", example = "parkjuyong")
+  @Email (message = "아이디는 이메일 형식으로 작성해주세요.")
+  @Schema(description = "사용자 아이디", example = "parkjuyong@naver.com")
   private String username;
 
   @NotBlank(message = "비밀번호 항목은 필수입니다.")
