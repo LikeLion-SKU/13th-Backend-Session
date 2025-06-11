@@ -3,8 +3,10 @@ package com.likelion.springpractice.domain.user.entity;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 public enum Role {
-  @Schema(description = "사용자")
-  USER,
+  @Schema(description = "회원")
+  MEMBER,
+  @Schema(description = "비회원")
+  NONMEMBER,
   @Schema(description = "관리자")
   ADMIN,
   @Schema(description = "개발자")
