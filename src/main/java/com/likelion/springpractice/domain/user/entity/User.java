@@ -36,14 +36,24 @@ public class User extends BaseTimeEntity {
   @Column(name="password", nullable = false)
   private String password;
 
-  @JsonIgnore
-  @Column(name="refresh_token")
-  private String refreshToken;
+  @Column(name="name", nullable = false)
+  private String name;
+
+  @Column(name="name", nullable = false)
+  private Nation Nation;
+
+  @Column(name="Introduce")
+  private Nation introduce;
 
   @Column(name="role", nullable = false)
   @Enumerated(EnumType.STRING)
   @Builder.Default
-  private Role role = Role.USER;
+  private Role role = Role.NONMEMBER;
+
+  @JsonIgnore
+  @Column(name="refresh_token")
+  private String refreshToken;
+
 
   public void saveRefreshToken(String refreshToken) {
     this.refreshToken = refreshToken;
