@@ -43,7 +43,7 @@ public class User extends BaseTimeEntity {
   private Nation Nation;
 
   @Column(name="Introduce")
-  private Nation introduce;
+  private String introduce;
 
   @Column(name="role", nullable = false)
   @Enumerated(EnumType.STRING)
