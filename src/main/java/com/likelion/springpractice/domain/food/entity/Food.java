@@ -30,13 +30,13 @@ public class Food extends BaseTimeEntity {
   @Column(nullable = false)
   private String description; // 음식 설명
 
-  @Column
+  @Column(nullable = false)
   private Double rating = 0.0; // 평점
 
-  @Column
+  @Column(nullable = false)
   private int likeNum = 0; // 좋아요 수
 
-  @Column
+  @Column(nullable = false)
   private int reviewNum = 0; // 리뷰 수
 
   public void increaseLikeNum() { // 좋아요 수 증가

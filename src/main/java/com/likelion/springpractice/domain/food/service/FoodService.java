@@ -2,10 +2,14 @@ package com.likelion.springpractice.domain.food.service;
 
 import com.likelion.springpractice.domain.food.dto.request.CreateFoodRequest;
 import com.likelion.springpractice.domain.food.dto.request.GetFoodRequest;
+import com.likelion.springpractice.domain.food.dto.request.UpdateFoodRequest;
 import com.likelion.springpractice.domain.food.dto.response.FoodResponse;
 import com.likelion.springpractice.domain.food.entity.Food;
+import com.likelion.springpractice.domain.food.exception.FoodErrorCode;
 import com.likelion.springpractice.domain.food.mapper.FoodMapper;
 import com.likelion.springpractice.domain.food.repository.FoodRepository;
+import com.likelion.springpractice.domain.post.exception.PostErrorCode;
+import com.likelion.springpractice.global.exception.CustomException;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,8 +51,33 @@ public class FoodService {
   public FoodResponse getFoodById(Long foodId) {
     Food food = foodRepository.findById(foodId)
         .orElseThrow(() -> {
-          throw new
-        })
+          throw new CustomException(FoodErrorCode.FOOD_ERROR_CODE);
+        });
+
+    return foodMapper.toFoodResponse(food);
+  }
+
+  // 음식 수정
+  @Transactional
+  public FoodResponse updateFood(Long foodId, UpdateFoodRequest updateFoodRequest) {
+    Food food = foodRepository.findById(foodId)
+        .orElseThrow(() -> {
+          throw new CustomException(FoodErrorCode.FOOD_ERROR_CODE);
+        });
+
+    food.update(updateFoodRequest.getFoodName(), updateFoodRequest.getDescription());
+
+    return foodMapper.toFoodResponse(food);
+  }
+
+  // 음식 삭제
+  public Boolean deleteFood(Long foodId) {
+    Food food = foodRepository.findById(foodId)
+        .orElseThrow(() -> {
+          throw new CustomException(FoodErrorCode.FOOD_ERROR_CODE);
+        });
+    foodRepository.deleteById(foodId);
+    return true;
   }
 
 }

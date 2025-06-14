@@ -13,7 +13,7 @@ public class FoodMapper {
         .foodName(food.getFoodName())
         .description(food.getDescription())
         .likeNum(food.getLikeNum())
-        .revirewNum(food.getRevirewNum())
+        .revirewNum(food.getReviewNum())
         .rating(food.getRating())
         .build();
   }
