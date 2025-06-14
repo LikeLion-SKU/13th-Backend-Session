@@ -43,7 +43,7 @@ public class PostService {
         .content(createPostRequest.getContent())
         .views(0)
         .build();
-    postRepository.save(post);
+    postRepository.save(post); // 이 시점에 post.getId() 값이 생김
     log.info("[서비스] 게시글 생성 완료 : id={}, title={}, content={}",
         post.getId(),post.getTitle(),post.getContent());
 

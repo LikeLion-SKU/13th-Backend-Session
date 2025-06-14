@@ -11,7 +11,7 @@ public class UpdatePostRequest {
   @Schema(description = "게시글 제목", example = "5주차 세션")
   private String title;
 
-  @NotBlank(message = "제목은 비어 있을 수 없습니다.")
+  @NotBlank(message = "내용은 비어 있을 수 없습니다.")
   @Schema(description = "게시글 내용", example = "세션 화이팅")
   private String content;
 

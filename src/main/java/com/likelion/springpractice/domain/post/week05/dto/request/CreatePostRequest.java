@@ -11,7 +11,7 @@ public class CreatePostRequest {
   @Schema(description = "게시글 제목", example = "1주차 세션???")
   private String title;
 
-  @NotBlank(message = "내용은 비어있을 수 없습니다.")
+  @NotBlank(message = "내용은 비어 있을 수 없습니다.")
   @Schema(description = "게시글 내용", example = "내용내용내용")
   private String content;
 
