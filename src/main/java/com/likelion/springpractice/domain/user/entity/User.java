@@ -26,20 +26,20 @@ import lombok.NoArgsConstructor;
 public class User extends BaseTimeEntity {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  @GeneratedValue(strategy = GenerationType.IDENTITY) // 아이디 고유 번호
+  private Long userId;
 
-  @Column(name="username", nullable = false)
+  @Column(name="username", nullable = false) // 사용자 아이디
   private String username;
 
   @JsonIgnore // 민감한 정보는 넘어가지 않도록 함
   @Column(name="password", nullable = false)
   private String password;
 
-  @Column(name="name", nullable = false)
+  @Column(name="name", nullable = false) // 사용자 이름
   private String name;
 
-  @Column(name="name", nullable = false)
+  @Column(name="nation", nullable = false)
   private Nation Nation;
 
   @Column(name="Introduce")

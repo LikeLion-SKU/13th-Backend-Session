@@ -9,7 +9,7 @@ public class UserMapper {
 
   public SignUpResponse tosignUpResponse(User user) {
     return SignUpResponse.builder()
-        .userId(user.getId())
+        .userId(user.getUserId())
         .username(user.getUsername())
         .build();
   }
