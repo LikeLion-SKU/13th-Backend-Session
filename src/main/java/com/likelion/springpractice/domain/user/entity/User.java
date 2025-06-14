@@ -27,6 +27,7 @@ public class User extends BaseTimeEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY) // 아이디 고유 번호
+  @Column(name = "userId")
   private Long userId;
 
   @Column(name="username", nullable = false) // 사용자 아이디
