@@ -14,4 +14,7 @@ public class SignUpResponse {
 
   @Schema(description = "회원가입된 사용자 아이디", example = "parkjuyong")
   private String username;
+
+  @Schema(description = "회원가입된 사용자 이름", example = "주용")
+  private String name;
 }

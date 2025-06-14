@@ -27,4 +27,8 @@ public class SignUpRequest {
       message = "비밀번호는 최소 8자 이상, 숫자 및 특수문자를 포함해야 합니다.")
   @Schema(description = "비밀번호", example = "1234")
   private String password;
+
+  @NotBlank(message = "사용자 이름은 필수입니다.")
+  @Schema(description = "사용자 이름", example = "주용")
+  private String name;
 }
