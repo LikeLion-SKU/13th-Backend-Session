@@ -32,7 +32,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
     try {
-      String token = resolveToken(request);
+      String token = resolveToken(request); // Http 요청에 담긴 토큰을 추출하여 저장
 
       if (token != null && jwtProvider.validateToken(token)) {
         String socialId = jwtProvider.extractSocialId(token);
@@ -54,7 +54,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     filterChain.doFilter(request, response);
   }
 
-  private String resolveToken(HttpServletRequest request) {
+  private String resolveToken(HttpServletRequest request) { // Http 요청의 헤더에서 JWT 토큰을 추출함
     String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
     log.debug("Authorization Header : {}", bearerToken);
     if (bearerToken != null && bearerToken.startsWith(BEARER_PREFIX)) {
