@@ -35,7 +35,6 @@ public class PostController {
       description = "게시판 페이지에서 게시글 작성 후 생성 버튼을 눌렀을 때 요청되는 API")
   @PostMapping("/posts")
   public ResponseEntity<BaseResponse<PostResponse>> createPost(
-      @Parameter(description = "게시글 작성 내용")
       @RequestBody @Valid CreatePostRequest createPostRequest) { // dto
     PostResponse response = postService.createPost(createPostRequest);
     return ResponseEntity.ok(BaseResponse.success("게시글 생성 성공", response));
