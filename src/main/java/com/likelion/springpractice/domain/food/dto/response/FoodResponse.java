@@ -10,7 +10,7 @@ import lombok.Getter;
 public class FoodResponse {
 
   @Schema(description = "음식 ID", example = "1")
-  private Long food_id;
+  private Long foodId;
 
   @Schema(description = "음식 이름", example = "김치")
   private String foodName;
