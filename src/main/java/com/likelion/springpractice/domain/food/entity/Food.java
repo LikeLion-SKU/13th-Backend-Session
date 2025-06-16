@@ -57,13 +57,13 @@ public class Food extends BaseTimeEntity {
     reviewNum++;
   }
 
-  public void update(String food, String description) {
+  public void updateFood(String food, String description) {
     this.foodName = food;
     this.description = description;
   }
 
-  /*public void caculateRatring() { // 평점 계산 로직
-
-  }*/
+  public void updateRating(double rating) {
+    this.rating = rating;
+  }
 
 }
