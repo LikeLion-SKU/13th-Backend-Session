@@ -45,6 +45,8 @@ public class ReviewService {
         .food(food)
         .build();
 
+    food.increaseReviewNum();
+
     Review savedReview = reviewRepository.save(review);
 
     return reviewMapper.toReviewResponse(savedReview);
