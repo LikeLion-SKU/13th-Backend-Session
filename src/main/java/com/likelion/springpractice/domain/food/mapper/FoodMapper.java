@@ -9,7 +9,7 @@ public class FoodMapper {
 
   public FoodResponse toFoodResponse(Food food) {
     return FoodResponse.builder()
-        .food_id(food.getFoodId())
+        .foodId(food.getFoodId())
         .foodName(food.getFoodName())
         .description(food.getDescription())
         .likeNum(food.getLikeNum())
