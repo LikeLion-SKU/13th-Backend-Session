@@ -3,6 +3,7 @@ package com.likelion.springpractice.domain.review.service;
 import com.likelion.springpractice.domain.food.entity.Food;
 import com.likelion.springpractice.domain.food.exception.FoodErrorCode;
 import com.likelion.springpractice.domain.food.repository.FoodRepository;
+import com.likelion.springpractice.domain.food.service.FoodService;
 import com.likelion.springpractice.domain.review.dto.request.CreateReviewRequest;
 import com.likelion.springpractice.domain.review.dto.response.ReviewResponse;
 import com.likelion.springpractice.domain.review.entity.Review;
@@ -24,6 +25,7 @@ public class ReviewService {
   private final ReviewMapper reviewMapper;
   private final UserRepository userRepository;
   private final FoodRepository foodRepository;
+  private final FoodService foodService;
 
   // 리뷰 작성
   @Transactional
@@ -45,13 +47,16 @@ public class ReviewService {
         .food(food)
         .build();
 
+    Review savedReview = reviewRepository.save(review);
+
+    // 음식 리뷰 수 증가
     food.increaseReviewNum();
 
-    Review savedReview = reviewRepository.save(review);
+    // 음식 평점 계산 후 업데이트
+    double newRating = foodService.calculateRating(food.getFoodId());
+    food.updateRating(newRating);
 
     return reviewMapper.toReviewResponse(savedReview);
   }
-
-
 
 }
