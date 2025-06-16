@@ -9,6 +9,8 @@ import com.likelion.springpractice.domain.food.exception.FoodErrorCode;
 import com.likelion.springpractice.domain.food.mapper.FoodMapper;
 import com.likelion.springpractice.domain.food.repository.FoodRepository;
 import com.likelion.springpractice.domain.post.exception.PostErrorCode;
+import com.likelion.springpractice.domain.user.entity.User;
+import com.likelion.springpractice.domain.user.repository.UserRepository;
 import com.likelion.springpractice.global.exception.CustomException;
 import jakarta.transaction.Transactional;
 import java.util.List;
@@ -24,10 +26,12 @@ public class FoodService {
 
   private final FoodRepository foodRepository;
   private final FoodMapper foodMapper;
+  private final UserRepository userRepository;
 
   // 음식 생성
   @Transactional
   public FoodResponse createFood(CreateFoodRequest createFoodRequest) {
+
     Food food = Food.builder()
         .foodName(createFoodRequest.getFoodName())
         .description(createFoodRequest.getDescription())
@@ -51,7 +55,7 @@ public class FoodService {
   public FoodResponse getFoodById(Long foodId) {
     Food food = foodRepository.findById(foodId)
         .orElseThrow(() -> {
-          throw new CustomException(FoodErrorCode.FOOD_ERROR_CODE);
+          throw new CustomException(FoodErrorCode.FOOD_NOT_FOUND);
         });
 
     return foodMapper.toFoodResponse(food);
@@ -62,7 +66,7 @@ public class FoodService {
   public FoodResponse updateFood(Long foodId, UpdateFoodRequest updateFoodRequest) {
     Food food = foodRepository.findById(foodId)
         .orElseThrow(() -> {
-          throw new CustomException(FoodErrorCode.FOOD_ERROR_CODE);
+          throw new CustomException(FoodErrorCode.FOOD_NOT_FOUND);
         });
 
     food.update(updateFoodRequest.getFoodName(), updateFoodRequest.getDescription());
@@ -71,10 +75,11 @@ public class FoodService {
   }
 
   // 음식 삭제
+  @Transactional
   public Boolean deleteFood(Long foodId) {
     Food food = foodRepository.findById(foodId)
         .orElseThrow(() -> {
-          throw new CustomException(FoodErrorCode.FOOD_ERROR_CODE);
+          throw new CustomException(FoodErrorCode.FOOD_NOT_FOUND);
         });
     foodRepository.deleteById(foodId);
     return true;
