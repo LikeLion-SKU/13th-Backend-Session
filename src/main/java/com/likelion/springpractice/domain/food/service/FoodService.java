@@ -9,6 +9,8 @@ import com.likelion.springpractice.domain.food.exception.FoodErrorCode;
 import com.likelion.springpractice.domain.food.mapper.FoodMapper;
 import com.likelion.springpractice.domain.food.repository.FoodRepository;
 import com.likelion.springpractice.domain.post.exception.PostErrorCode;
+import com.likelion.springpractice.domain.review.entity.Review;
+import com.likelion.springpractice.domain.review.repository.ReviewRepository;
 import com.likelion.springpractice.domain.user.entity.User;
 import com.likelion.springpractice.domain.user.repository.UserRepository;
 import com.likelion.springpractice.global.exception.CustomException;
@@ -26,7 +28,7 @@ public class FoodService {
 
   private final FoodRepository foodRepository;
   private final FoodMapper foodMapper;
-  private final UserRepository userRepository;
+  private final ReviewRepository reviewRepository;
 
   // 음식 생성
   @Transactional
@@ -69,7 +71,7 @@ public class FoodService {
           throw new CustomException(FoodErrorCode.FOOD_NOT_FOUND);
         });
 
-    food.update(updateFoodRequest.getFoodName(), updateFoodRequest.getDescription());
+    food.updateFood(updateFoodRequest.getFoodName(), updateFoodRequest.getDescription());
 
     return foodMapper.toFoodResponse(food);
   }
@@ -83,6 +85,21 @@ public class FoodService {
         });
     foodRepository.deleteById(foodId);
     return true;
+  }
+
+  // 음식 평점 계산
+  public double calculateRating(Long foodId) {
+    List<Review> reviews = reviewRepository.findByFood_FoodId(foodId);
+
+    if (reviews.isEmpty()) {
+      return 0.0; // 혹은 평점 없음을 의미하는 다른 값
+    }
+
+    int totalScore = reviews.stream().mapToInt(Review::getScore).sum();
+    double avg = (double) totalScore / reviews.size();
+
+    // 소수점 둘째 자리까지 반올림
+    return Math.round(avg * 100.0) / 100.0;
   }
 
 }
