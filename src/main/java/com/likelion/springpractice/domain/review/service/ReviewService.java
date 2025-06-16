@@ -7,6 +7,7 @@ import com.likelion.springpractice.domain.food.service.FoodService;
 import com.likelion.springpractice.domain.review.dto.request.CreateReviewRequest;
 import com.likelion.springpractice.domain.review.dto.response.ReviewResponse;
 import com.likelion.springpractice.domain.review.entity.Review;
+import com.likelion.springpractice.domain.review.exception.ReviewErrorCode;
 import com.likelion.springpractice.domain.review.mapper.ReviewMapper;
 import com.likelion.springpractice.domain.review.repository.ReviewRepository;
 import com.likelion.springpractice.domain.user.entity.User;
@@ -14,6 +15,7 @@ import com.likelion.springpractice.domain.user.exception.UserErrorCode;
 import com.likelion.springpractice.domain.user.repository.UserRepository;
 import com.likelion.springpractice.global.exception.CustomException;
 import jakarta.transaction.Transactional;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -57,6 +59,17 @@ public class ReviewService {
     food.updateRating(newRating);
 
     return reviewMapper.toReviewResponse(savedReview);
+  }
+
+  // 특정 음식 리뷰 조회
+  public List<ReviewResponse> getReviews(Long foodId) {
+    List<Review> reviewList = reviewRepository.findByFood_FoodId(foodId);
+
+    if (reviewList.isEmpty()) {
+      throw new CustomException(ReviewErrorCode.REVIEW_ERROR_CODE);
+    }
+
+    return reviewList.stream().map(reviewMapper::toReviewResponse).toList();
   }
 
 }
