@@ -1,6 +1,7 @@
 package com.likelion.springpractice.global.config;
 
 import com.likelion.springpractice.global.security.JwtAuthenticationFilter;
+import io.swagger.v3.oas.models.PathItem.HttpMethod;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -46,12 +47,20 @@ public class SecurityConfig {
         .authorizeHttpRequests(
             request ->
                 request
-                    // Swagger 경로 인증 필요
-                    .requestMatchers("/swagger-ui/**", "/v3/api-docs/**")
-                    .permitAll()
+                    // Swagger 경로 인증 필요 x
+                    .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                    // 로그인 허용
+                    .requestMatchers("/api/auths/**").permitAll()
+                    // 회원가입 허용
+                    .requestMatchers("/api/users/**").permitAll()
+                    // 음식 생성, 삭제 인증 필요
+                    .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/foods/**").authenticated()
+                    .requestMatchers(org.springframework.http.HttpMethod.DELETE, "/api/foods/**").authenticated()
+                    .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/foods/**").permitAll()
+                    // 리뷰 작성은 인증 필요
+                    .requestMatchers("/api/review/write-review").authenticated()
                     // 인증 없이 허용할 경로
-                    .requestMatchers("/api/**")
-                    .permitAll()
+                    .requestMatchers("/api/v1/**").permitAll()
                     // 그 외 모든 요청은 모두 인증 필요
                     .anyRequest()
                     .authenticated())
