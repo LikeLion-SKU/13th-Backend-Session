@@ -1,5 +1,6 @@
 package com.likelion.springpractice.domain.food.entity;
 
+import com.likelion.springpractice.domain.like.entity.Like;
 import com.likelion.springpractice.domain.review.entity.Review;
 import com.likelion.springpractice.global.BaseTimeEntity;
 import jakarta.persistence.CascadeType;
@@ -44,9 +45,13 @@ public class Food extends BaseTimeEntity {
   @Column(nullable = false)
   private int reviewNum = 0; // 리뷰 수
 
-  // reviews 테이블과 연관 -> food는 review를 여러개 가짐
+  // reviews 테이블과 연관 -> food는 리뷰를 여러 개 가짐
   @OneToMany(mappedBy = "food", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Review> reviews = new ArrayList<>();
+
+  // likes 테이블과 연관 -> food는 좋아요를 여러 개 가짐
+  @OneToMany(mappedBy = "food", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<Like> likes = new ArrayList<>();
 
 
   public void increaseLikeNum() { // 좋아요 수 증가
