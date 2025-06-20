@@ -60,7 +60,7 @@ public class User extends BaseTimeEntity {
   @Column(name="role", nullable = false)
   @Enumerated(EnumType.STRING)
   @Builder.Default
-  private Role role = Role.NONMEMBER;
+  public Role role = Role.NONMEMBER;
 
   @JsonIgnore
   @Column(name="refresh_token")
