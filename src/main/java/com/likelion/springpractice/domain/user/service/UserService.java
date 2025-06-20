@@ -41,7 +41,7 @@ public class UserService {
         .password(encodePassword)
         .build();
 
-    // 로그인 성공 시 사용자의 역할을 바꿈
+    // 회원가입 성공 시 사용자의 역할을 바꿈
     user.role = Role.MEMBER;
 
     // 저장 및 로깅
