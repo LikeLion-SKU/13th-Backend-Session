@@ -2,6 +2,7 @@ package com.likelion.springpractice.domain.user.service;
 
 import com.likelion.springpractice.domain.user.dto.request.SignUpRequest;
 import com.likelion.springpractice.domain.user.dto.response.SignUpResponse;
+import com.likelion.springpractice.domain.user.entity.Role;
 import com.likelion.springpractice.domain.user.entity.User;
 import com.likelion.springpractice.domain.user.exception.UserErrorCode;
 import com.likelion.springpractice.domain.user.mapper.UserMapper;
@@ -39,6 +40,9 @@ public class UserService {
         .name(request.getName())
         .password(encodePassword)
         .build();
+
+    // 로그인 성공 시 사용자의 역할을 바꿈
+    user.role = Role.MEMBER;
 
     // 저장 및 로깅
     User savedUser = userRepository.save(user);
