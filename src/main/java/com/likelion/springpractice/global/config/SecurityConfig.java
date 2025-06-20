@@ -58,7 +58,11 @@ public class SecurityConfig {
                     .requestMatchers(org.springframework.http.HttpMethod.DELETE, "/api/foods/**").authenticated()
                     .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/foods/**").permitAll()
                     // 리뷰 작성은 인증 필요
-                    .requestMatchers("/api/review/write-review").authenticated()
+                    .requestMatchers("/api/review").authenticated()
+                    // 리뷰 조회 허용
+                    .requestMatchers("/api/reviews/{foodId}").permitAll()
+                    // 좋아요 기능은 인증 필요
+                    .requestMatchers("api/likes/**").authenticated()
                     // 인증 없이 허용할 경로
                     .requestMatchers("/api/v1/**").permitAll()
                     // 그 외 모든 요청은 모두 인증 필요
