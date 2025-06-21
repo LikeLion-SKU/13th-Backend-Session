@@ -8,6 +8,7 @@ import com.likelion.springpractice.global.response.BaseResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ public class ReviewController {
       description = "음식 상세 페이지에서 리뷰 생성 버튼을 눌렀을 때 요청되는 API")
   @PostMapping
   public ResponseEntity<BaseResponse<ReviewResponse>> createReview(
-      @RequestBody CreateReviewRequest createReviewRequest,
+      @RequestBody @Valid CreateReviewRequest createReviewRequest,
       @AuthenticationPrincipal(expression = "username") String username) {
     ReviewResponse reviewResponse = reviewService.createReview(username, createReviewRequest);
     return ResponseEntity.ok(BaseResponse.success("리뷰 작성 완료", reviewResponse));
