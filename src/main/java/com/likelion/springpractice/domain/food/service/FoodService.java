@@ -8,6 +8,7 @@ import com.likelion.springpractice.domain.food.entity.Food;
 import com.likelion.springpractice.domain.food.exception.FoodErrorCode;
 import com.likelion.springpractice.domain.food.mapper.FoodMapper;
 import com.likelion.springpractice.domain.food.repository.FoodRepository;
+import com.likelion.springpractice.domain.like.repository.LikeRepository;
 import com.likelion.springpractice.domain.post.exception.PostErrorCode;
 import com.likelion.springpractice.domain.review.entity.Review;
 import com.likelion.springpractice.domain.review.repository.ReviewRepository;
@@ -29,6 +30,7 @@ public class FoodService {
   private final FoodRepository foodRepository;
   private final FoodMapper foodMapper;
   private final ReviewRepository reviewRepository;
+  private final LikeRepository likeRepository;
 
   // 음식 생성
   @Transactional
@@ -100,6 +102,14 @@ public class FoodService {
 
     // 소수점 둘째 자리까지 반올림
     return Math.round(avg * 100.0) / 100.0;
+  }
+
+  // 음식 좋아요 수 반환
+  public int countLike(Long foodId) {
+    Food food = foodRepository.findById(foodId)
+        .orElseThrow(() -> new CustomException(FoodErrorCode.FOOD_NOT_FOUND));
+
+    return likeRepository.countByFoodAndStatusTrue(food);
   }
 
 }

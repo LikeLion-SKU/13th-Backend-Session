@@ -40,7 +40,7 @@ public class Food extends BaseTimeEntity {
   private Double rating = 0.0; // 평점
 
   @Column(nullable = false)
-  private int likeNum = 0; // 좋아요 수
+  private int likeNum; // 좋아요 수
 
   @Column(nullable = false)
   private int reviewNum = 0; // 리뷰 수
@@ -56,6 +56,10 @@ public class Food extends BaseTimeEntity {
 
   public void increaseLikeNum() { // 좋아요 수 증가
     likeNum++;
+  }
+
+  public void decreaseLikeNum() { // 좋아요 수 증가
+    likeNum--;
   }
 
   public void increaseReviewNum() { // 리뷰 수 증가
