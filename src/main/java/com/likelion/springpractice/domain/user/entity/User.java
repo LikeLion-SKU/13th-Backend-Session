@@ -1,6 +1,7 @@
 package com.likelion.springpractice.domain.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.likelion.springpractice.domain.MappingUserBadge.entity.MappingUserBadge;
 import com.likelion.springpractice.domain.like.entity.Like;
 import com.likelion.springpractice.domain.review.entity.Review;
 import com.likelion.springpractice.global.BaseTimeEntity;
@@ -60,6 +61,10 @@ public class User extends BaseTimeEntity {
   // likes 테이블의 user 필드와 연관 -> user는 좋아요를 여러 개 누를 수 있음
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Like> likes = new ArrayList<>();
+
+  // MappingUserBadge 테이블의 user 필드와 연관 -> 사용자와 배찌의 다대다 매핑 테이블
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<MappingUserBadge> userBadges = new ArrayList<>();
 
   @Column(name="role", nullable = false)
   @Enumerated(EnumType.STRING)
