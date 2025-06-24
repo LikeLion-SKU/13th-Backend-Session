@@ -32,7 +32,7 @@ public class Badge extends BaseTimeEntity {
   private Long badgeId;
 
   @Enumerated(EnumType.STRING)
-  @Column(nullable = false)
+  @Column(nullable = false, unique = true)
   private BadgeName badgeName;
 
   // MappingUserBadge 테이블의 badge 필드와 연관 -> 사용자와 배찌의 다대다 매핑 테이블

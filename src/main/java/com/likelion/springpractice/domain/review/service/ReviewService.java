@@ -1,5 +1,6 @@
 package com.likelion.springpractice.domain.review.service;
 
+import com.likelion.springpractice.domain.badge.service.BadgeService;
 import com.likelion.springpractice.domain.food.entity.Food;
 import com.likelion.springpractice.domain.food.exception.FoodErrorCode;
 import com.likelion.springpractice.domain.food.repository.FoodRepository;
@@ -28,6 +29,7 @@ public class ReviewService {
   private final UserRepository userRepository;
   private final FoodRepository foodRepository;
   private final FoodService foodService;
+  private final BadgeService badgeService;
 
   // 리뷰 작성
   @Transactional
@@ -57,6 +59,9 @@ public class ReviewService {
     // 음식 평점 계산 후 업데이트
     double newRating = foodService.calculateRating(food.getFoodId());
     food.updateRating(newRating);
+
+    // 특정 사용자 배찌 지급
+    badgeService.getBadge(username);
 
     return reviewMapper.toReviewResponse(savedReview);
   }

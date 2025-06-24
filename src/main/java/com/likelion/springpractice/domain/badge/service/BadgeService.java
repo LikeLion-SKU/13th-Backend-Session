@@ -36,9 +36,10 @@ public class BadgeService {
     int reviewCount = reviewRepository.countByUser(user); // 사용자가 작성한 리뷰 개수
 
     for (BadgeName badgeName : BadgeName.values()) {
-      Badge badge = badgeRepository.findByBadgeName(badgeName);
+      Badge badge = badgeRepository.findByBadgeName(badgeName); // 배찌 조회
       int requiredReview = badgeName.getRequiredReviews(); // 배찌 지급에 필요한 리뷰 개수
       int shouldHaveCount = reviewCount / requiredReview; // 사용자가 가지고 있어야 할 배찌 개수
+      if (shouldHaveCount == 0) continue; // 리뷰 수 부족 → 배찌 지급 조건 미달 시 패스
       int alreadyHaveCount = mappingUserBadgeRepository.countByUserAndBadge(user, badge); // 사용자가 이미 가지고 있는 배찌 개수
 
       int toGiveCount = shouldHaveCount - alreadyHaveCount; // 최종적으로 사용자가 가지고 있어야 할 배찌 개수
