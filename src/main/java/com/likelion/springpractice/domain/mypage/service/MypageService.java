@@ -3,6 +3,7 @@ package com.likelion.springpractice.domain.mypage.service;
 import com.likelion.springpractice.domain.like.entity.Like;
 import com.likelion.springpractice.domain.like.repository.LikeRepository;
 import com.likelion.springpractice.domain.mypage.dto.response.MypageLikesResponse;
+import com.likelion.springpractice.domain.mypage.dto.response.MypageReviewsResponse;
 import com.likelion.springpractice.domain.user.entity.User;
 import com.likelion.springpractice.domain.user.exception.UserErrorCode;
 import com.likelion.springpractice.domain.user.repository.UserRepository;
@@ -15,7 +16,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MypageService {
 
-  private final LikeRepository likeRepository;
   private final UserRepository userRepository;
 
   // 특정 사용자의 좋아요 리스트 반환
@@ -30,6 +30,19 @@ public class MypageService {
            .description(like.getFood().getDescription())
            .build())
        .toList();
+  }
+
+  // 특정 사용자의 리뷰 반환
+  public List<MypageReviewsResponse> getReviewFoods(String username) {
+    User user = userRepository.findByUsername(username)
+        .orElseThrow(() -> new CustomException(UserErrorCode.USER_NOT_FOUND));
+    return user.getReviews().stream()
+        .map(review -> MypageReviewsResponse.builder()
+            .foodId(review.getFood().getFoodId())
+            .foodName(review.getFood().getFoodName())
+            .content(review.getContent())
+            .build())
+        .toList();
   }
 
 }
