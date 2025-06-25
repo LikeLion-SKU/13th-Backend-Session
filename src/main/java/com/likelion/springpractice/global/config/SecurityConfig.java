@@ -63,6 +63,8 @@ public class SecurityConfig {
                     .requestMatchers("/api/reviews/{foodId}").permitAll()
                     // 좋아요 기능은 인증 필요
                     .requestMatchers("api/likes/**").authenticated()
+                    // 마이페이지 기능은 인증 필요
+                    .requestMatchers("api/mypages/**").authenticated()
                     // 인증 없이 허용할 경로
                     .requestMatchers("/api/v1/**").permitAll()
                     // 그 외 모든 요청은 모두 인증 필요
