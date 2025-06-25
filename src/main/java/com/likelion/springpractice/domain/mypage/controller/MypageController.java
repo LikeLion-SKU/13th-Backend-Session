@@ -1,5 +1,6 @@
 package com.likelion.springpractice.domain.mypage.controller;
 
+import com.likelion.springpractice.domain.mypage.dto.response.MypageBadgesResponse;
 import com.likelion.springpractice.domain.mypage.dto.response.MypageLikesResponse;
 import com.likelion.springpractice.domain.mypage.dto.response.MypageReviewsResponse;
 import com.likelion.springpractice.domain.mypage.service.MypageService;
@@ -39,6 +40,15 @@ public class MypageController {
   ) {
     List<MypageReviewsResponse> mypageReviewsResponses = mypageService.getReviewFoods(username);
     return ResponseEntity.ok(BaseResponse.success("리뷰 리스트 조회 성공", mypageReviewsResponses));
+  }
+
+  @Operation(summary = "배찌 리스트 조회 API", description = "마이 페이지에서 배찌 조회 버튼을 누르면 요청되는 API")
+  @GetMapping("/badges")
+  public ResponseEntity<BaseResponse<List<MypageBadgesResponse>>> getUserBadges(
+      @AuthenticationPrincipal(expression = "username") String username
+  ) {
+    List<MypageBadgesResponse> mypageBadgesResponses = mypageService.getUserBadges(username);
+    return ResponseEntity.ok(BaseResponse.success("사용자 배찌 조회 성공", mypageBadgesResponses));
   }
 
 }
