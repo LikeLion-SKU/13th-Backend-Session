@@ -45,7 +45,7 @@ public class SwaggerConfig {
 
     @Bean
     public GroupedOpenApi customGroupedOpenApiPosts() {
-        return GroupedOpenApi.builder().group("api-posts").pathsToMatch("/api/v1/posts/**").build();
+        return GroupedOpenApi.builder().group("api-posts").pathsToMatch("/api/posts/**").build();
     }
 
     @Bean
@@ -56,6 +56,35 @@ public class SwaggerConfig {
     @Bean
     public GroupedOpenApi customGroupedOpenApiAuths() {
         return GroupedOpenApi.builder().group("api-auths").pathsToMatch("/api/auths/**").build();
+    }
+
+    @Bean
+    public GroupedOpenApi customGroupedOpenApiBatches() {
+        return GroupedOpenApi.builder().group("api-batches").pathsToMatch("/api/batches/**")
+            .build();
+    }
+
+    @Bean
+    public GroupedOpenApi customGroupedOpenApiFoods() {
+        return GroupedOpenApi.builder().group("api-foods").pathsToMatch("/api/foods/**").build();
+    }
+
+    @Bean
+    public GroupedOpenApi customGroupedOpenApiFoodLikes() {
+        return GroupedOpenApi.builder().group("api-foodlikes").pathsToMatch("/api/foodlikes/**")
+            .build();
+    }
+
+    @Bean
+    public GroupedOpenApi customGroupedOpenApiFoodReviews() {
+        return GroupedOpenApi.builder().group("api-foodreviews").pathsToMatch("/api/foodreviews/**")
+            .build();
+    }
+
+    @Bean
+    public GroupedOpenApi customGroupedOpenApiUserBatches() {
+        return GroupedOpenApi.builder().group("api-userbatches").pathsToMatch("/api/userbatches/**")
+            .build();
     }
 
 }

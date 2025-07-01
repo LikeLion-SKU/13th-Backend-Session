@@ -1,8 +1,22 @@
 package com.likelion.springpractice.domain.food.entity;
 
+import com.likelion.springpractice.domain.foodlike.entity.FoodLike;
+import com.likelion.springpractice.domain.foodreview.entity.FoodReview;
 import com.likelion.springpractice.global.common.BaseTimeEntity;
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
@@ -27,4 +41,10 @@ public class Food extends BaseTimeEntity {
 
     @Column(name = "likes")
     private int likes = 0;
+
+    @OneToMany(mappedBy = "food")
+    private List<FoodReview> foodReviews = new ArrayList<>();
+
+    @OneToMany(mappedBy = "food")
+    private List<FoodLike> foodLikes = new ArrayList<>();
 }
