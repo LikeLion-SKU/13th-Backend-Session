@@ -45,46 +45,28 @@ public class SwaggerConfig {
 
     @Bean
     public GroupedOpenApi customGroupedOpenApiPosts() {
-        return GroupedOpenApi.builder().group("api-posts").pathsToMatch("/api/posts/**").build();
+        return GroupedOpenApi.builder().group("api-posts").pathsToMatch("/api/v1/posts/**").build();
     }
 
     @Bean
     public GroupedOpenApi customGroupedOpenApiUsers() {
-        return GroupedOpenApi.builder().group("api-users").pathsToMatch("/api/users/**").build();
+        return GroupedOpenApi.builder().group("api-users").pathsToMatch("/api/v1/users/**").build();
     }
 
     @Bean
     public GroupedOpenApi customGroupedOpenApiAuths() {
-        return GroupedOpenApi.builder().group("api-auths").pathsToMatch("/api/auths/**").build();
+        return GroupedOpenApi.builder().group("api-auths").pathsToMatch("/api/v1/auths/**").build();
     }
 
     @Bean
     public GroupedOpenApi customGroupedOpenApiBatches() {
-        return GroupedOpenApi.builder().group("api-batches").pathsToMatch("/api/batches/**")
+        return GroupedOpenApi.builder().group("api-batches").pathsToMatch("/api/v1/batches/**")
             .build();
     }
 
     @Bean
     public GroupedOpenApi customGroupedOpenApiFoods() {
-        return GroupedOpenApi.builder().group("api-foods").pathsToMatch("/api/foods/**").build();
-    }
-
-    @Bean
-    public GroupedOpenApi customGroupedOpenApiFoodLikes() {
-        return GroupedOpenApi.builder().group("api-foodlikes").pathsToMatch("/api/foodlikes/**")
-            .build();
-    }
-
-    @Bean
-    public GroupedOpenApi customGroupedOpenApiFoodReviews() {
-        return GroupedOpenApi.builder().group("api-foodreviews").pathsToMatch("/api/foodreviews/**")
-            .build();
-    }
-
-    @Bean
-    public GroupedOpenApi customGroupedOpenApiUserBatches() {
-        return GroupedOpenApi.builder().group("api-userbatches").pathsToMatch("/api/userbatches/**")
-            .build();
+        return GroupedOpenApi.builder().group("api-foods").pathsToMatch("/api/v1/foods/**").build();
     }
 
 }
