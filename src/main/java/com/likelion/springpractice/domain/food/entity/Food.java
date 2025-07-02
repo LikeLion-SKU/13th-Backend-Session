@@ -36,6 +36,9 @@ public class Food extends BaseTimeEntity {
     @Column(name = "description", nullable = false)
     private String description;
 
+    @Column(name = "image", nullable = false)
+    private String image;
+
     @Column(name = "score")
     private float score = 0.0f;
 
