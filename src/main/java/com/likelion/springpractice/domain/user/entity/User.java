@@ -15,9 +15,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -35,6 +37,15 @@ public class User extends BaseTimeEntity {
   @Column(name = "password", nullable = false)
   private String password;
 
+  @Column(name = "name", nullable = false)
+  private String name;
+
+  @Column(name = "language", nullable = false)
+  private String language = "Korean";
+
+  @Column(name = "introduce", nullable = true)
+  private String introduce;
+
   @JsonIgnore
   @Column(name = "refresh_token")
   private String refreshToken;
@@ -47,7 +58,5 @@ public class User extends BaseTimeEntity {
   public void createRefreshToken(String refreshToken) {
     this.refreshToken = refreshToken;
   }
-
-
 
 }
