@@ -139,6 +139,7 @@ public class PostService {
     return true;
   }
 
+  // Post는 Mapper를 안만들어서 여기서 toPostResponse 함수를 만듦
   private PostResponse toPostResponse(Post post) {
     return PostResponse.builder().postId(post.getId())
         .title(post.getTitle())//다른 이유는 Post에서 속성을 자료에서는 postId 인것과 다르게 id이기 때문에 id로 설정해야 함

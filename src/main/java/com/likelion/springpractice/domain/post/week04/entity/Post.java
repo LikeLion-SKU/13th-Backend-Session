@@ -32,6 +32,12 @@ public class Post extends BaseTimeEntity {
   private String content;
 
   @Column(nullable = false)
+  @Builder.Default
   private Long views = 0L; // 조회수 필드 생성 + 0으로 초기화
+
+  public void update(String title, String content) {
+    this.title = title;
+    this.content = content;
+  }
 
 }
