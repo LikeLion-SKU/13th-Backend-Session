@@ -1,5 +1,6 @@
 package com.likelion.springpractice.domain.review.service;
 
+import com.likelion.springpractice.domain.badge.service.BadgeService;
 import com.likelion.springpractice.domain.food.entity.Food;
 import com.likelion.springpractice.domain.food.exception.FoodErrorCode;
 import com.likelion.springpractice.domain.food.repository.FoodRepository;
@@ -26,10 +27,11 @@ public class ReviewService {
   private final ReviewRepository reviewRepository;
   private final ReviewMapper reviewMapper;
   private final FoodRepository foodRepository;
+  private final BadgeService badgeService;
 
   // 후기 생성
   @Transactional
-  public ReviewResponse createReview(CreateReviewRequest createReviewRequest) {
+  public ReviewResponse createReview(CreateReviewRequest createReviewRequest, User user) {
     log.info("[ReviewService] 후기 생성 시도: foodId = {}, content = {}, score = {}",
         createReviewRequest.getFoodId(), createReviewRequest.getReviewContent(),
         createReviewRequest.getReviewScore());
@@ -58,12 +60,13 @@ public class ReviewService {
     log.info("[서비스] 후기 생성 완료: id = {}, foodId = {}, score = {}",
         review.getReviewId(), review.getFood().getFoodId(), review.getScore());
 
+    badgeService.updateBadgesByUserFromReviewCount(user); // 후기 추가될때마다 배찌 검토 필요
     return reviewMapper.toReviewResponse(review);
   }
 
   // 후기 삭제
   @Transactional
-  public void deleteReview(Long reviewId) {
+  public boolean deleteReview(Long reviewId, User user) {
     log.info("[ReviewService] 후기 삭제 시도: reviewId = {}", reviewId);
 
     Review review = reviewRepository.findById(reviewId)
@@ -72,6 +75,9 @@ public class ReviewService {
     reviewRepository.delete(review);
 
     log.info("[ReviewService] 후기 삭제 완료: reviewId = {}", reviewId);
+
+    badgeService.updateBadgesByUserFromReviewCount(user); // 후기 삭제될때마다 배찌 검토 필요
+    return true;
   }
 
   // 후기 수정
@@ -113,12 +119,16 @@ public class ReviewService {
       throw new CustomException(ReviewErrorCode.REVIEW_NOT_FOUND);
     }
     return reviewList.stream().map(
-        review -> reviewMapper.toReviewResponse(review)).toList();
+        reviewMapper::toReviewResponse).toList();
   }
 
   // 음식별 후기 내역 조회
   @Transactional
-  public List<ReviewResponse> getReviewsByFood(Food food) {
+  public List<ReviewResponse> getReviewsByFood(Long foodId) {
+
+    Food food = foodRepository.findById(foodId)
+        .orElseThrow(() -> new CustomException(FoodErrorCode.FOOD_NOT_FOUND));
+
     log.info("[ReviewService] 사용자별 좋아요 조회 시도");
     List<Review> reviewList = reviewRepository.findAllByFood(food);
 
@@ -127,6 +137,6 @@ public class ReviewService {
       throw new CustomException(ReviewErrorCode.REVIEW_NOT_FOUND);
     }
     return reviewList.stream().map(
-        review -> reviewMapper.toReviewResponse(review)).toList();
+        reviewMapper::toReviewResponse).toList();
   }
 }

@@ -43,4 +43,9 @@ public class Review extends BaseTimeEntity {  // 생성일시, 수정일시 때�
   @ManyToOne
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
+
+  public void update(String content, int score) {
+    this.content = content;
+    this.score = score;
+  }
 }
