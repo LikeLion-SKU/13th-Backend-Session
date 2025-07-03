@@ -36,7 +36,9 @@ public class BadgeService {
 
     for (Badge badge : badgeList) {
       String badgeName = badge.getBadgeName();
-      boolean inRange = isInReviewRange(badgeName, reviewCount);
+      boolean inRange = isInReviewRange(badge.getMinReview(), badge.getMaxReview(), reviewCount);
+
+      //boolean inRange = isInReviewRange(badgeName, reviewCount);
       boolean alreadyBadge = badgeUserRepository.existsByUserAndBadge(user, badge);
 
       // 후가 개수 범위 조건은 만족하는데 그 배찌를 가지고 있지 않을때 배찌 생성하기 위함
@@ -66,7 +68,7 @@ public class BadgeService {
     List<BadgeUser> badgeList = badgeUserRepository.findAllByUser(user);
 
     if (badgeList.isEmpty()) {
-      log.warn("[LikeService] 좋아요 데이터가 존재하지 않음");
+      log.warn("[BadgeService] 배찌 데이터가 존재하지 않음");
       throw new CustomException(BadgeErrorCode.BADGE__NOT_FOUND);
     }
     return badgeList.stream().map(
@@ -74,6 +76,10 @@ public class BadgeService {
   }
 
   // 후기 개수별 배찌 반환 조건 만족 여부
+  public boolean isInReviewRange(int minReview, int maxReview, long count) {
+    return count >= minReview && count < maxReview;
+  }
+  /*
   public boolean isInReviewRange(String badgeName, long count) {
     return switch (badgeName) {
       case "아기배찌" -> count >= 5 && count < 15;
@@ -83,5 +89,5 @@ public class BadgeService {
       default -> false;
     };
   }
-
+*/
 }
