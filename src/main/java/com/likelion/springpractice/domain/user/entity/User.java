@@ -25,8 +25,12 @@ public class User extends BaseTimeEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+  @Column(name = "email", nullable = false, unique = true)
+  private String email;
+
   @Column(name = "username", nullable = false)
   private String username;
+
   @JsonIgnore
   @Column(name = "password", nullable = false)
   private String password;
@@ -37,6 +41,12 @@ public class User extends BaseTimeEntity {
   @Enumerated
   @Builder.Default
   private Role role = Role.USER;
+  //  마이페이지에 소개랑 국가
+  @Column(name = "national")
+  private String national;
+
+  @Column(name = "introduction")
+  private String introduction;
 
   public void createRefreshToken(String refreshToken) {
     this.refreshToken = refreshToken;

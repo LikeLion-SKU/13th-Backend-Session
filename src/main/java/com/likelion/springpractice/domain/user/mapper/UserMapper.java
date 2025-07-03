@@ -11,6 +11,9 @@ public class UserMapper {
     return SignUpResponse.builder()
         .userId(user.getId())
         .username(user.getUsername())
+        .email(user.getEmail())
+        .national(user.getNational())
+        .introduction(user.getIntroduction())
         .build();
   }
 
