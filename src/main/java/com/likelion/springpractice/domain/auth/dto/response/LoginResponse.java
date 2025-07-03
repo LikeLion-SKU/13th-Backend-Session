@@ -14,8 +14,8 @@ public class LoginResponse {
   private String accessToken;
   @Schema(description = "사용자 ID", example = "1")
   private Long userId;
-  @Schema(description = "사용자 아이디 또는 이메일", example = "seoyeon")
-  private String username;
+  @Schema(description = "사용자 아이디 또는 이메일", example = "seoyeon@gmail.com")
+  private String email;
   @Schema(description = "사용자 권한", example = "USER")
   private Role role;
   @Schema(description = "사용자 Access Token 만료 시간", example = "1800000")
