@@ -1,0 +1,11 @@
+package com.likelion.springpractice.domain.badge.repository;
+
+import com.likelion.springpractice.domain.badge.entity.Badge;
+import com.likelion.springpractice.domain.badge.entity.BadgeUser;
+import com.likelion.springpractice.domain.user.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserBadgeRepository extends JpaRepository<BadgeUser, Long> {
+
+  Boolean existsByUserAndBadge(User user, Badge badge);
+}
