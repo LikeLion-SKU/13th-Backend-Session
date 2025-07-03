@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -36,15 +35,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       String token = resolveToken(request);
 
       if (token != null && jwtProvider.validateToken(token)) {
-        String socialId = jwtProvider.extractSocialId(token);
-        UserDetails userDetails = userDetailsService.loadUserByUsername(socialId);
+        String email = jwtProvider.extractEmail(token);
+        //UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+        CustomUserDetails userDetails = (CustomUserDetails) userDetailsService.loadUserByUsername(
+            email);
 
         UsernamePasswordAuthenticationToken authentication =
             new UsernamePasswordAuthenticationToken(
                 userDetails, null, userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        log.debug("SecurityContext에 '{}' 인증 정보를 저장했습니다.", socialId);
+        log.debug("SecurityContext에 '{}' 인증 정보를 저장했습니다.", email);
       }
     } catch (JwtException | IllegalArgumentException e) {
       log.error("JWT 검증 실패 : {}", e.getMessage());
