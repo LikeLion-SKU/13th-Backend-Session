@@ -33,11 +33,10 @@ public class JwtProvider {
     this.refreshTokenExpireTime = refreshTokenExpireTime;
   }
 
-  public String createAccessToken(String username) {
+  public String createAccessToken(String email) {
     Date now = new Date();
     return Jwts.builder()
-        .setSubject(username)
-        .setId(String.valueOf(username))
+        .setSubject(email)
         .setIssuedAt(now)
         .setExpiration(new Date(now.getTime() + accessTokenExpireTime))
         .signWith(key, SignatureAlgorithm.HS256)
@@ -56,10 +55,10 @@ public class JwtProvider {
     return key;
   }
 
-  public String createRefreshToken(String username, String tokenId) {
+  public String createRefreshToken(String email, String tokenId) {
     Date now = new Date();
     return Jwts.builder()
-        .setSubject(username)
+        .setSubject(email)
         .setId(tokenId)
         .setIssuedAt(now)
         .setExpiration(new Date(now.getTime() + refreshTokenExpireTime))
