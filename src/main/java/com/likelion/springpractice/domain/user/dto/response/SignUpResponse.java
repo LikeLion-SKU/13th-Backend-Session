@@ -13,7 +13,15 @@ public class SignUpResponse {
 
   @Schema(description = "회원가입된 사용자 ID", example = "1")
   private Long userId;
-  @Schema(description = "회원가입된 사용자 아이디", example = "seoyeon")
+  @Schema(description = "회원가입된 사용자 이메일", example = "seoyeon@gmail.com")
+  private String email;
+  @Schema(description = "회원가입된 사용자 이름", example = "누구")
   private String username;
+
+  @Schema(description = "국가", example = "대한민국")
+  private String national;
+
+  @Schema(description = "자기소개", example = "매운 음식 좋아해요.")
+  private String introduction;
 
 }
