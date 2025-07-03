@@ -2,6 +2,8 @@ package com.likelion.springpractice.global.jwt;
 
 import com.likelion.springpractice.domain.auth.exception.AuthErrorCode;
 import com.likelion.springpractice.global.exception.CustomException;
+import com.likelion.springpractice.global.security.CustomUserDetails;
+import com.likelion.springpractice.global.security.CustomUserDetailsService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -13,6 +15,8 @@ import java.security.Key;
 import java.util.Date;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -22,15 +26,18 @@ public class JwtProvider {
   private final Key key;
   private final long accessTokenExpireTime;
   private final long refreshTokenExpireTime;
+  private final CustomUserDetailsService customUserDetailsService;
 
   public JwtProvider(
       @Value("${spring.jwt.secret}") String secretKey,
       @Value("${spring.jwt.access-token-expire-time}") long accessTokenExpireTime,
-      @Value("${spring.jwt.refresh-token-expire-time}") long refreshTokenExpireTime) {
+      @Value("${spring.jwt.refresh-token-expire-time}") long refreshTokenExpireTime,
+      CustomUserDetailsService customUserDetailsService) {
     byte[] keyBytes = java.util.Base64.getDecoder().decode(secretKey);
     this.key = Keys.hmacShaKeyFor(keyBytes);
     this.accessTokenExpireTime = accessTokenExpireTime;
     this.refreshTokenExpireTime = refreshTokenExpireTime;
+    this.customUserDetailsService = customUserDetailsService;
   }
 
   public String createAccessToken(String email) {
@@ -83,7 +90,7 @@ public class JwtProvider {
     }
   }
 
-  public String extractSocialId(String token) {
+  public String extractEmail(String token) {
     return parseClaims(token).getSubject();
   }
 
@@ -97,5 +104,12 @@ public class JwtProvider {
         .build()
         .parseClaimsJws(token)
         .getBody();
+  }
+
+  public Authentication getAuthentication(String token) {
+    String email = extractEmail(token);
+    CustomUserDetails userDetails = (CustomUserDetails) customUserDetailsService.loadUserByUsername(
+        email);
+    return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
   }
 }
