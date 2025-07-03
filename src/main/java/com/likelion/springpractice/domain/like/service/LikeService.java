@@ -5,6 +5,7 @@ import com.likelion.springpractice.domain.food.exception.FoodErrorCode;
 import com.likelion.springpractice.domain.food.repository.FoodRepository;
 import com.likelion.springpractice.domain.like.dto.response.LikeResponse;
 import com.likelion.springpractice.domain.like.entity.Like;
+import com.likelion.springpractice.domain.like.entity.LikeId;
 import com.likelion.springpractice.domain.like.exception.LikeErrorCode;
 import com.likelion.springpractice.domain.like.mapper.LikeMapper;
 import com.likelion.springpractice.domain.like.repository.LikeRepository;
@@ -59,7 +60,8 @@ public class LikeService {
       throw new CustomException(LikeErrorCode.LIKE_IS_EXIST);
     }
 
-    Like like = Like.builder().user(user).food(food).build();
+    Like like = Like.builder().id(new LikeId(user.getId(), food.getFoodId())).user(user).food(food)
+        .build();
     likeRepository.save(like);
     log.info("[LikeService] 좋아요 생성 완료: userId={}, foodId={}", user.getId(), foodId);
 

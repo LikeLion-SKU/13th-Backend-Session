@@ -33,9 +33,11 @@ public class Like {
   @MapsId("foodId") // LikeId 의 foodId와 매핑
   @JoinColumn(name = "food_id", nullable = false)
   private Food food;
-
+/*
   public static Like of(User user, Food food) {
 
     return new Like(new LikeId(user.getId(), food.getFoodId()), user, food);
   }
+
+ */
 }
