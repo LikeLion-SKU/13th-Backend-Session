@@ -84,7 +84,7 @@ public class JwtProvider {
     }
   }
 
-  public String extractSocialId(String token) {
+  public String extractUsername(String token) {
     return parseClaims(token).getSubject();
   }
 
