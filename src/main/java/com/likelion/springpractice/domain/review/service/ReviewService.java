@@ -50,9 +50,10 @@ public class ReviewService {
         .orElseThrow(() -> new CustomException(FoodErrorCode.FOOD_NOT_FOUND));
 
     Review review = Review.builder()
-        .food(food)
         .content(createReviewRequest.getReviewContent())
         .score(createReviewRequest.getReviewScore())
+        .food(foodRepository.findById(createReviewRequest.getFoodId()).orElseThrow()) // 수정함
+        .user(user)
         .build();
 
     reviewRepository.save(review);
@@ -111,11 +112,11 @@ public class ReviewService {
   // 사용자별 후기 내역 조회
   @Transactional
   public List<ReviewResponse> getReviewsByUser(User user) {
-    log.info("[ReviewService] 사용자별 좋아요 조회 시도");
+    log.info("[ReviewService] 사용자별 후기 조회 시도");
     List<Review> reviewList = reviewRepository.findAllByUser(user);
 
     if (reviewList.isEmpty()) {
-      log.warn("[LikeService] 좋아요 데이터가 존재하지 않음");
+      log.warn("[LikeService] 후기 데이터가 존재하지 않음");
       throw new CustomException(ReviewErrorCode.REVIEW_NOT_FOUND);
     }
     return reviewList.stream().map(
@@ -129,11 +130,11 @@ public class ReviewService {
     Food food = foodRepository.findById(foodId)
         .orElseThrow(() -> new CustomException(FoodErrorCode.FOOD_NOT_FOUND));
 
-    log.info("[ReviewService] 사용자별 좋아요 조회 시도");
+    log.info("[ReviewService] 음식별 후기 조회 시도");
     List<Review> reviewList = reviewRepository.findAllByFood(food);
 
     if (reviewList.isEmpty()) {
-      log.warn("[LikeService] 좋아요 데이터가 존재하지 않음");
+      log.warn("[LikeService] 후기 데이터가 존재하지 않음");
       throw new CustomException(ReviewErrorCode.REVIEW_NOT_FOUND);
     }
     return reviewList.stream().map(

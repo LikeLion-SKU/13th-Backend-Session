@@ -6,6 +6,7 @@ import com.likelion.springpractice.domain.review.dto.response.ReviewResponse;
 import com.likelion.springpractice.domain.review.service.ReviewService;
 import com.likelion.springpractice.domain.user.entity.User;
 import com.likelion.springpractice.global.response.BaseResponse;
+import com.likelion.springpractice.global.security.CustomUserDetails;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -37,7 +38,8 @@ public class ReviewController {
   public ResponseEntity<BaseResponse<ReviewResponse>> createReview(
       @Parameter(description = "후기 작성 내용")
       @RequestBody @Valid CreateReviewRequest createReviewRequest,
-      @AuthenticationPrincipal User user) {
+      @AuthenticationPrincipal CustomUserDetails userDetails) {
+    User user = userDetails.getUser();
     ReviewResponse response = reviewService.createReview(createReviewRequest, user);
     return ResponseEntity.ok(BaseResponse.success("후기 생성 성공", response));
   }
@@ -59,25 +61,27 @@ public class ReviewController {
   @DeleteMapping("/reviews/{reviewId}")
   public ResponseEntity<BaseResponse<Boolean>> deleteReview(
       @Parameter(description = "특정 후기 ID") @PathVariable Long reviewId,
-      @AuthenticationPrincipal User user) {
+      @AuthenticationPrincipal CustomUserDetails userDetails) {
+    User user = userDetails.getUser();
     boolean isDeleted = reviewService.deleteReview(reviewId, user);
     return ResponseEntity.ok(BaseResponse.success("후기 삭제 성공", isDeleted));
   }
 
   // 사용자별 후기 리스트 조회 API
   @Operation(summary = "마이페이지 후기 내역 조회", description = "마이페이지에서 후기 내역 조회 시 요청되는 API")
-  @GetMapping("/reviews")
+  @GetMapping("/reviews/byuser")
   public ResponseEntity<BaseResponse<List<ReviewResponse>>> getReviewsByUser(
-      @AuthenticationPrincipal User user) {
+      @AuthenticationPrincipal CustomUserDetails userDetails) {
+    User user = userDetails.getUser();
     List<ReviewResponse> reviewList = reviewService.getReviewsByUser(user);
     return ResponseEntity.ok(BaseResponse.success("사용자별 후기 조회 완료", reviewList));
   }
 
   // 음식별 후기 리스트 조회 API
   @Operation(summary = "음식별 후기 내역 조회", description = "음식 상세 페이지에서 후기 내역 조회 시 요청되는 API")
-  @GetMapping("/reviews")
+  @GetMapping("/reviews/{foodId}")
   public ResponseEntity<BaseResponse<List<ReviewResponse>>> getReviewsByFood(
-      @PathVariable Long foodId) {
+      @PathVariable("foodId") Long foodId) {
     List<ReviewResponse> reviewList = reviewService.getReviewsByFood(foodId);
     return ResponseEntity.ok(BaseResponse.success("음식별 후기 조회 완료", reviewList));
   }
