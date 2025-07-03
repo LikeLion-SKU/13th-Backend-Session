@@ -1,5 +1,6 @@
 package com.likelion.springpractice.global.config;
 
+import com.likelion.springpractice.global.security.CustomUserDetailsService;
 import com.likelion.springpractice.global.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +24,7 @@ public class SecurityConfig {
 
   private final CorsConfig corsConfig;
   private final JwtAuthenticationFilter jwtAuthenticationFilter;
+  private final CustomUserDetailsService customUserDetailsService;  // 추가함
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -49,6 +51,7 @@ public class SecurityConfig {
                     // 그 외 모든 요청은 모두 인증 필요
                     .anyRequest()
                     .authenticated())
+        .userDetailsService(customUserDetailsService) // 추가함
         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     return http.build();
   }
