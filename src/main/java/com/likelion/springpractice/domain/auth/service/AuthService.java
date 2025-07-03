@@ -26,19 +26,19 @@ public class AuthService {
   private final AuthMapper authMapper;
 
   public LoginResponse login(LoginRequest loginRequest) {
-    User user = userRepository.findByUsername(loginRequest.getUsername())
+    User user = userRepository.findByEmail(loginRequest.getEmail())
         .orElseThrow(() -> new CustomException(UserErrorCode.USER_NOT_FOUND));
 
     UsernamePasswordAuthenticationToken authenticationToken =
-        new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
+        new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),
             loginRequest.getPassword());
 
     // 인증 처리
     authenticationManager.authenticate(authenticationToken);
 
     // 액세스 토큰 및 리프레시 토큰 발급
-    String accessToken = jwtProvider.createAccessToken(user.getUsername());
-    String refreshToken = jwtProvider.createRefreshToken(user.getUsername(),
+    String accessToken = jwtProvider.createAccessToken(user.getEmail());
+    String refreshToken = jwtProvider.createRefreshToken(user.getEmail(),
         UUID.randomUUID().toString());
 
     // 리프레시 토큰 저장
