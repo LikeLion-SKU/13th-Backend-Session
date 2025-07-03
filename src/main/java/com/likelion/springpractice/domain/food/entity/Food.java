@@ -50,4 +50,10 @@ public class Food extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "food")
     private List<FoodLike> foodLikes = new ArrayList<>();
+
+    public void update(String name, String description, String image) {
+        this.name = name;
+        this.description = description;
+        this.image = image;
+    }
 }
