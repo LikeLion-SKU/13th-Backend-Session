@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/auths")
+@RequestMapping("/api/v1")
 @Tag(name = "Auth", description = "Auth 관리 API")
 public class AuthController {
 
@@ -29,7 +29,7 @@ public class AuthController {
     private final UserRepository userRepository;
 
     @Operation(summary = "사용자 로그인", description = "사용자 로그인을 위한 API")
-    @PostMapping("/login")
+    @PostMapping("/auths/login")
     public ResponseEntity<BaseResponse<LoginResponse>> login(
         @RequestBody @Valid LoginRequest loginRequest, HttpServletResponse response) {
         LoginResponse loginResponse = authService.login(loginRequest);

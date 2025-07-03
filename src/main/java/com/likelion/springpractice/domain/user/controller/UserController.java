@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/users")
+@RequestMapping("/api/v1")
 @Tag(name = "User", description = "User 관리 API")
 public class UserController {
 
     private final UserService userService;
 
     @Operation(summary = "회원가입 API", description = "사용자 회원가입을 위한 API")
-    @PostMapping("/sign-up")
+    @PostMapping("/users/sign-up")
     public ResponseEntity<BaseResponse<SignUpResponse>> signUp(
         @RequestBody @Valid SignUpRequest signUpRequest) {
         System.out.println(signUpRequest.getUsername() + ", " + signUpRequest.getPassword());
