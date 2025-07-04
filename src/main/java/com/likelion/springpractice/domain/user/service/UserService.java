@@ -1,5 +1,6 @@
 package com.likelion.springpractice.domain.user.service;
 
+import com.likelion.springpractice.domain.user.dto.request.PasswordUpdateRequest;
 import com.likelion.springpractice.domain.user.dto.request.SignUpRequest;
 import com.likelion.springpractice.domain.user.dto.response.SignUpResponse;
 import com.likelion.springpractice.domain.user.entity.User;
@@ -45,5 +46,23 @@ public class UserService {
 
     // 응답 DTO로 변환 후 반환
     return userMapper.toSignUpResponse(savedUser);
+  }
+
+
+  //이 부분 추가했지만, 잘 돌아가지 않아, 우선 모든 기능들 구현 후, 로그인 정보 붙이기로함!!
+  //+ PasswordUpdateRequest + UserErrorCode + UserController 내용 추가했음
+  @Transactional
+  public void updatePassword(Long userId, PasswordUpdateRequest request) {
+    User user = userRepository.findById(userId)
+        .orElseThrow(() -> new CustomException(UserErrorCode.USER_NOT_FOUND));
+
+    // 현재 비밀번호 일치 여부 확인
+    if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
+      throw new CustomException(UserErrorCode.INVALID_PASSWORD);
+    }
+
+    // 새 비밀번호로 변경
+    user.updatePassword(passwordEncoder.encode(request.getNewPassword()));
+    userRepository.save(user);
   }
 }

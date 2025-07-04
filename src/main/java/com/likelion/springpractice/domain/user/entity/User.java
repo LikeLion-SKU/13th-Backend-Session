@@ -35,6 +35,15 @@ public class User extends BaseTimeEntity {
   @Column(name = "password", nullable = false)
   private String password;
 
+  @Column(name = "nickname", nullable = true)
+  private String nickname;
+
+  @Column(name = "nation", nullable = true)
+  private String nation;
+
+  @Column(name = "introduce", nullable = true)
+  private String introduce;
+
   @JsonIgnore
   @Column(name = "refresh_token")
   private String refreshToken;
@@ -48,4 +57,9 @@ public class User extends BaseTimeEntity {
   public void createRefreshToken(String refreshToken) {
     this.refreshToken = refreshToken;
   }
+
+  public void updatePassword(String password) {
+    this.password = password;
+  }
+
 }
