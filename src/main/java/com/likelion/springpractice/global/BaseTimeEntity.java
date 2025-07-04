@@ -1,5 +1,6 @@
 package com.likelion.springpractice.global;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
@@ -14,7 +15,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public abstract class BaseTimeEntity {
 
   @CreatedDate
-  private LocalDateTime createAt; // 게시글 생성 일시 필드
+  @Column(updatable = false)
+  private LocalDateTime createdAt; // 게시글 생성 일시 필드
 
   @LastModifiedDate
   private LocalDateTime modifiedAt;
