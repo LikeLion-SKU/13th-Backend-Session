@@ -2,14 +2,18 @@ package com.likelion.springpractice.global.jwt;
 
 import com.likelion.springpractice.domain.auth.exception.AuthErrorCode;
 import com.likelion.springpractice.global.exception.CustomException;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.Keys;
+import java.security.Key;
+import java.util.Date;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import java.security.Key;
-import java.util.Date;
 
 @Slf4j
 @Component
@@ -20,24 +24,24 @@ public class JwtProvider {
     private final long refreshTokenExpireTime;
 
     public JwtProvider(
-            @Value("${spring.jwt.secret}") String secretKey,
-            @Value("${spring.jwt.access-token-expire-time}") long accessTokenExpireTime,
-            @Value("${spring.jwt.refresh-token-expire-time}") long refreshTokenExpireTime) {
+        @Value("${spring.jwt.secret}") String secretKey,
+        @Value("${spring.jwt.access-token-expire-time}") long accessTokenExpireTime,
+        @Value("${spring.jwt.refresh-token-expire-time}") long refreshTokenExpireTime) {
         byte[] keyBytes = java.util.Base64.getDecoder().decode(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
         this.accessTokenExpireTime = accessTokenExpireTime;
         this.refreshTokenExpireTime = refreshTokenExpireTime;
     }
 
-    public String createAccessToken(String username) {
+    public String createAccessToken(String email) {
         Date now = new Date();
         return Jwts.builder()
-                .setSubject(username)
-                .setId(String.valueOf(username))
-                .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + accessTokenExpireTime))
-                .signWith(key, SignatureAlgorithm.HS256)
-                .compact();
+            .setSubject(email)
+            .setId(String.valueOf(email))
+            .setIssuedAt(now)
+            .setExpiration(new Date(now.getTime() + accessTokenExpireTime))
+            .signWith(key, SignatureAlgorithm.HS256)
+            .compact();
     }
 
     public long getExpiration(String accessToken) {
@@ -52,15 +56,15 @@ public class JwtProvider {
         return key;
     }
 
-    public String createRefreshToken(String username, String tokenId) {
+    public String createRefreshToken(String email, String tokenId) {
         Date now = new Date();
         return Jwts.builder()
-                .setSubject(username)
-                .setId(tokenId)
-                .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + refreshTokenExpireTime))
-                .signWith(key, SignatureAlgorithm.HS256)
-                .compact();
+            .setSubject(email)
+            .setId(tokenId)
+            .setIssuedAt(now)
+            .setExpiration(new Date(now.getTime() + refreshTokenExpireTime))
+            .signWith(key, SignatureAlgorithm.HS256)
+            .compact();
     }
 
     public boolean validateToken(String token) {
@@ -90,9 +94,9 @@ public class JwtProvider {
 
     private Claims parseClaims(String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(getSigningKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+            .setSigningKey(getSigningKey())
+            .build()
+            .parseClaimsJws(token)
+            .getBody();
     }
 }

@@ -3,7 +3,7 @@ package com.likelion.springpractice.domain.user.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.likelion.springpractice.domain.foodlike.entity.FoodLike;
 import com.likelion.springpractice.domain.foodreview.entity.FoodReview;
-import com.likelion.springpractice.domain.userbatch.entity.UserBatch;
+import com.likelion.springpractice.domain.userbadge.entity.UserBadge;
 import com.likelion.springpractice.global.common.BaseTimeEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -62,7 +62,7 @@ public class User extends BaseTimeEntity {
     private Country country = Country.KOREA;
 
     @OneToMany(mappedBy = "user")
-    private List<UserBatch> userBatches = new ArrayList<>();
+    private List<UserBadge> userBatches = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private List<FoodReview> foodReviews = new ArrayList<>();
@@ -72,5 +72,15 @@ public class User extends BaseTimeEntity {
 
     public void createRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
+    }
+
+    public void updateUserInformation(String username, String introduce, Country country) {
+        this.username = username;
+        this.introduce = introduce;
+        this.country = country;
+    }
+
+    public void updateUserPassword(String password) {
+        this.password = password;
     }
 }

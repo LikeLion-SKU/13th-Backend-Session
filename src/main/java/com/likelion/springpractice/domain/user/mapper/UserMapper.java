@@ -9,8 +9,12 @@ public class UserMapper {
 
     public SignUpResponse toSignUpResponse(User user) {
         return SignUpResponse.builder()
-                .userId(user.getId())
-                .username(user.getUsername())
-                .build();
+            .userId(user.getId())
+            .email(user.getEmail())
+            .username(user.getUsername())
+            .password(user.getPassword())
+            .country(user.getCountry())
+            .introduce(user.getIntroduce())
+            .build();
     }
 }
