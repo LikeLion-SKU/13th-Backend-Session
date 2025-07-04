@@ -35,7 +35,7 @@ public class User extends BaseTimeEntity {
   @JsonIgnore
   @Column(name = "password", nullable = false)
   private String password;  // 비밀번호
-  
+
   @Column(name = "username", nullable = false)
   private String username;  // 닉네임
 
@@ -53,6 +53,12 @@ public class User extends BaseTimeEntity {
   @Enumerated(EnumType.STRING)
   @Builder.Default  // UserService의 User 엔티티 생성하는 부분에서 굳이 명시적으로 role을 넣지 않아도 자동으로 들어가게 해줌
   private Role role = Role.USER;
+
+  public void updateInfo(String name, String password, String nationality) {
+    this.username = name;
+    this.password = password;
+    this.nationality = nationality;
+  }
 
   public void createRefreshToken(String refreshToken) {
     this.refreshToken = refreshToken;
