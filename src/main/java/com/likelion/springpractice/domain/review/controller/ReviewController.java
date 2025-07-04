@@ -1,6 +1,8 @@
 package com.likelion.springpractice.domain.review.controller;
 
 
+import com.likelion.springpractice.domain.food.dto.FoodResponse;
+import com.likelion.springpractice.domain.food.service.FoodService;
 import com.likelion.springpractice.domain.review.dto.request.CreateReviewRequest;
 import com.likelion.springpractice.domain.review.dto.response.ReviewResponse;
 import com.likelion.springpractice.domain.review.service.ReviewService;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ReviewController {
 
   private final ReviewService reviewService;
+  private final FoodService foodService;
 
   @Operation(summary = "음식에 달린 리뷰 전체 조회",  //Operation의 구성요소 중 하나로, API에 대한 한줄요약.
       description = "한 음식에 대한 전체 리뷰 조회 페이지로 이동될 때 요청되는 API") //상세설명
@@ -60,5 +63,12 @@ public class ReviewController {
         BaseResponse.success("리뷰 생성 성공", response));
   }
 
+
+  @Operation(summary = "내가 리뷰 작성한 음식 조회", description = "마이페이지에서 내가 리뷰 남긴 음식들만 조회하는 API")
+  @GetMapping("/reviews/my-foods")
+  public ResponseEntity<BaseResponse<List<FoodResponse>>> getReviewedFoodsByMe() {
+    List<FoodResponse> responses = foodService.getFoodsReviewedByUser();
+    return ResponseEntity.ok(BaseResponse.success("내가 리뷰 작성한 음식 조회 성공", responses));
+  }
 
 }
