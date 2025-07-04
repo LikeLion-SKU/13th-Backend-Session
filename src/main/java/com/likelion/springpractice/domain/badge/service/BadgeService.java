@@ -27,7 +27,7 @@ public class BadgeService {
   private final BadgeMapper badgeMapper;
   private final ReviewRepository reviewRepository;
 
-  // 후기 개수가 바뀜에 따라서 배찌 목록 수정
+  // 후기 개수가 바뀜(후기 개수 범위를 벗어나면 배찌를 획득 또는 삭제)에 따라서 배찌 목록 수정
   @Transactional
   public List<BadgeResponse> updateBadgesByUserFromReviewCount(User user) {
     long reviewCount = reviewRepository.countByUser(user);
@@ -79,7 +79,7 @@ public class BadgeService {
   public boolean isInReviewRange(int minReview, int maxReview, long count) {
     return count >= minReview && count < maxReview;
   }
-  /*
+  /*  ->  오류 발생 가능성이 높으니 쓰지 X
   public boolean isInReviewRange(String badgeName, long count) {
     return switch (badgeName) {
       case "아기배찌" -> count >= 5 && count < 15;
