@@ -1,14 +1,17 @@
 package com.likelion.springpractice.domain.like.controller;
 
 
+import com.likelion.springpractice.domain.food.dto.FoodResponse;
 import com.likelion.springpractice.domain.like.service.LikeService;
 import com.likelion.springpractice.global.response.BaseResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,5 +42,12 @@ public class LikeController {
       @Parameter(description = "좋아요를 취소할 음식 ID") @PathVariable Long foodId) {
     likeService.unlikeFood(foodId);
     return ResponseEntity.ok(BaseResponse.success("좋아요 취소 완료", null));
+  }
+
+  @Operation(summary = "좋아요 누른 음식 목록 조회", description = "마이페이지에서 내가 좋아요 누른 음식들 조회하는 API")
+  @GetMapping("/likes/my")
+  public ResponseEntity<BaseResponse<List<FoodResponse>>> getMyLikedFoods() {
+    List<FoodResponse> likedFoods = likeService.getLikedFoodsByUser();
+    return ResponseEntity.ok(BaseResponse.success("내가 좋아요 누른 음식 조회 성공", likedFoods));
   }
 }

@@ -1,6 +1,7 @@
 package com.likelion.springpractice.domain.like.service;
 
 
+import com.likelion.springpractice.domain.food.dto.FoodResponse;
 import com.likelion.springpractice.domain.food.entity.Food;
 import com.likelion.springpractice.domain.food.exception.FoodErrorCode;
 import com.likelion.springpractice.domain.food.repository.FoodRepository;
@@ -10,6 +11,7 @@ import com.likelion.springpractice.domain.user.entity.User;
 import com.likelion.springpractice.domain.user.exception.UserErrorCode;
 import com.likelion.springpractice.domain.user.repository.UserRepository;
 import com.likelion.springpractice.global.exception.CustomException;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -85,5 +87,35 @@ public class LikeService {
     } else {
       log.info("[서비스] 이미 좋아요가 꺼진 상태입니다. 아무 작업 없음");
     }
+  }
+
+
+  @Transactional(readOnly = true)
+  public List<FoodResponse> getLikedFoodsByUser() {
+    Long userId = 1L;
+    log.info("[서비스] 좋아요 누른 음식 목록 조회 시도 - userId: {}", userId);
+
+    User user = userRepository.findById(1L)
+        .orElseThrow(() -> new CustomException(UserErrorCode.USER_NOT_FOUND));
+
+    List<Like> likes = likeRepository.findAllByUserIdAndLikeStatusTrue(user.getId());
+
+    log.info("[서비스] 좋아요 누른 음식 수: {}", likes.size());
+
+    // Like → Food → FoodResponse
+    return likes.stream()
+        .map(like -> toFoodResponse(like.getFood()))
+        .toList();
+  }
+
+  // Entity → DTO 변환 (FoodService와 동일한 방식)
+  private FoodResponse toFoodResponse(Food food) {
+    return FoodResponse.builder()
+        .foodId(food.getId())
+        .name(food.getName())
+        .description(food.getDescription())
+        .like_count(food.getLikeCount())
+        .avg_rating(food.getAvgRating())
+        .build();
   }
 }
