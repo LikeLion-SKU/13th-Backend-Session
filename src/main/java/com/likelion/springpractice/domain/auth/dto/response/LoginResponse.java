@@ -16,8 +16,8 @@ public class LoginResponse {
   @Schema(description = "사용자 ID", example = "1")
   private Long userId;
 
-  @Schema(description = "사용자 아이디 또는 이메일", example = "naooung")
-  private String username;
+  @Schema(description = "사용자 이메일", example = "naooung@naver.com")
+  private String email;
 
   @Schema(description = "사용자 권한", example = "USER")
   private Role role;

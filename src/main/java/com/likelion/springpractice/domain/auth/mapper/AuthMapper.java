@@ -11,7 +11,7 @@ public class AuthMapper {
     return LoginResponse.builder()
         .accessToken(accessToken)
         .userId(user.getId())
-        .username(user.getUsername())
+        .email(user.getEmail())
         .role(user.getRole())
         .expirationTime(expirationTime)
         .build();
