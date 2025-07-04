@@ -28,11 +28,11 @@ public class AuthService {
   private final AuthMapper authMapper;
 
   public LoginResponse login(LoginRequest loginRequest) {
-    User user = userRepository.findByUsername(loginRequest.getUsername())
+    User user = userRepository.findByUsername(loginRequest.getEmail())
         .orElseThrow(() -> new CustomException(UserErrorCode.USER_NOT_FOUND));
 
     UsernamePasswordAuthenticationToken authenticationToken =
-        new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
+        new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),
             loginRequest.getPassword());
 
     //인증 처리

@@ -35,7 +35,7 @@ public class AuthController {
     LoginResponse loginResponse = authService.login(loginRequest);
 
     //refreshToken 가져오기
-    String refreshToken = userRepository.findByUsername(loginRequest.getUsername())
+    String refreshToken = userRepository.findByEmail(loginRequest.getEmail())
         .orElseThrow(() -> new CustomException(UserErrorCode.USER_NOT_FOUND))
         .getRefreshToken();
 
