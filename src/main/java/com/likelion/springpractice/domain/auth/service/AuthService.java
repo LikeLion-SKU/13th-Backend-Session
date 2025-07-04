@@ -27,8 +27,10 @@ public class AuthService {
   private final UserRepository userRepository;
   private final AuthMapper authMapper;
 
+  // 사용자의 로그인 요청 처리
   @Transactional
   public LoginResponse login(LoginRequest loginRequest) {
+    // 이메일로 사용자 조회
     User user = userRepository.findByEmail(loginRequest.getEmail())
         .orElseThrow(() -> new CustomException(UserErrorCode.USER_NOT_FOUND));
 
