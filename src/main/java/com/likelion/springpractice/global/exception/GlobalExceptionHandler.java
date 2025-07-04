@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -23,6 +24,21 @@ public class GlobalExceptionHandler {
     return ResponseEntity
         .status(errorCode.getStatus())
         .body(BaseResponse.error(errorCode.getStatus().value(), ex.getMessage()));
+  }
+
+  // 유효성 검사 실패 예외
+  @ExceptionHandler(MethodArgumentNotValidException.class)
+  public ResponseEntity<BaseResponse<Object>> handleValidationException(
+      MethodArgumentNotValidException ex) {
+    String message = ex.getBindingResult().getFieldError() != null
+        ? ex.getBindingResult().getFieldError().getDefaultMessage()
+        : "요청 데이터가 유효하지 않습니다.";
+
+    log.warn("유효성 검사 오류 발생: {}", message);
+
+    return ResponseEntity
+        .status(HttpStatus.BAD_REQUEST)
+        .body(BaseResponse.error(HttpStatus.BAD_REQUEST.value(), message));
   }
 
 

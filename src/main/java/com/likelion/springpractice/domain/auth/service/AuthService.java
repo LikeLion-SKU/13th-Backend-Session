@@ -26,6 +26,16 @@ public class AuthService {
   private final UserRepository userRepository;
   private final AuthMapper authMapper;
 
+  /**
+   * 사용자 로그인 서비스 메서드.
+   * <p>
+   * 주어진 {@link LoginRequest} 객체로부터 사용자 정보를 추출하여 인증을 시도하고, 성공 시 액세스 토큰과 리프레시 토큰을 발급한다.
+   * </p>
+   *
+   * @param loginRequest 로그인 요청 DTO
+   * @return 로그인 응답 DTO
+   * @throws CustomException {@link UserErrorCode#USER_NOT_FOUND} – 존재하지 않는 사용자 이름인 경우 발생
+   */
   @Transactional
   public LoginResponse login(LoginRequest loginRequest) {
     User user = userRepository.findByUsername(loginRequest.getUsername())

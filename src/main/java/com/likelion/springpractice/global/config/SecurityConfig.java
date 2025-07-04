@@ -43,12 +43,13 @@ public class SecurityConfig {
                     // Swagger 경로 인증 필요
                     .requestMatchers("/swagger-ui/**", "/v3/api-docs/**")
                     .permitAll()
-                    // 인증 없이 허용할 경로
-                    .requestMatchers("/api/**")
-                    .permitAll()
+                    // 로그인 필요
+                    .requestMatchers("/api/v1/users", "/api/v1/myPages", "/api/v1/food/*/reviews",
+                        "/api/v1/likes/foods/**")
+                    .authenticated()
                     // 그 외 모든 요청은 모두 인증 필요
                     .anyRequest()
-                    .authenticated())
+                    .permitAll())
         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     return http.build();
   }
