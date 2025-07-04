@@ -1,6 +1,6 @@
 package com.likelion.springpractice.domain.post.week04.entity;
 
-import com.likelion.springpractice.global.common.BaseTimeEntity;
+//import com.likelion.springpractice.global.common.BaseTimeEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,7 +18,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "post")
-public class Post extends BaseTimeEntity {
+public class Post {
+//    public class Post extends BaseTimeEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

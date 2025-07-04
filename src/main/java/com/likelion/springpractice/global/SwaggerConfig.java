@@ -25,15 +25,25 @@ public class SwaggerConfig {
 
     return new OpenAPI()
         .addServersItem(localServer)
-        .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
-        .components(
-            new Components()
-                .addSecuritySchemes(
-                    "bearerAuth",
-                    new SecurityScheme()
-                        .type(SecurityScheme.Type.HTTP)
-                        .scheme("bearer")
-                        .bearerFormat("JWT")))
+//        .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
+//        .components(
+//            new Components()
+//                .addSecuritySchemes(
+//                    "bearerAuth",
+//                    new SecurityScheme()
+//                        .type(SecurityScheme.Type.HTTP)
+//                        .scheme("bearer")
+//                        .bearerFormat("JWT")))
+            .addSecurityItem(new SecurityRequirement().addList("basicAuth"))
+            .components(
+                    new Components()
+                            .addSecuritySchemes(
+                                    "basicAuth",
+                                    new SecurityScheme()
+                                            .type(SecurityScheme.Type.HTTP)
+                                            .scheme("basic")
+                            )
+            )
         .info(new Info().title("Swagger API 명세서").version("1.0").description("My Swagger"));
   }
 
