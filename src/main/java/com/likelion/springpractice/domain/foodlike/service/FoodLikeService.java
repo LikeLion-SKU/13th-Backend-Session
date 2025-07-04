@@ -4,9 +4,12 @@ import com.likelion.springpractice.domain.food.entity.Food;
 import com.likelion.springpractice.domain.food.repository.FoodRepository;
 import com.likelion.springpractice.domain.foodlike.dto.response.FoodLikeResponse;
 import com.likelion.springpractice.domain.foodlike.entity.FoodLike;
+import com.likelion.springpractice.domain.foodlike.exception.FoodLikeErrorCode;
 import com.likelion.springpractice.domain.foodlike.repository.FoodLikeRepository;
 import com.likelion.springpractice.domain.user.entity.User;
 import com.likelion.springpractice.domain.user.repository.UserRepository;
+import com.likelion.springpractice.global.exception.CustomException;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,11 +34,16 @@ public class FoodLikeService {
         Food food = foodRepository.findById(foodId)
             .orElseThrow();
 
+        Optional<FoodLike> isExist = foodLikeRepository.findByUserIdAndFoodId(userId, foodId);
+        if (isExist.isPresent()) {
+            throw new CustomException(FoodLikeErrorCode.FOODLIKE_ALREADY_EXISTS);
+        }
         FoodLike foodLike = FoodLike.builder()
             .user(user)
             .food(food).build();
 
         foodLikeRepository.save(foodLike);
+        food.increaseLikes();
 
         return toFoodLikeResponse(foodLike);
     }
@@ -50,9 +58,22 @@ public class FoodLikeService {
             .orElseThrow();
 
         Optional<FoodLike> foodLike = foodLikeRepository.findByUserIdAndFoodId(userId, foodId);
+        if (!foodLike.isPresent()) {
+            throw new CustomException(FoodLikeErrorCode.FOODLIKE_NOT_FOUND);
+        }
         foodLikeRepository.delete(foodLike.get());
+        food.decreaseLikes();
 
         return true;
+    }
+
+    public List<FoodLikeResponse> getAllUserLikes(Long userId) {
+        User user = userRepository.findById(userId)
+            .orElseThrow();
+
+        List<FoodLike> likeList = foodLikeRepository.findAllByUserId(userId);
+
+        return likeList.stream().map(this::toFoodLikeResponse).toList();
     }
 
     //Response DTO Converter
