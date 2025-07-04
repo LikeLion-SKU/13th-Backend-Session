@@ -35,8 +35,7 @@ public class ReviewService {
     log.info("[ReviewService] 후기 생성 시도: foodId = {}, content = {}, score = {}",
         createReviewRequest.getFoodId(), createReviewRequest.getReviewContent(),
         createReviewRequest.getReviewScore());
-
-    // 유효성 검사
+    
     if (createReviewRequest.getReviewContent() == null || createReviewRequest.getReviewContent()
         .isBlank()) {
       throw new CustomException(ReviewErrorCode.INVALID_REVIEW_CONTENT);
