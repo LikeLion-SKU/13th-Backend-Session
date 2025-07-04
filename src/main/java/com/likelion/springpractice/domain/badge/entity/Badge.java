@@ -1,7 +1,7 @@
-package com.likelion.springpractice.domain.batch.entity;
+package com.likelion.springpractice.domain.badge.entity;
 
 
-import com.likelion.springpractice.domain.userbatch.entity.UserBatch;
+import com.likelion.springpractice.domain.userbadge.entity.UserBadge;
 import com.likelion.springpractice.global.common.BaseTimeEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,8 +23,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Table(name = "batches")
-public class Batch extends BaseTimeEntity {
+@Table(name = "badges")
+public class Badge extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +36,7 @@ public class Batch extends BaseTimeEntity {
     @Column(name = "acquisition_condition", nullable = false)
     private String acquisition_condition;
 
-    @OneToMany(mappedBy = "batch")
-    private List<UserBatch> userBatches = new ArrayList<>();
+    @OneToMany(mappedBy = "badge")
+    private List<UserBadge> userBadges = new ArrayList<>();
 
 }
