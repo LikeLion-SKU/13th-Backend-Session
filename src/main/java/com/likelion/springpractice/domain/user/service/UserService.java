@@ -1,6 +1,7 @@
 package com.likelion.springpractice.domain.user.service;
 
 import com.likelion.springpractice.domain.user.dto.request.SignUpRequest;
+import com.likelion.springpractice.domain.user.dto.request.UpdateUserRequest;
 import com.likelion.springpractice.domain.user.dto.response.SignUpResponse;
 import com.likelion.springpractice.domain.user.entity.User;
 import com.likelion.springpractice.domain.user.exception.UserErrorCode;
@@ -48,5 +49,11 @@ public class UserService {
   }
 
   // 회원 정보 수정
+  public User updateUser(User user, UpdateUserRequest request) {
+    String encodedPassword = passwordEncoder.encode(request.getPassword());
+    user.updateInfo(request.getName(), encodedPassword, request.getNationality());
+    return userRepository.save(user);
+  }
+
 
 }
