@@ -27,23 +27,51 @@ public class User extends BaseTimeEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "username", nullable = false)
-  private String username;
+  @Column(name = "email", nullable = false, unique = true)
+  private String email;
 
-  @JsonIgnore // 실수로 프론트 측으로 민감한 정보를 보내더라도 넘기지 않게 관리
+  @Column(name = "nickname", nullable = false)
+  private String nickname;
+
+  @JsonIgnore
   @Column(name = "password", nullable = false)
   private String password;
 
-  @JsonIgnore
-  @Column(name = "refresh_token")
-  private String refreshToken;
+  @Column(name = "nation", nullable = false)
+  @Enumerated(EnumType.STRING)
+  private Nation nation;
+
+  @Column(name = "self_intro", nullable = true)
+  private String selfIntro;
 
   @Column(name = "role", nullable = false)
   @Enumerated(EnumType.STRING)
   @Builder.Default
   private Role role = Role.USER;
 
+  @Column(name = "status", nullable = false)
+  @Enumerated(EnumType.STRING)
+  @Builder.Default
+  private Status status = Status.ACTIVE;
+
+  @JsonIgnore
+  @Column(name = "refresh_token", nullable = true)
+  private String refreshToken;
+
+  public void removeRefreshToken() {
+    this.refreshToken = null;
+  }
+
   public void createRefreshToken(String refreshToken) {
     this.refreshToken = refreshToken;
+  }
+
+  public void updateSettings(Nation newNation, String newNickname) {
+    this.nation = newNation;
+    this.nickname = newNickname;
+  }
+
+  public void updateSelfIntro(String newSelfIntro) {
+    this.selfIntro = newSelfIntro;
   }
 }
