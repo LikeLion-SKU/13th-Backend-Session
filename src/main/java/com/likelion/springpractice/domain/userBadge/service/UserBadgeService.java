@@ -1,0 +1,44 @@
+package com.likelion.springpractice.domain.userBadge.service;
+
+import com.likelion.springpractice.domain.userBadge.dto.BadgeDetailResponse;
+import com.likelion.springpractice.domain.userBadge.dto.BadgeSummaryResponse;
+import com.likelion.springpractice.domain.userBadge.entity.UserBadge;
+import com.likelion.springpractice.domain.userBadge.exception.BadgeErrorCode;
+import com.likelion.springpractice.domain.userBadge.repository.UserBadgeRepository;
+import com.likelion.springpractice.global.exception.CustomException;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+@Slf4j
+public class UserBadgeService {
+
+  private final UserBadgeRepository userBadgeRepository;
+
+  //음식 덜맵기순 조회
+  public List<BadgeSummaryResponse> getMyBadges(Long userId) {
+    List<UserBadge> userBadgeList = userBadgeRepository.findByUserIdOrderByCreatedAtDesc(userId);
+    return userBadgeList.stream()
+        .map(BadgeSummaryResponse::new)
+        .toList();
+  }
+
+  public BadgeDetailResponse getBadgeDetail(Long badgeId) {
+    Long userId = 1L; // 로그인 미구현으로 임시 사용자 ID 고정
+
+    UserBadge userBadge = userBadgeRepository.findByUserIdAndBadgeId(userId, badgeId)
+        .orElseThrow(() -> new CustomException(BadgeErrorCode.BADGE_NOT_OWNED));
+
+    return new BadgeDetailResponse(
+        userBadge.getBadge().getId(),
+        userBadge.getBadge().getName(),
+        userBadge.getBadge().getDescription(),
+        userBadge.getCreatedAt()
+    );
+  }
+
+
+}
