@@ -27,9 +27,10 @@ public class CustomUserDetails implements UserDetails {
     return user.getPassword();
   }
 
+  // UserDetails에서 이메일 기준 인증으로 변경
   @Override
   public String getUsername() {
-    return user.getUsername();
+    return user.getEmail();
   }
 
   @Override
