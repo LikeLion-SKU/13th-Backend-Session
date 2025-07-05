@@ -1,6 +1,6 @@
 package com.likelion.springpractice.global.security;
 
-import com.likelion.springpractice.domain.user.entity.User;
+import com.likelion.springpractice.domain.mission.entity.User;
 import java.util.Collection;
 import java.util.List;
 import lombok.Getter;
@@ -29,7 +29,7 @@ public class CustomUserDetails implements UserDetails {
 
   @Override
   public String getUsername() {
-    return user.getUsername();
+    return user.getEmail();
   }
 
   @Override

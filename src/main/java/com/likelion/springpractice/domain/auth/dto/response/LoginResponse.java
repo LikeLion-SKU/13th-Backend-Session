@@ -1,6 +1,6 @@
 package com.likelion.springpractice.domain.auth.dto.response;
 
-import com.likelion.springpractice.domain.user.entity.Role;
+import com.likelion.springpractice.domain.mission.entity.Role;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,8 +16,8 @@ public class LoginResponse {
   @Schema(description = "사용자 ID", example = "1")
   private Long userId;
 
-  @Schema(description = "사용자 아이디 또는 이메일", example = "jhjk0519")
-  private String username;
+  @Schema(description = "사용자 아이디 또는 이메일", example = "jhjk1234@gmail.com")
+  private String email;
 
   @Schema(description = "사용자 권한", example = "USER")
   private Role role;

@@ -1,4 +1,4 @@
-package com.likelion.springpractice.domain.user.entity;
+package com.likelion.springpractice.domain.mission.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

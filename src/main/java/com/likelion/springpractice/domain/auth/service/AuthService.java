@@ -3,9 +3,9 @@ package com.likelion.springpractice.domain.auth.service;
 import com.likelion.springpractice.domain.auth.dto.request.LoginRequest;
 import com.likelion.springpractice.domain.auth.dto.response.LoginResponse;
 import com.likelion.springpractice.domain.auth.mapper.AuthMapper;
-import com.likelion.springpractice.domain.user.entity.User;
-import com.likelion.springpractice.domain.user.exception.UserErrorCode;
-import com.likelion.springpractice.domain.user.repository.UserRepository;
+import com.likelion.springpractice.domain.mission.entity.User;
+import com.likelion.springpractice.domain.mission.exception.UserErrorCode;
+import com.likelion.springpractice.domain.mission.repository.UserRepository;
 import com.likelion.springpractice.global.exception.CustomException;
 import com.likelion.springpractice.global.jwt.JwtProvider;
 import java.util.UUID;
@@ -28,18 +28,18 @@ public class AuthService {
 
   @Transactional
   public LoginResponse login(LoginRequest loginRequest) {
-    User user = userRepository.findByUsername(loginRequest.getUsername())
+    User user = userRepository.findByEmail(loginRequest.getEmail())
         .orElseThrow(() -> new CustomException(UserErrorCode.USER_NOT_FOUND));
 
     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-        loginRequest.getUsername(), loginRequest.getPassword());
+        loginRequest.getEmail(), loginRequest.getPassword());
 
     // 인증 처리
     authenticationManager.authenticate(authenticationToken);
 
     // 액세스 토큰 및 리프레시 토큰 발급
-    String accessToken = jwtProvider.createAccessToken(user.getUsername());
-    String refreshToken = jwtProvider.createRefreshToken(user.getUsername(),
+    String accessToken = jwtProvider.createAccessToken(user.getEmail());
+    String refreshToken = jwtProvider.createRefreshToken(user.getEmail(),
         UUID.randomUUID().toString());
 
     // 리프레시 토큰 저장
@@ -49,7 +49,7 @@ public class AuthService {
     Long expirationTime = jwtProvider.getExpiration(accessToken);
 
     // 로그인 성공 로깅
-    log.info("로그인 성공: {}", user.getUsername());
+    log.info("로그인 성공: {}", user.getEmail());
 
     // 로그인 응답 반환
     return authMapper.toLoginResponse(user, accessToken, expirationTime);

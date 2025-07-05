@@ -1,4 +1,4 @@
-package com.likelion.springpractice.domain.user.dto.response;
+package com.likelion.springpractice.domain.mission.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
@@ -12,7 +12,7 @@ public class SignUpResponse {
   @Schema(description = "회원가입된 사용자 ID", example = "1")
   private Long userId;
 
-  @Schema(description = "회원가입된 사용자 아이디", example = "jhjk0519")
-  private String username;
+  @Schema(description = "회원가입된 사용자 아이디", example = "jhjk1234@gmail.com")
+  private String email;
 
 }

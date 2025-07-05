@@ -3,8 +3,8 @@ package com.likelion.springpractice.domain.auth.controller;
 import com.likelion.springpractice.domain.auth.dto.request.LoginRequest;
 import com.likelion.springpractice.domain.auth.dto.response.LoginResponse;
 import com.likelion.springpractice.domain.auth.service.AuthService;
-import com.likelion.springpractice.domain.user.exception.UserErrorCode;
-import com.likelion.springpractice.domain.user.repository.UserRepository;
+import com.likelion.springpractice.domain.mission.exception.UserErrorCode;
+import com.likelion.springpractice.domain.mission.repository.UserRepository;
 import com.likelion.springpractice.global.exception.CustomException;
 import com.likelion.springpractice.global.response.BaseResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,7 +35,7 @@ public class AuthController {
     LoginResponse loginResponse = authService.login(loginRequest);
 
     // refreshToken 가져오기
-    String refreshToken = userRepository.findByUsername(loginResponse.getUsername())
+    String refreshToken = userRepository.findByEmail(loginResponse.getEmail())
         .orElseThrow(() -> new CustomException(UserErrorCode.USER_NOT_FOUND))
         .getRefreshToken();
 

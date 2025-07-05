@@ -35,15 +35,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       String token = resolveToken(request);
 
       if (token != null && jwtProvider.validateToken(token)) {
-        String socialId = jwtProvider.extractSocialId(token);
-        UserDetails userDetails = userDetailsService.loadUserByUsername(socialId);
+//        String socialId = jwtProvider.extractSocialId(token);
+        String email = jwtProvider.extractEmail(token); // 이메일로 추출
+        log.info("✅ [JWT 필터] JWT에서 추출한 이메일: {}", email);  // ✅ 추가
+        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 
         UsernamePasswordAuthenticationToken authentication =
             new UsernamePasswordAuthenticationToken(
                 userDetails, null, userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        log.debug("SecurityContext에 '{}' 인증 정보를 저장했습니다.", socialId);
+        log.debug("SecurityContext에 '{}' 인증 정보를 저장했습니다.", email);
       }
     } catch (JwtException | IllegalArgumentException e) {
       log.error("JWT 검증 실패 : {}", e.getMessage());

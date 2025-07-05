@@ -1,7 +1,7 @@
 package com.likelion.springpractice.domain.auth.mapper;
 
 import com.likelion.springpractice.domain.auth.dto.response.LoginResponse;
-import com.likelion.springpractice.domain.user.entity.User;
+import com.likelion.springpractice.domain.mission.entity.User;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -11,7 +11,7 @@ public class AuthMapper {
     return LoginResponse.builder()
         .accessToken(accessToken)
         .userId(user.getId())
-        .username(user.getUsername())
+        .email(user.getEmail())
         .role(user.getRole())
         .expirationTime(expirationTime)
         .build();
