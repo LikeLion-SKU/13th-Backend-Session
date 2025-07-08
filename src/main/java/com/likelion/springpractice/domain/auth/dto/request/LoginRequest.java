@@ -14,9 +14,9 @@ import lombok.NoArgsConstructor;
 @Schema(title = "LoginRequest DTO", description = "사용자 로그인을 위한 데이터 전송")
 public class LoginRequest {
 
-    @NotBlank(message = "사용자 아이디 항목은 필수입니다.")
-    @Schema(description = "사용자 아이디", example = "sieon")
-    private String username;
+    @NotBlank(message = "사용자 이메일 항목은 필수입니다.")
+    @Schema(description = "사용자 아이디", example = "keumsiun@gmail.com")
+    private String email;
 
     @NotBlank(message = "비밀번호 항목은 필수입니다.")
     @Schema(description = "비밀번호", example = "password123!")

@@ -50,7 +50,8 @@ public class SwaggerConfig {
 
     @Bean
     public GroupedOpenApi customGroupedOpenApiUsers() {
-        return GroupedOpenApi.builder().group("api-users").pathsToMatch("/api/v1/users/**").build();
+        return GroupedOpenApi.builder().group("api-users")
+            .pathsToMatch("/api/v1/users/**", "/api/v1/my/**").build();
     }
 
     @Bean
@@ -60,7 +61,7 @@ public class SwaggerConfig {
 
     @Bean
     public GroupedOpenApi customGroupedOpenApiBatches() {
-        return GroupedOpenApi.builder().group("api-batches").pathsToMatch("/api/v1/batches/**")
+        return GroupedOpenApi.builder().group("api-badges").pathsToMatch("/api/v1/badges/**")
             .build();
     }
 

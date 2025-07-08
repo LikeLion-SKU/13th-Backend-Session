@@ -56,4 +56,16 @@ public class Food extends BaseTimeEntity {
         this.description = description;
         this.image = image;
     }
+
+    public void increaseLikes() {
+        this.likes++;
+    }
+
+    public void decreaseLikes() {
+        this.likes--;
+    }
+
+    public void updateScore(float score) {
+        this.score = score;
+    }
 }
