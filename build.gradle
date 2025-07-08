@@ -19,6 +19,7 @@ repositories {
 }
 
 dependencies {
+
     // Web
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -34,8 +35,8 @@ dependencies {
     runtimeOnly 'com.mysql:mysql-connector-j'
 
     // Lombok
-    compileOnly 'org.projectlombok:lombok:1.18.30'
-    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 
     // Swagger openapi-ui
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.1'
