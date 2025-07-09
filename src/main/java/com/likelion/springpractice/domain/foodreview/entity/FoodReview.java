@@ -37,6 +37,7 @@ public class FoodReview extends BaseTimeEntity {
     private String content;
 
     @Column(name = "score", nullable = false)
+    @Builder.Default
     private float score = 0.0f;
 
     @ManyToOne(fetch = FetchType.LAZY)
