@@ -60,7 +60,7 @@ public class FoodController {
         "음식 CRUD"})
     @GetMapping("/foods/{foodId}")
     public ResponseEntity<BaseResponse<FoodResponse>> getFoodBydId(
-        @Parameter(description = "특정 음식 ID") @PathVariable(value = "id") Long id) {
+        @Parameter(description = "특정 음식 ID") @PathVariable(value = "foodId") Long id) {
         FoodResponse response = foodService.getFoodById(id);
         return ResponseEntity.ok(BaseResponse.success(id + "번 음식 조회 성공", response));
     }
@@ -69,7 +69,7 @@ public class FoodController {
         "음식 CRUD"})
     @PutMapping("/foods/{foodId}")
     public ResponseEntity<BaseResponse<FoodResponse>> updateFood(
-        @Parameter(description = "특정 음식 ID") @PathVariable(value = "id") Long id,
+        @Parameter(description = "특정 음식 ID") @PathVariable(value = "foodId") Long id,
         @Parameter(description = "음식 수정 내용") @RequestBody @Valid UpdateFoodRequest updateFoodRequest) {
         FoodResponse response = foodService.updateFood(id, updateFoodRequest);
         return ResponseEntity.ok(BaseResponse.success(id + "번 음식 수정 성공", response));
@@ -79,7 +79,7 @@ public class FoodController {
         "음식 CRUD"})
     @DeleteMapping("/foods/{foodId}")
     public ResponseEntity<BaseResponse<Boolean>> deleteFood(
-        @Parameter(description = "특정 음식 ID") @PathVariable(value = "id") Long id) {
+        @Parameter(description = "특정 음식 ID") @PathVariable(value = "foodId") Long id) {
         Boolean response = foodService.deleteFood(id);
         return ResponseEntity.ok(BaseResponse.success(id + "번 음식 삭제 성공", response));
     }
@@ -100,7 +100,7 @@ public class FoodController {
         return ResponseEntity.ok(BaseResponse.success("평점순 음식 전체 조회 성공", responses));
     }
 
-    @Operation(summary = "음식 좋아요 추가", description = "음식 개별 조회 페이지에서 누르지 않은 좋아요를 눌렀을 때 요청되는 API", tags = {
+    @Operation(summary = "음식 좋아요", description = "음식 개별 조회 페이지에서 좋아요를 눌렀을 때 요청되는 API", tags = {
         "음식 좋아요 관련"})
     @PostMapping("/foods/{foodId}/likes")
     public ResponseEntity<BaseResponse<FoodLikeResponse>> createFoodLike(
@@ -108,22 +108,9 @@ public class FoodController {
         @AuthenticationPrincipal CustomUserDetails userDetails) {
 
         Long userId = userDetails.getUser().getId();
-        FoodLikeResponse response = foodLikeService.addFoodLike(userId, foodId);
+        FoodLikeResponse response = foodLikeService.toggleFoodLike(userId, foodId);
         return ResponseEntity.ok(
-            BaseResponse.success(userId + "번 유저가" + foodId + "번 음식 좋아요 성공", response));
-    }
-
-    @Operation(summary = "음식 좋아요 삭제", description = "음식 개별 조회 페이지에서 눌렀던 좋아요를 눌렀을 때 요청되는 API", tags = {
-        "음식 좋아요 관련"})
-    @DeleteMapping("/foods/{foodId}/likes")
-    public ResponseEntity<BaseResponse<Boolean>> deleteFoodLike(
-        @Parameter(description = "특정 음식 ID") @PathVariable(value = "foodId") Long foodId,
-        @AuthenticationPrincipal CustomUserDetails userDetails) {
-
-        Long userId = userDetails.getUser().getId();
-        Boolean response = foodLikeService.removeFoodLike(userId, foodId);
-        return ResponseEntity.ok(
-            BaseResponse.success(userId + "번 유저가" + foodId + "번 음식 좋아요 삭제", response));
+            BaseResponse.success(userId + "번 유저가" + foodId + "번 음식 좋아요 버튼 누름", response));
     }
 
     @Operation(summary = "음식 리뷰 추가", description = "음식 개별 조회 페이지에서 리뷰 작성을 누르면 요청되는 API", tags = {

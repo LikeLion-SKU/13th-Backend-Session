@@ -40,15 +40,19 @@ public class Food extends BaseTimeEntity {
     private String image;
 
     @Column(name = "score")
+    @Builder.Default
     private float score = 0.0f;
 
     @Column(name = "likes")
+    @Builder.Default
     private int likes = 0;
 
     @OneToMany(mappedBy = "food")
+    @Builder.Default
     private List<FoodReview> foodReviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "food")
+    @Builder.Default
     private List<FoodLike> foodLikes = new ArrayList<>();
 
     public void update(String name, String description, String image) {

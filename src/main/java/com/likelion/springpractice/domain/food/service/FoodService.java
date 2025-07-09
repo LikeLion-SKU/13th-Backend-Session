@@ -80,6 +80,6 @@ public class FoodService {
 
     private FoodResponse toFoodResponse(Food food) {
         return FoodResponse.builder().foodId(food.getId())
-            .name(food.getName()).description(food.getDescription()).image(food.getImage()).build();
+            .name(food.getName()).description(food.getDescription()).image(food.getImage()).likes(food.getLikes()).score(food.getScore()).build();
     }
 }
