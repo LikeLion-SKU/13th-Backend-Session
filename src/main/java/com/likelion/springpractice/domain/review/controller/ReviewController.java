@@ -36,7 +36,8 @@ public class ReviewController {
   @PostMapping
   public ResponseEntity<BaseResponse<ReviewResponse>> createReview(
       @RequestBody @Valid CreateReviewRequest createReviewRequest,
-      @AuthenticationPrincipal(expression = "username") String username) {
+      @AuthenticationPrincipal CustomUserDetails userDetails) {
+    String username = userDetails.getUsername();
     ReviewResponse reviewResponse = reviewService.createReview(username, createReviewRequest);
     return ResponseEntity.ok(BaseResponse.success("리뷰 작성 완료", reviewResponse));
   }
