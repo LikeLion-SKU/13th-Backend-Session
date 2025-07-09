@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @Schema(title = "비밀번호 변경 요청 DTO")
 public class PasswordUpdateRequest {
 
-  @Schema(description = "현재 비밀번호", example = "hamni0531!")
+  @Schema(description = "현재 비밀번호", example = "password123!")
   private String currentPassword;
 
-  @Schema(description = "새로운 비밀번호", example = "ham0531!")
+  @Schema(description = "새로운 비밀번호", example = "password123!!")
   private String newPassword;
 }

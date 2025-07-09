@@ -35,14 +35,16 @@ public class User extends BaseTimeEntity {
   @Column(name = "password", nullable = false)
   private String password;
 
-  @Column(name = "nickname", nullable = true)
+  @Column(name = "nickname", nullable = false)
   private String nickname;
 
-  @Column(name = "nation", nullable = true)
-  private String nation;
+  @Column(name = "nation", nullable = false)
+  @Enumerated(EnumType.STRING)
+  private Nation nation;
 
   @Column(name = "introduce", nullable = true)
   private String introduce;
+
 
   @JsonIgnore
   @Column(name = "refresh_token")

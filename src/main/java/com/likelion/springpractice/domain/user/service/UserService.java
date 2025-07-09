@@ -38,6 +38,9 @@ public class UserService {
     User user = User.builder()
         .username(request.getUsername())
         .password(encodedPassword)
+        .nickname(request.getNickname())   // 필수
+        .nation(request.getNation())      // 필수 (enum)
+        .introduce(request.getIntroduce()) // 선택
         .build();
 
     // 저장 및 로깅
