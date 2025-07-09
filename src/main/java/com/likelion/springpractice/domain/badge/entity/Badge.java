@@ -37,6 +37,7 @@ public class Badge extends BaseTimeEntity {
     private String acquisition_condition;
 
     @OneToMany(mappedBy = "badge")
+    @Builder.Default
     private List<UserBadge> userBadges = new ArrayList<>();
 
 }
