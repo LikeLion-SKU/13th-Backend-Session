@@ -44,6 +44,10 @@ public class ReviewService {
         .orElseThrow(() -> new CustomException(FoodErrorCode.FOOD_NOT_FOUND));
 
     // 사용자는 음식 하나 당 하나의 리뷰만 작성 가능
+    boolean reviewExists = reviewRepository.existsByUserAndFood(user, food);
+    if (reviewExists) {
+      throw new CustomException(ReviewErrorCode.DUPLICATE_REVIEW_ERROR_CODE); // 예외 코드는 정의 필요
+    }
 
     // 작성한 리뷰 생성
     Review review = Review.builder()
