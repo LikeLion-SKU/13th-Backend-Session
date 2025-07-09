@@ -12,6 +12,8 @@ public class UserMapper {
         .userId(user.getUserId())
         .username(user.getUsername())
         .name(user.getName())
+        .introduce(user.getIntroduce())
+        .nation(user.getNation())
         .build();
   }
 }

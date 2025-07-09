@@ -1,5 +1,6 @@
 package com.likelion.springpractice.domain.user.dto.response;
 
+import com.likelion.springpractice.domain.user.entity.Nation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,4 +18,11 @@ public class SignUpResponse {
 
   @Schema(description = "회원가입된 사용자 이름", example = "주용")
   private String name;
+
+  @Schema(description = "사용자 국적", example = "KOREA",
+      allowableValues = {"KOREA", "USA", "JAPAN", "CHINA"})
+  private Nation nation;
+
+  @Schema(description = "사용자 자기소개", example = "안녕하세요")
+  private String introduce;
 }

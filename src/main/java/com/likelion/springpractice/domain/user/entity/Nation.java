@@ -6,7 +6,7 @@ public enum Nation {
   @Schema(description = "한국")
   KOREA,
   @Schema(description = "미국")
-  AMERICA,
+  USA,
   @Schema(description = "일본")
   JAPAN,
   @Schema(description = "중국")

@@ -38,6 +38,8 @@ public class UserService {
     User user = User.builder()
         .username(request.getUsername())
         .name(request.getName())
+        .nation(request.getNation())
+        .introduce(request.getIntroduce())
         .password(encodePassword)
         .build();
 
