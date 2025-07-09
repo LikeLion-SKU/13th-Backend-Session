@@ -43,6 +43,8 @@ public class ReviewService {
     Food food = foodRepository.findById(createReviewRequest.getFoodId())
         .orElseThrow(() -> new CustomException(FoodErrorCode.FOOD_NOT_FOUND));
 
+    // 사용자는 음식 하나 당 하나의 리뷰만 작성 가능
+
     // 작성한 리뷰 생성
     Review review = Review.builder()
         .content(createReviewRequest.getContent())
@@ -75,6 +77,18 @@ public class ReviewService {
     }
 
     return reviewList.stream().map(reviewMapper::toReviewResponse).toList();
+  }
+
+  // 특정 음식 리뷰 삭제
+  @Transactional
+  public Boolean deleteReview(Long userId, Long foodId) {
+    Review review = reviewRepository.findByUser_UserIdAndFood_FoodId(userId, foodId)
+        .orElseThrow(() -> {
+          throw new CustomException(ReviewErrorCode.REVIEW_ERROR_CODE);
+        });
+
+    reviewRepository.delete(review);
+    return true;
   }
 
 }

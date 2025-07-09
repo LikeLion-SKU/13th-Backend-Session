@@ -57,10 +57,10 @@ public class SecurityConfig {
                     .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/foods/**").authenticated()
                     .requestMatchers(org.springframework.http.HttpMethod.DELETE, "/api/foods/**").authenticated()
                     .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/foods/**").permitAll()
-                    // 리뷰 작성은 인증 필요
-                    .requestMatchers("/api/review").authenticated()
                     // 리뷰 조회 허용
                     .requestMatchers("/api/reviews/{foodId}").permitAll()
+                    // 리뷰 삭제는 인증 필요
+                    .requestMatchers("/api/review/{foodId}/review").authenticated()
                     // 좋아요 기능은 인증 필요
                     .requestMatchers("api/likes/**").authenticated()
                     // 마이페이지 기능은 인증 필요
