@@ -72,6 +72,7 @@ public class UserService {
 
     private UpdateUserResponse toUpdateUserResponse(User user) {
         return UpdateUserResponse.builder().userId(user.getId())
+                .username(user.getUsername())
             .country(user.getCountry()).introduce(user.getIntroduce()).build();
     }
 }

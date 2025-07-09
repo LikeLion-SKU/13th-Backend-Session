@@ -62,12 +62,15 @@ public class User extends BaseTimeEntity {
     private Country country = Country.KOREA;
 
     @OneToMany(mappedBy = "user")
+    @Builder.Default
     private List<UserBadge> userBatches = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
+    @Builder.Default
     private List<FoodReview> foodReviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
+    @Builder.Default
     private List<FoodLike> foodLikes = new ArrayList<>();
 
     public void createRefreshToken(String refreshToken) {
