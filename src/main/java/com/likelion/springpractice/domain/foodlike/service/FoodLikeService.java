@@ -27,44 +27,35 @@ public class FoodLikeService {
 
     //음식 좋아요 추가
     @Transactional
-    public FoodLikeResponse addFoodLike(Long userId, Long foodId) {
+    public FoodLikeResponse toggleFoodLike(Long userId, Long foodId) {
         User user = userRepository.findById(userId)
             .orElseThrow();
 
         Food food = foodRepository.findById(foodId)
             .orElseThrow();
 
-        Optional<FoodLike> isExist = foodLikeRepository.findByUserIdAndFoodId(userId, foodId);
-        if (isExist.isPresent()) {
-            throw new CustomException(FoodLikeErrorCode.FOODLIKE_ALREADY_EXISTS);
-        }
-        FoodLike foodLike = FoodLike.builder()
-            .user(user)
-            .food(food).build();
+        FoodLike foodLike;
 
-        foodLikeRepository.save(foodLike);
-        food.increaseLikes();
+        Optional<FoodLike> exist = foodLikeRepository.findByUserIdAndFoodId(userId, foodId);
+        if (exist.isEmpty()) {
+            foodLike = FoodLike.builder()
+                    .isLiked(true)
+                    .user(user)
+                    .food(food).build();
+            foodLikeRepository.save(foodLike);
+            food.increaseLikes();
+        } else {
+            foodLike = exist.get();
+            foodLike.setIsLiked(!foodLike.getIsLiked());
+            if(foodLike.getIsLiked()) {
+                food.increaseLikes();
+            } else {
+                food.decreaseLikes();
+            }
+            foodLikeRepository.save(foodLike);
+        }
 
         return toFoodLikeResponse(foodLike);
-    }
-
-    //음식 좋아요 삭제
-    @Transactional
-    public Boolean removeFoodLike(Long userId, Long foodId) {
-        User user = userRepository.findById(userId)
-            .orElseThrow();
-
-        Food food = foodRepository.findById(foodId)
-            .orElseThrow();
-
-        Optional<FoodLike> foodLike = foodLikeRepository.findByUserIdAndFoodId(userId, foodId);
-        if (!foodLike.isPresent()) {
-            throw new CustomException(FoodLikeErrorCode.FOODLIKE_NOT_FOUND);
-        }
-        foodLikeRepository.delete(foodLike.get());
-        food.decreaseLikes();
-
-        return true;
     }
 
     public List<FoodLikeResponse> getAllUserLikes(Long userId) {
@@ -79,6 +70,7 @@ public class FoodLikeService {
     //Response DTO Converter
     private FoodLikeResponse toFoodLikeResponse(FoodLike foodLike) {
         return FoodLikeResponse.builder().foodlikeId(foodLike.getId())
+                .isLiked(foodLike.getIsLiked())
             .userId(foodLike.getUser().getId()).foodId(foodLike.getFood().getId()).build();
     }
 }

@@ -12,6 +12,9 @@ public class FoodLikeResponse {
     @Schema(description = "음식 좋아요 ID", example = "1")
     private Long foodlikeId;
 
+    @Schema(description = "좋아요 상태", example = "true")
+    private Boolean isLiked;
+
     @Schema(description = "음식 ID", example = "2")
     private Long foodId;
 
