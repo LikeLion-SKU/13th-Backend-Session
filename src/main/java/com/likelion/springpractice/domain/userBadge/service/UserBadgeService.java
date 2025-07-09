@@ -1,5 +1,6 @@
 package com.likelion.springpractice.domain.userBadge.service;
 
+import com.likelion.springpractice.domain.user.entity.User;
 import com.likelion.springpractice.domain.userBadge.dto.BadgeDetailResponse;
 import com.likelion.springpractice.domain.userBadge.dto.BadgeSummaryResponse;
 import com.likelion.springpractice.domain.userBadge.entity.UserBadge;
@@ -19,15 +20,16 @@ public class UserBadgeService {
   private final UserBadgeRepository userBadgeRepository;
 
   //음식 덜맵기순 조회
-  public List<BadgeSummaryResponse> getMyBadges(Long userId) {
+  public List<BadgeSummaryResponse> getMyBadges(User user) {
+    Long userId = user.getId();
     List<UserBadge> userBadgeList = userBadgeRepository.findByUserIdOrderByCreatedAtDesc(userId);
     return userBadgeList.stream()
         .map(BadgeSummaryResponse::new)
         .toList();
   }
 
-  public BadgeDetailResponse getBadgeDetail(Long badgeId) {
-    Long userId = 1L; // 로그인 미구현으로 임시 사용자 ID 고정
+  public BadgeDetailResponse getBadgeDetail(Long badgeId, User user) {
+    Long userId = user.getId(); // 로그인 미구현으로 임시 사용자 ID 고정
 
     UserBadge userBadge = userBadgeRepository.findByUserIdAndBadgeId(userId, badgeId)
         .orElseThrow(() -> new CustomException(BadgeErrorCode.BADGE_NOT_OWNED));

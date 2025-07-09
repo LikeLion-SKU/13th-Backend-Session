@@ -55,8 +55,8 @@ public class UserService {
   //이 부분 추가했지만, 잘 돌아가지 않아, 우선 모든 기능들 구현 후, 로그인 정보 붙이기로함!!
   //+ PasswordUpdateRequest + UserErrorCode + UserController 내용 추가했음
   @Transactional
-  public void updatePassword(Long userId, PasswordUpdateRequest request) {
-    User user = userRepository.findById(userId)
+  public void updatePassword(User user, PasswordUpdateRequest request) {
+    user = userRepository.findById(user.getId())
         .orElseThrow(() -> new CustomException(UserErrorCode.USER_NOT_FOUND));
 
     // 현재 비밀번호 일치 여부 확인

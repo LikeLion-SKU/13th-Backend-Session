@@ -6,7 +6,9 @@ import com.likelion.springpractice.domain.food.service.FoodService;
 import com.likelion.springpractice.domain.review.dto.request.CreateReviewRequest;
 import com.likelion.springpractice.domain.review.dto.response.ReviewResponse;
 import com.likelion.springpractice.domain.review.service.ReviewService;
+import com.likelion.springpractice.domain.user.entity.User;
 import com.likelion.springpractice.global.response.BaseResponse;
+import com.likelion.springpractice.global.security.CustomUserDetails;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -14,6 +16,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -57,8 +60,11 @@ public class ReviewController {
   public ResponseEntity<BaseResponse<ReviewResponse>> createReview(
       @Parameter(description = "리뷰 작성 내용")  //Swagger에서 파라미터의 의미를 설명함! 실제 동작엔 관계X
       @PathVariable Long foodId,
-      @RequestBody @Valid CreateReviewRequest createReviewRequest) { //@RequestBody : JSON -> java객체로 변환!
-    ReviewResponse response = reviewService.createReview(foodId, createReviewRequest);
+      @RequestBody @Valid CreateReviewRequest createReviewRequest,
+      @AuthenticationPrincipal CustomUserDetails userDetails
+  ) { //@RequestBody : JSON -> java객체로 변환!
+    User user = userDetails.getUser();
+    ReviewResponse response = reviewService.createReview(foodId, createReviewRequest, user);
     return ResponseEntity.ok(
         BaseResponse.success("리뷰 생성 성공", response));
   }
@@ -66,8 +72,11 @@ public class ReviewController {
 
   @Operation(summary = "내가 리뷰 작성한 음식 조회", description = "마이페이지에서 내가 리뷰 남긴 음식들만 조회하는 API")
   @GetMapping("/reviews/my-foods")
-  public ResponseEntity<BaseResponse<List<FoodResponse>>> getReviewedFoodsByMe() {
-    List<FoodResponse> responses = foodService.getFoodsReviewedByUser();
+  public ResponseEntity<BaseResponse<List<FoodResponse>>> getReviewedFoodsByMe(
+      @AuthenticationPrincipal CustomUserDetails userDetails
+  ) {
+    User user = userDetails.getUser();
+    List<FoodResponse> responses = foodService.getFoodsReviewedByUser(user);
     return ResponseEntity.ok(BaseResponse.success("내가 리뷰 작성한 음식 조회 성공", responses));
   }
 

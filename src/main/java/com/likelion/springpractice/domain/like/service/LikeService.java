@@ -29,11 +29,10 @@ public class LikeService {
 
 
   @Transactional
-  public void likeFood(Long foodId) {
-    Long userId = 1L;
-    log.info("[서비스] 음식 좋아요 시도 - foodId: {}, userId: {}", foodId, userId);
+  public void likeFood(Long foodId, User user) {
+    log.info("[서비스] 음식 좋아요 시도 - foodId: {}, userId: {}", foodId, user.getId());
 
-    User user = userRepository.findById(userId)
+    user = userRepository.findById(user.getId())
         .orElseThrow(() -> {
           log.warn("[서비스] 좋아요 실패 - 사용자 없음");
           return new CustomException(UserErrorCode.USER_NOT_FOUND);
@@ -70,8 +69,8 @@ public class LikeService {
   }
 
   @Transactional
-  public void unlikeFood(Long foodId) {
-    Long userId = 1L;
+  public void unlikeFood(Long foodId, User user) {
+    Long userId = user.getId();
     log.info("[서비스] 음식 좋아요 삭제 시도 - foodId: {}, userId: {}", foodId, userId);
 
     Like like = likeRepository.findByUserIdAndFoodId(userId, foodId)
@@ -91,11 +90,11 @@ public class LikeService {
 
 
   @Transactional(readOnly = true)
-  public List<FoodResponse> getLikedFoodsByUser() {
-    Long userId = 1L;
+  public List<FoodResponse> getLikedFoodsByUser(User user) {
+    Long userId = user.getId();
     log.info("[서비스] 좋아요 누른 음식 목록 조회 시도 - userId: {}", userId);
 
-    User user = userRepository.findById(1L)
+    user = userRepository.findById(userId)
         .orElseThrow(() -> new CustomException(UserErrorCode.USER_NOT_FOUND));
 
     List<Like> likes = likeRepository.findAllByUserIdAndLikeStatusTrue(user.getId());

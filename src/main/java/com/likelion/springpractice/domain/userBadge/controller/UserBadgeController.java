@@ -1,14 +1,17 @@
 package com.likelion.springpractice.domain.userBadge.controller;
 
+import com.likelion.springpractice.domain.user.entity.User;
 import com.likelion.springpractice.domain.userBadge.dto.BadgeDetailResponse;
 import com.likelion.springpractice.domain.userBadge.dto.BadgeSummaryResponse;
 import com.likelion.springpractice.domain.userBadge.service.UserBadgeService;
 import com.likelion.springpractice.global.response.BaseResponse;
+import com.likelion.springpractice.global.security.CustomUserDetails;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,16 +30,21 @@ public class UserBadgeController {
 
   @Operation(summary = "획득한 배지 최신순 조회", description = "마이페이지에서 획득한 배찌 리스트 버튼 눌렀을 때 요청되는 API")
   @GetMapping("/badges")
-  public ResponseEntity<BaseResponse<List<BadgeSummaryResponse>>> getMyBadges() {
-    Long userId = 1L; // ⭐(나중에 로그인 구현되면 SecurityContext에서 가져오기)
-    List<BadgeSummaryResponse> responses = userBadgeService.getMyBadges(userId);
+  public ResponseEntity<BaseResponse<List<BadgeSummaryResponse>>> getMyBadges(
+      @AuthenticationPrincipal CustomUserDetails userDetails
+  ) {
+    User user = userDetails.getUser();
+    List<BadgeSummaryResponse> responses = userBadgeService.getMyBadges(user);
     return ResponseEntity.ok(BaseResponse.success(responses));
   }
 
   @GetMapping("/badges/{badgeId}")
   public ResponseEntity<BaseResponse<BadgeDetailResponse>> getMyBadgeDetail(
-      @PathVariable Long badgeId) {
-    BadgeDetailResponse response = userBadgeService.getBadgeDetail(badgeId);
+      @PathVariable Long badgeId,
+      @AuthenticationPrincipal CustomUserDetails userDetails
+  ) {
+    User user = userDetails.getUser();
+    BadgeDetailResponse response = userBadgeService.getBadgeDetail(badgeId, user);
     return ResponseEntity.ok(BaseResponse.success(response));
   }
 }

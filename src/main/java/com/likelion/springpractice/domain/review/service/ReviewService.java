@@ -55,14 +55,14 @@ public class ReviewService {
   // 클라이언트가 보낸 리뷰 생성 요청을 처리!!
   @Transactional
   public ReviewResponse createReview(Long foodId,
-      CreateReviewRequest createReviewRequest) { //DTO를 인자로 받아,
+      CreateReviewRequest createReviewRequest, User user) { //DTO를 인자로 받아,
     log.info("[서비스]게시글 생성 시도: rating= {}, comment={}", createReviewRequest.getRating(),
         createReviewRequest.getComment());
 
     // 로그인 유저 정보 필요하다면 다음 라인 사용 (User user = ... 로부터)
     // User user = userRepository.findByUsername(...) 또는 SecurityContext에서 꺼내오기
 
-    User user = userRepository.findById(1L)
+    user = userRepository.findById(user.getId())
         .orElseThrow(() -> new CustomException(UserErrorCode.USER_NOT_FOUND));
     Food food = foodRepository.findById(foodId)
         .orElseThrow(() -> new CustomException(FoodErrorCode.FOOD_NOT_FOUND));

@@ -3,6 +3,7 @@ package com.likelion.springpractice.domain.user.controller;
 import com.likelion.springpractice.domain.user.dto.request.PasswordUpdateRequest;
 import com.likelion.springpractice.domain.user.dto.request.SignUpRequest;
 import com.likelion.springpractice.domain.user.dto.response.SignUpResponse;
+import com.likelion.springpractice.domain.user.entity.User;
 import com.likelion.springpractice.domain.user.service.UserService;
 import com.likelion.springpractice.global.response.BaseResponse;
 import com.likelion.springpractice.global.security.CustomUserDetails;
@@ -42,8 +43,8 @@ public class UserController {
       @AuthenticationPrincipal CustomUserDetails userDetails,
       @RequestBody PasswordUpdateRequest request
   ) {
-    Long userId = userDetails.getUser().getId(); //User 엔티티 내부 ID
-    userService.updatePassword(userId, request);
+    User user = userDetails.getUser();
+    userService.updatePassword(user, request);
     return ResponseEntity.ok(BaseResponse.success("비밀번호 변경 성공"));
   }
 

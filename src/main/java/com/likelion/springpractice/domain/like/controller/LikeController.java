@@ -3,13 +3,16 @@ package com.likelion.springpractice.domain.like.controller;
 
 import com.likelion.springpractice.domain.food.dto.FoodResponse;
 import com.likelion.springpractice.domain.like.service.LikeService;
+import com.likelion.springpractice.domain.user.entity.User;
 import com.likelion.springpractice.global.response.BaseResponse;
+import com.likelion.springpractice.global.security.CustomUserDetails;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,23 +34,32 @@ public class LikeController {
   @Operation(summary = "음식 좋아요 누르기", description = "음식 상세 페이지에서 좋아요 버튼을 눌렀을 때 요청되는 API")
   @PostMapping("/foods/{foodId}/likes")
   public ResponseEntity<BaseResponse<String>> likeFood(
-      @Parameter(description = "좋아요를 누를 음식 ID") @PathVariable Long foodId) {
-    likeService.likeFood(foodId);
+      @Parameter(description = "좋아요를 누를 음식 ID") @PathVariable Long foodId,
+      @AuthenticationPrincipal CustomUserDetails userDetails
+  ) {
+    User user = userDetails.getUser();
+    likeService.likeFood(foodId, user);
     return ResponseEntity.ok(BaseResponse.success("좋아요 등록 완료", null));
   }
 
   @Operation(summary = "음식 좋아요 삭제", description = "음식 상세 페이지에서 좋아요를 취소했을 때 요청되는 API")
   @DeleteMapping("/{foodId}/likes")
   public ResponseEntity<BaseResponse<String>> unlikeFood(
-      @Parameter(description = "좋아요를 취소할 음식 ID") @PathVariable Long foodId) {
-    likeService.unlikeFood(foodId);
+      @Parameter(description = "좋아요를 취소할 음식 ID") @PathVariable Long foodId,
+      @AuthenticationPrincipal CustomUserDetails userDetails
+  ) {
+    User user = userDetails.getUser();
+    likeService.unlikeFood(foodId, user);
     return ResponseEntity.ok(BaseResponse.success("좋아요 취소 완료", null));
   }
 
   @Operation(summary = "좋아요 누른 음식 목록 조회", description = "마이페이지에서 내가 좋아요 누른 음식들 조회하는 API")
   @GetMapping("/likes/my")
-  public ResponseEntity<BaseResponse<List<FoodResponse>>> getMyLikedFoods() {
-    List<FoodResponse> likedFoods = likeService.getLikedFoodsByUser();
+  public ResponseEntity<BaseResponse<List<FoodResponse>>> getMyLikedFoods(
+      @AuthenticationPrincipal CustomUserDetails userDetails
+  ) {
+    User user = userDetails.getUser();
+    List<FoodResponse> likedFoods = likeService.getLikedFoodsByUser(user);
     return ResponseEntity.ok(BaseResponse.success("내가 좋아요 누른 음식 조회 성공", likedFoods));
   }
 }

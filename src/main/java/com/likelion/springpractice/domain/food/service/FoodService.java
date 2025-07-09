@@ -81,11 +81,10 @@ public class FoodService {
 
   //내가 리뷰 남긴 음식 조회하기!!
   @Transactional(readOnly = true)
-  public List<FoodResponse> getFoodsReviewedByUser() {
-    Long userId = 1L;
-    log.info("[서비스] 내가 리뷰 남긴 음식 조회 시도 - userId: {}", userId);
+  public List<FoodResponse> getFoodsReviewedByUser(User user) {
+    log.info("[서비스] 내가 리뷰 남긴 음식 조회 시도 - userId: {}", user.getId());
 
-    User user = userRepository.findById(1L)
+    user = userRepository.findById(user.getId())
         .orElseThrow(() -> new CustomException(UserErrorCode.USER_NOT_FOUND));
 
     List<Food> foodList = reviewRepository.findDistinctFoodsByUserId(user.getId());
