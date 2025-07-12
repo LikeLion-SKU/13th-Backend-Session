@@ -4,6 +4,8 @@ import com.likelion.springpractice.domain.Like.dto.response.LikeResponse;
 import com.likelion.springpractice.domain.Like.service.LikeService;
 import com.likelion.springpractice.global.Response.BaseResponse;
 import com.likelion.springpractice.global.Security.CustomUserDetails;
+import com.likelion.springpractice.global.exception.CustomException;
+import com.likelion.springpractice.global.exception.GlobalErrorCode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -33,6 +35,10 @@ public class LikeController {
       @Parameter(description = "특정 좋아요 ID")
       @PathVariable Long likeId) {
 
+    if (userDetails == null) {
+      throw new CustomException(GlobalErrorCode.UNAUTHORIZED);
+    }
+
     LikeResponse response = likeService.updateLike(likeId);
     return ResponseEntity.ok(BaseResponse.success("좋아요 재등록에 성공했습니다.", response));
   }
@@ -42,6 +48,10 @@ public class LikeController {
   public ResponseEntity<BaseResponse<List<LikeResponse>>> getMyLikes(
       @Parameter(hidden = true)
       @AuthenticationPrincipal CustomUserDetails userDetails) {
+
+    if (userDetails == null) {
+      throw new CustomException(GlobalErrorCode.UNAUTHORIZED);
+    }
 
     List<LikeResponse> responses = likeService.getMyLikes(userDetails.getUser().getId());
     return ResponseEntity.ok(BaseResponse.success("내 좋아요 목록 조회에 성공했습니다.", responses));
