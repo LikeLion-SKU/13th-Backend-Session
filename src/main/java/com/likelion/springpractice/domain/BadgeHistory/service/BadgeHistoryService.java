@@ -22,13 +22,16 @@ public class BadgeHistoryService {
   private final BadgeHistoryMapper badgeHistoryMapper;
 
   @Transactional(readOnly = true)
-  public List<BadgeHistoryResponse> getAllBadges(Long userId) {
+  public List<BadgeHistoryResponse> getAllMyBadges(Long userId) {
 
     if (userId == null) {
       throw new CustomException(BadgeHistoryErrorCode.BADGE_USER_UNAUTHORIZED);
     }
 
-    List<BadgeHistory> badgeHistorieList = badgeHistoryRepository.findAllByUserId(userId);
-    return badgeHistoryMapper.toBadgeHistoryResponseList(badgeHistorieList);
+    // 회수되지 않은 배지만 반환
+    List<BadgeHistory> badgeHistoryList
+        = badgeHistoryRepository.findByUserIdAndIsRevokedFalse(userId);
+
+    return badgeHistoryMapper.toBadgeHistoryResponseList(badgeHistoryList);
   }
 }

@@ -6,5 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BadgeHistoryRepository extends JpaRepository<BadgeHistory, Long> {
 
-  List<BadgeHistory> findAllByUserId(Long userId);
+  List<BadgeHistory> findByUserIdAndIsRevokedFalse(Long userId);
+
+  Boolean existsByUserIdAndBadgeId(Long userId, Long badgeId);
 }

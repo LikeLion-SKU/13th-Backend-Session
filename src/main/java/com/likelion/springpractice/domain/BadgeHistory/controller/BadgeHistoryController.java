@@ -4,6 +4,8 @@ import com.likelion.springpractice.domain.BadgeHistory.dto.response.BadgeHistory
 import com.likelion.springpractice.domain.BadgeHistory.service.BadgeHistoryService;
 import com.likelion.springpractice.global.Response.BaseResponse;
 import com.likelion.springpractice.global.Security.CustomUserDetails;
+import com.likelion.springpractice.global.exception.CustomException;
+import com.likelion.springpractice.global.exception.GlobalErrorCode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,11 +27,15 @@ public class BadgeHistoryController {
 
   @Operation(summary = "먹방배지 목록 조회 API", description = "자신의 먹방배지 목록을 조회하기 위한 API")
   @GetMapping("/")
-  public ResponseEntity<BaseResponse<List<BadgeHistoryResponse>>> getAllBadges(
+  public ResponseEntity<BaseResponse<List<BadgeHistoryResponse>>> getAllMyBadges(
       @Parameter(hidden = true)
       @AuthenticationPrincipal CustomUserDetails userDetails) {
 
-    List<BadgeHistoryResponse> responses = badgeHistoryService.getAllBadges(
+    if (userDetails == null) {
+      throw new CustomException(GlobalErrorCode.UNAUTHORIZED);
+    }
+
+    List<BadgeHistoryResponse> responses = badgeHistoryService.getAllMyBadges(
         userDetails.getUser().getId());
 
     return ResponseEntity.ok(BaseResponse.success("먹방배지 목록 조회에 성공했습니다.", responses));

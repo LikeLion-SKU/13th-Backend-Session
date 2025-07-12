@@ -40,4 +40,10 @@ public class BadgeHistory extends BaseTimeEntity {
   @Column(name = "is_revoked", nullable = false)
   @Builder.Default
   private Boolean isRevoked = false;
+
+  public BadgeHistory(User user, Badge badge) {
+    this.user = user;
+    this.badge = badge;
+    this.isRevoked = false;
+  }
 }
