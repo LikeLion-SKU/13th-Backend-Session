@@ -5,6 +5,7 @@ import com.likelion.springpractice.domain.auth.dto.response.LoginResponse;
 import com.likelion.springpractice.domain.auth.service.AuthService;
 import com.likelion.springpractice.global.Response.BaseResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/auth")
 @RestController
 @RequiredArgsConstructor
+@Tag(name = "Auth", description = "사용자 인증/인가 관련 API")
 public class AuthController {
 
   private final AuthService authService;
