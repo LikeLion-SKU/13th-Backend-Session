@@ -58,6 +58,8 @@ public class ReviewService {
         .build();
 
     reviewRepository.save(review);
+    double newAvg = reviewRepository.calculateSpicyAverageForFood(foodId);
+    food.updateSpicyLevelAvg(newAvg);
 
     long reviewCount = reviewRepository.countByUserId(userId);  // 후기 누적 수
 
@@ -86,6 +88,9 @@ public class ReviewService {
     }
     review.updateReview(reviewRequest.getContent(), reviewRequest.getSpicyLevel());
 
+    double newAvg = reviewRepository.calculateSpicyAverageForFood(review.getFood().getId());
+    review.getFood().updateSpicyLevelAvg(newAvg);
+
     return reviewMapper.toReviewResponse(review);
   }
 
@@ -100,6 +105,9 @@ public class ReviewService {
     }
 
     review.softDelete();
+
+    double newAvg = reviewRepository.calculateSpicyAverageForFood(review.getFood().getId());
+    review.getFood().updateSpicyLevelAvg(newAvg);
   }
 
   @Transactional(readOnly = true)

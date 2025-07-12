@@ -49,6 +49,8 @@ public class LikeService {
         .build();
 
     Like saved = likeRepository.save(like);
+    food.increaseLikeCount();
+
     return likeMapper.toLikeResponse(saved);
   }
 
@@ -59,10 +61,14 @@ public class LikeService {
     Like like = likeRepository.findById(likeId)
         .orElseThrow(() -> new CustomException(LikeErrorCode.LIKE_NOT_FOUND));
 
+    Food food = like.getFood();
+
     if (like.isDeleted()) {
       like.reLike();
+      food.increaseLikeCount();
     } else {
       like.softDelete();
+      food.decreaseLikeCount();
     }
 
     return likeMapper.toLikeResponse(like);

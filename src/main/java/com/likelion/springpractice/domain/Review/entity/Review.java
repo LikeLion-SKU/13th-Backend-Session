@@ -54,5 +54,6 @@ public class Review extends BaseTimeEntity {
 
   public void softDelete() {
     this.isDeleted = true;
+    this.spicyLevel = null;
   }
 }
