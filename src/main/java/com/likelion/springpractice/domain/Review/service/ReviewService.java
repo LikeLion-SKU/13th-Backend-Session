@@ -1,5 +1,9 @@
 package com.likelion.springpractice.domain.Review.service;
 
+import com.likelion.springpractice.domain.Badge.entity.Badge;
+import com.likelion.springpractice.domain.Badge.repository.BadgeRepository;
+import com.likelion.springpractice.domain.BadgeHistory.entity.BadgeHistory;
+import com.likelion.springpractice.domain.BadgeHistory.repository.BadgeHistoryRepository;
 import com.likelion.springpractice.domain.Food.entity.Food;
 import com.likelion.springpractice.domain.Food.exception.FoodErrorCode;
 import com.likelion.springpractice.domain.Food.repository.FoodRepository;
@@ -28,6 +32,8 @@ public class ReviewService {
   private final ReviewRepository reviewRepository;
   private final UserRepository userRepository;
   private final FoodRepository foodRepository;
+  private final BadgeRepository badgeRepository;
+  private final BadgeHistoryRepository badgeHistoryRepository;
   private final ReviewMapper reviewMapper;
 
   @Transactional
@@ -52,6 +58,18 @@ public class ReviewService {
         .build();
 
     reviewRepository.save(review);
+
+    long reviewCount = reviewRepository.countByUserId(userId);  // 후기 누적 수
+
+    List<Badge> unlockableBadges = badgeRepository.findByUnlockCount(reviewCount);
+
+    for (Badge badge : unlockableBadges) {
+      boolean alreadyOwned = badgeHistoryRepository.existsByUserIdAndBadgeId(userId, badge.getId());
+
+      if (!alreadyOwned) {
+        badgeHistoryRepository.save(new BadgeHistory(user, badge));
+      }
+    }
 
     return reviewMapper.toReviewResponse(review);
   }

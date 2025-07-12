@@ -5,6 +5,8 @@ import com.likelion.springpractice.domain.Review.dto.response.ReviewResponse;
 import com.likelion.springpractice.domain.Review.service.ReviewService;
 import com.likelion.springpractice.global.Response.BaseResponse;
 import com.likelion.springpractice.global.Security.CustomUserDetails;
+import com.likelion.springpractice.global.exception.CustomException;
+import com.likelion.springpractice.global.exception.GlobalErrorCode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -35,6 +37,9 @@ public class ReviewController {
       @Parameter(description = "특정 후기 ID")
       @PathVariable Long reviewId,
       @RequestBody ReviewRequest reviewRequest) {
+    if (userDetails == null) {
+      throw new CustomException(GlobalErrorCode.UNAUTHORIZED);
+    }
 
     ReviewResponse response
         = reviewService.updateReview(userDetails.getUser().getId(), reviewId, reviewRequest);
@@ -51,6 +56,9 @@ public class ReviewController {
       @AuthenticationPrincipal CustomUserDetails userDetails,
       @Parameter(description = "삭제할 후기 ID")
       @PathVariable Long reviewId) {
+    if (userDetails == null) {
+      throw new CustomException(GlobalErrorCode.UNAUTHORIZED);
+    }
 
     reviewService.deleteReview(userDetails.getUser().getId(), reviewId);
     return ResponseEntity.ok(BaseResponse.success("후기 삭제에 성공했습니다."));
@@ -61,6 +69,9 @@ public class ReviewController {
   public ResponseEntity<BaseResponse<List<ReviewResponse>>> getAllReviews(
       @Parameter(hidden = true)
       @AuthenticationPrincipal CustomUserDetails userDetails) {
+    if (userDetails == null) {
+      throw new CustomException(GlobalErrorCode.UNAUTHORIZED);
+    }
 
     List<ReviewResponse> responses = reviewService.getAllReviews(userDetails.getUser().getId());
 

@@ -11,4 +11,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
   boolean existsByUserIdAndFoodIdAndIsDeletedFalse(Long userId, Long foodId);
 
   List<Review> findAllByUserIdAndIsDeletedFalse(Long userId);
+
+  Long countByUserId(Long userId);
 }
