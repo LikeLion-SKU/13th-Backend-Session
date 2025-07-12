@@ -8,6 +8,8 @@ import com.likelion.springpractice.domain.user.dto.response.UserResponse;
 import com.likelion.springpractice.domain.user.service.UserService;
 import com.likelion.springpractice.global.Response.BaseResponse;
 import com.likelion.springpractice.global.Security.CustomUserDetails;
+import com.likelion.springpractice.global.exception.CustomException;
+import com.likelion.springpractice.global.exception.GlobalErrorCode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -45,6 +47,9 @@ public class UserController {
       @Parameter(hidden = true)
       // Spring Security에서 현재 인증된 사용자 정보를 가져올 수 있다!!
       @AuthenticationPrincipal CustomUserDetails userDetails) {
+    if (userDetails == null) {
+      throw new CustomException(GlobalErrorCode.UNAUTHORIZED);
+    }
 
     UserResponse userResponse = userService.getUserInfoById(userDetails.getUser().getId());
 
@@ -63,6 +68,10 @@ public class UserController {
       @Parameter(description = "사용자 자기소개 수정 내용")
       @RequestBody SelfIntroRequest selfIntroRequest) {
 
+    if (userDetails == null) {
+      throw new CustomException(GlobalErrorCode.UNAUTHORIZED);
+    }
+
     UserResponse userResponse
         = userService.updateSelfIntro(userDetails.getUser().getId(), selfIntroRequest);
 
@@ -76,6 +85,10 @@ public class UserController {
       @AuthenticationPrincipal CustomUserDetails userDetails,
       @Parameter(description = "사용자 설정 수정 내용")
       @RequestBody SettingsRequest settingsRequest) {
+    
+    if (userDetails == null) {
+      throw new CustomException(GlobalErrorCode.UNAUTHORIZED);
+    }
 
     UserResponse userResponse
         = userService.updateSettings(userDetails.getUser().getId(), settingsRequest);
