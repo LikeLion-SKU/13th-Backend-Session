@@ -31,5 +31,5 @@ public class Badge extends BaseTimeEntity {
   private String description;
 
   @Column(name = "unlock_count", nullable = false)
-  private Integer unlock_count;
+  private Integer unlockCount;
 }
