@@ -16,7 +16,7 @@ public class Student {
   private String name;
   private Long age;
   private String department;
-  private Long student_num;
+  private String studentNum; // 카멜케이스로 생성, MySQL은 보통 student_num 처럼 스네이크 케이스로 작성
 
   public Long getId() {
     return id;
@@ -34,7 +34,7 @@ public class Student {
     return department;
   }
 
-  public Long getStudent_num() {
-    return student_num;
+  public String getStudentNum() {
+    return studentNum;
   }
 }

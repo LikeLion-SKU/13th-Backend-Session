@@ -44,7 +44,7 @@ public class AuthController {
     // 가져온 refreshToken 쿠키에 저장
     Cookie refreshTokenCookie = new Cookie("refreshToken", refreshToken);
     refreshTokenCookie.setHttpOnly(true);
-    // refreshTokenCookie.setSecure(true);  // HTTPS일 때만
+    //refreshTokenCookie.setSecure(true);  // HTTPS일 때만
     refreshTokenCookie.setPath("/");
     refreshTokenCookie.setMaxAge(60 * 60 * 24 * 7);  // 예: 7일 refresh Token 만료기간
 
