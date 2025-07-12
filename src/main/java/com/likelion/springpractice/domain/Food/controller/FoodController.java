@@ -9,6 +9,8 @@ import com.likelion.springpractice.domain.Review.dto.response.ReviewResponse;
 import com.likelion.springpractice.domain.Review.service.ReviewService;
 import com.likelion.springpractice.global.Response.BaseResponse;
 import com.likelion.springpractice.global.Security.CustomUserDetails;
+import com.likelion.springpractice.global.exception.CustomException;
+import com.likelion.springpractice.global.exception.GlobalErrorCode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -82,6 +84,10 @@ public class FoodController {
       @Parameter(description = "특정 음식 ID")
       @PathVariable Long foodId) {
 
+    if (userDetails == null) {
+      throw new CustomException(GlobalErrorCode.UNAUTHORIZED);
+    }
+
     LikeResponse response = likeService.createLike(userDetails.getUser().getId(), foodId);
     return ResponseEntity.ok(BaseResponse.success("좋아요 등록에 성공했습니다.", response));
   }
@@ -93,6 +99,10 @@ public class FoodController {
       @AuthenticationPrincipal CustomUserDetails userDetails,
       @Parameter(description = "리뷰를 작성할 음식 ID") @PathVariable Long foodId,
       @RequestBody ReviewRequest reviewRequest) {
+
+    if (userDetails == null) {
+      throw new CustomException(GlobalErrorCode.UNAUTHORIZED);
+    }
 
     ReviewResponse response = reviewService.createReview(userDetails.getUser().getId(), foodId,
         reviewRequest);
