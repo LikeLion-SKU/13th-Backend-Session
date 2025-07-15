@@ -106,7 +106,8 @@ public class ReviewService {
 
     review.softDelete();
 
-    double newAvg = reviewRepository.calculateSpicyAverageForFood(review.getFood().getId());
+    Double avg = reviewRepository.calculateSpicyAverageForFood(review.getFood().getId());
+    double newAvg = (avg != null) ? avg : 0.0;
     review.getFood().updateSpicyLevelAvg(newAvg);
   }
 
