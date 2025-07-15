@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/bedges")
-@Tag(name = "Bedge", description = "Bedge 관리 API")
+@RequestMapping("/api/beadges")
+@Tag(name = "Badge", description = "Badge 관리 API")
 public class BadgeController {
 
   private final BadgeService badgeService;
