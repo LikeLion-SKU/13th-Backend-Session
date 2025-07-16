@@ -10,6 +10,7 @@ import com.likelion.springpractice.week11.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,7 +23,12 @@ public class FoodService {
     private final FoodLikeRepository foodLikeRepository;
     private final ReviewRepository reviewRepository;
 
-    // 음식 상세 조회
+    // 전체 음식 목록 조회
+    public List<Food> getAllFoods() {
+        return foodRepository.findAll();
+    }
+
+    // 음식 상세 조회 (DB에서 가져오는 방식 유지)
     public FoodDetailResponseDto getFoodDetail(Long foodId) {
         Food food = foodRepository.findById(foodId)
                 .orElseThrow(() -> new IllegalArgumentException("음식을 찾을 수 없습니다."));
@@ -30,17 +36,19 @@ public class FoodService {
         // 평점 계산
         List<Review> reviews = reviewRepository.findAllByFoodId(foodId);
         double averageRating = reviews.isEmpty() ? 0.0 :
-                reviews.stream().mapToDouble(Review::getRating).average().orElse(0.0);        // 좋아요 수
-        int likeCount = foodLikeRepository.findAll().stream()
+                reviews.stream().mapToDouble(Review::getRating).average().orElse(0.0);
+
+        int likeCount = (int) foodLikeRepository.findAll().stream()
                 .filter(like -> like.getFood().getId().equals(foodId) && like.getDeletedAt() == null)
-                .toList().size();
+                .count();
 
         // 후기 리스트 DTO로 변환
+
         List<ReviewSimpleDto> reviewDtos = reviews.stream()
                 .filter(r -> r.getDeletedAt() == null)
                 .map(review -> new ReviewSimpleDto(
                         review.getId(),
-                        review.getUser().getNickname(),
+                        review.getUser().getUsername(),
                         review.getRating(),
                         review.getContent(),
                         review.getCreatedAt()
@@ -68,7 +76,6 @@ public class FoodService {
                         .likeCount(countLikes(food.getId()))
                         .reviews(null)
                         .build())
-
                 .sorted(Comparator.comparingInt(FoodDetailResponseDto::getLikeCount).reversed())
                 .collect(Collectors.toList());
     }
@@ -76,7 +83,8 @@ public class FoodService {
     private double calculateAvgRating(Long foodId) {
         List<Review> reviews = reviewRepository.findAllByFoodId(foodId);
         return reviews.isEmpty() ? 0.0 :
-                reviews.stream().mapToDouble(Review::getRating).average().orElse(0.0);    }
+                reviews.stream().mapToDouble(Review::getRating).average().orElse(0.0);
+    }
 
     private int countLikes(Long foodId) {
         return (int) foodLikeRepository.findAll().stream()

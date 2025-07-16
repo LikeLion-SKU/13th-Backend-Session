@@ -1,6 +1,6 @@
 package com.likelion.springpractice.week11.domain;
 
-import com.likelion.springpractice.week11.entity.BaseTimeEntity;
+import com.likelion.springpractice.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -1,13 +1,13 @@
 package com.likelion.springpractice.week11.service;
 
+import com.likelion.springpractice.domain.user.entity.User;
+import com.likelion.springpractice.domain.user.repository.UserRepository;
 import com.likelion.springpractice.week11.domain.Food;
 import com.likelion.springpractice.week11.domain.Review;
-import com.likelion.springpractice.week11.domain.User;
 import com.likelion.springpractice.week11.dto.request.CreateReviewRequestDto;
 import com.likelion.springpractice.week11.dto.response.ReviewResponseDto;
 import com.likelion.springpractice.week11.repository.FoodRepository;
 import com.likelion.springpractice.week11.repository.ReviewRepository;
-import com.likelion.springpractice.week11.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -60,5 +60,13 @@ public class ReviewService {
 
         review.setDeletedAt(LocalDateTime.now());
         reviewRepository.save(review);
+    }
+
+    // 마이페이지용
+    public List<ReviewResponseDto> getReviewsByUser(Long userId) {
+        List<Review> reviews = reviewRepository.findAllByUserId(userId);
+        return reviews.stream()
+                .map(ReviewResponseDto::from)
+                .toList();
     }
 }

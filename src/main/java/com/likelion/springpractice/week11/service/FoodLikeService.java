@@ -1,12 +1,12 @@
 package com.likelion.springpractice.week11.service;
 
+import com.likelion.springpractice.domain.user.entity.User;
+import com.likelion.springpractice.domain.user.repository.UserRepository;
 import com.likelion.springpractice.week11.domain.Food;
 import com.likelion.springpractice.week11.domain.FoodLike;
-import com.likelion.springpractice.week11.domain.User;
 import com.likelion.springpractice.week11.dto.response.FoodDetailResponseDto;
 import com.likelion.springpractice.week11.repository.FoodLikeRepository;
 import com.likelion.springpractice.week11.repository.FoodRepository;
-import com.likelion.springpractice.week11.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;

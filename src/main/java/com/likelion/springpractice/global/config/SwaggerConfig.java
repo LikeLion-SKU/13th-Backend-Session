@@ -1,4 +1,4 @@
-package com.likelion.springpractice.global;
+package com.likelion.springpractice.global.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -14,37 +14,28 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SwaggerConfig {
 
-  @Value("${server.servlet.comtext-path:}")
+  @Value("${server.servlet.context-path:}")
   private String contextPath;
 
   @Bean
   public OpenAPI customOpenAPI() {
-    Server localServer = new Server();
-    localServer.setUrl(contextPath);
-    localServer.setDescription("Local Server");
+    Server loacalServer = new Server();
+    loacalServer.setUrl(contextPath);
+    loacalServer.setDescription("Local Server");
 
     return new OpenAPI()
-        .addServersItem(localServer)
-//        .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
-//        .components(
-//            new Components()
-//                .addSecuritySchemes(
-//                    "bearerAuth",
-//                    new SecurityScheme()
-//                        .type(SecurityScheme.Type.HTTP)
-//                        .scheme("bearer")
-//                        .bearerFormat("JWT")))
-            .addSecurityItem(new SecurityRequirement().addList("basicAuth"))
+            .addServersItem(loacalServer)
+            .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
             .components(
                     new Components()
                             .addSecuritySchemes(
-                                    "basicAuth",
+                                    "bearerAuth",
                                     new SecurityScheme()
                                             .type(SecurityScheme.Type.HTTP)
-                                            .scheme("basic")
-                            )
-            )
-        .info(new Info().title("Swagger API 명세서").version("1.0").description("My Swagger"));
+                                            .scheme("bearer")
+                                            .bearerFormat("JMT")))
+            .info(new Info().title("Swagger API 명세서").version("1.0").description("My Swagger"));
+
   }
 
   @Bean

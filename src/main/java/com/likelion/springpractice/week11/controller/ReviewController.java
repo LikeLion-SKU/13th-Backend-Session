@@ -1,9 +1,11 @@
 package com.likelion.springpractice.week11.controller;
 
+import com.likelion.springpractice.global.security.CustomUserDetails;
 import com.likelion.springpractice.week11.dto.request.CreateReviewRequestDto;
 import com.likelion.springpractice.week11.dto.response.ReviewResponseDto;
-import com.likelion.springpractice.week11.security.CustomUserDetails;
 import com.likelion.springpractice.week11.service.ReviewService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "Review", description = "리뷰 관련 API")
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -19,6 +22,7 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     // 후기 작성
+    @Operation(summary = "리뷰 등록", description = "해당 음식에 대한 리뷰를 등록합니다.")
     @PostMapping("/reviews")
     public ResponseEntity<String> createReview(
             @AuthenticationPrincipal CustomUserDetails userDetails,
@@ -29,12 +33,14 @@ public class ReviewController {
     }
 
     // 음식별 후기 조회
+    @Operation(summary = "리뷰 조회", description = "해당 음식에 대한 리뷰를 조회합니다.")
     @GetMapping("/foods/{foodId}/reviews")
     public ResponseEntity<List<ReviewResponseDto>> getReviewsByFood(@PathVariable Long foodId) {
         return ResponseEntity.ok(reviewService.getReviewsByFood(foodId));
     }
 
     // 후기 삭제
+    @Operation(summary = "리뷰 삭제", description = "해당 음식에 대한 리뷰를 삭제합니다.")
     @DeleteMapping("/reviews/{reviewId}")
     public ResponseEntity<String> deleteReview(
             @AuthenticationPrincipal CustomUserDetails userDetails,
@@ -42,5 +48,13 @@ public class ReviewController {
 
         reviewService.deleteReview(userDetails.getId(), reviewId);
         return ResponseEntity.ok("후기 삭제 완료");
+    }
+
+    @Operation(summary = "내가 작성한 리뷰 목록 조회", description = "로그인한 사용자가 작성한 모든 리뷰를 조회합니다.")
+    @GetMapping("/users/me/reviews")
+    public ResponseEntity<List<ReviewResponseDto>> getMyReviews(
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
+
+        return ResponseEntity.ok(reviewService.getReviewsByUser(userDetails.getId()));
     }
 }
